@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
         printf("client on [ip:%s, port:%d]\n", inet_ntoa(client.sin_addr), client.sin_port);
         
         while (1) {
-		    n = recv(connfd, buff, MAXLINE, 0);
+		    n = recv(connfd, buff, INI_MAXLINE, 0);
             if (n > 0)
             {
 		        buff[n] = '\0';
