@@ -1,0 +1,4 @@
+1.下载log4cplus-1.2.0.zip
+2.编译生成log4cplusS.lib、log4cplusSD.lib、log4cplusSU.lib、log4cplusSUD.lib、
+3.把include文件夹及上文两个lib放到lib库中
+4.新建工程，设置字符集为使用多字节字符集（或者使用log4cplusSU.lib+Unicode字符集）
