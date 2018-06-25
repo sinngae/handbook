@@ -6,15 +6,15 @@ linux
 
 bjam--show-libraries
 
-cdboost_1_57_0
-bashbootstrap.sh
+cd boost_1_57_0
+bash bootstrap.sh
 ./b2
 
 
-yumgroupinstall"DevelopmentTools"--安装基本开发包
+yum groupinstall "DevelopmentTools"--安装基本开发包
 
 ================================================================================================
-systemctldisablefirewalld.service关闭防火墙
+systemctl disable firewalld.service关闭防火墙
 常用
 ll
 第1列：drwxr-xr-x代表文件的类型及权限；以d开头的为文件夹，以-开头的为文件，以l开头的为连接文件；
@@ -24,8 +24,8 @@ ll
 第6列：文件最后的修改时间。
 第7列：文件名
 
-ps-aux
-ps-elf|grep[特征]
+ps -aux
+ps -elf|grep[特征]
 #进程5种状态：
 R运行runnable(orrunqueue)
 S中断sleeping
@@ -33,21 +33,21 @@ D不可中断uninterruptiblesleep(usuallyIO)
 Z僵死adefunc("zombie")process
 T停止tracedorstopped
 
-chmod777【：redis-server】
+chmod 777【：redis-server】
 
 ./redis-server&
 (加&表示后台运行。）
 
-kill-96617
+kill -96617
 强制杀掉6617进程；
 
-killall-9；
+killall -9；
 
-gcctest.c-otest
+gcctest.c -otest
 
-g++-otest.exetest.cpp
+g++ -o test.exe test.cpp
 
-tail-n10[filename]
+tail -n 10[filename]
 调试
 gdb[program]
 gdb[program]core///用gdb查看coredump文件，跟踪程序core的原因
@@ -82,9 +82,9 @@ childon只调试子进程
 parentoff同时调试两个进程，gdb跟主进程，子进程block在fork位置
 childoff同时调试两个进程，gdb跟子进程，主进程block在fork位置
 设置方法：setfollow-fork-mode[parent|child]setdetach-on-fork[on|off]
->setfollow-fork-mode[parent|child]//
->setdetach-on-fork[on|off]静态库的编译链接
-1.g++-omylib.o-cmylib.cpp//编译
+>set follow-fork-mode[parent|child]//
+>set detach-on-fork[on|off]静态库的编译链接
+1.g++ -o mylib.o -c mylib.cpp//编译
 2.arrcslibmylib.amylib.o//打包成静态库
 3.cplibmylib.a/usr/lib/libmylib.a//拷贝到linux的库目录
 4.gcc-otesttest.cpp-lmylib//链接mylib.a编译生成可执行程序。
@@ -126,7 +126,7 @@ so:动态链接库（共享库）
 lo:使用libtool编译出的目标文件，其实就是在o文件中添加了一些信息
 la:使用libtool编译出的库文件，其实是个文本文件，记录同名动态库和静态库的相关信息
 
-echo$LIBRARY_PATH
+echo $LIBRARY_PATH
 
 如果没有配置--prefix选项，源码包也没有提供makeuninstall，则可以通过以下方式可以完整卸载：
 找一个临时目录重新安装一遍，如：
@@ -233,6 +233,8 @@ pwdx查看进程的执行文件路径
 du-ah--max-depth=1
 
 ================================================================================================
+tcpdump
+
 ================================================================================================
 ================================================================================================
 ================================================================================================

@@ -29,5 +29,6 @@ private:
 	boost::asio::io_service::work m_work;
 	boost::asio::io_service::strand m_strand;
 	boost::thread_group m_thread_group;
+    boost::asio::deadline_timer timer_;
 };
 
