@@ -1,4 +1,3 @@
-20180612
 1.linux 磁盘io 命令 
 sar -b 1 10 
 iostat
@@ -206,3 +205,10 @@ strcpy strncpy strcat
 memcpy memncpy memmove memset bcopy
 如有用到自己编写的动态库，保证编译环境和程序的一致
 
+
+哈希表
+
+数字证书
+
+分布式理论
+CAP Paxos
