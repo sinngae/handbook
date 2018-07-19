@@ -13,17 +13,46 @@
 
 using namespace std;
 
+struct st_
+{
+	char type;
+	unsigned int size;
+	char data[];
+};
+
+class empty
+{
+};
+
+class cls
+{
+	void func();
+};
+
+class cls_int
+{
+	int value;
+};
+
+class base0
+{
+	public:
+	virtual void func();
+};
+
+class base1
+{
+	public:
+	virtual void func0();
+};
+
+class derived : public base0, public base1
+{
+	
+};
+
 int main(int argc, char *argv[])
 {
-    ostringstream oss;
-    oss << "v1.0.0.1  build@" << __TIME__<< " " << __DATE__;
-    string version = oss.str();
-    if (argc > 1 && strcmp(argv[1], "-v") == 0)
-    {
-        cout << argv[0] << "\t" << version.c_str() << endl;
-        return 0;
-    }
-
     /*int *iptr;
     char *cptr;
 
@@ -37,8 +66,14 @@ int main(int argc, char *argv[])
     cptr = (char *)malloc(sizeof(int)+1);
     iptr = (int*) ++cptr;
     *iptr = 42;*/
-    cout << sizeof(int*) << endl;
-    int ss[100] = "123456789";
+    cout << "sizeof(int*) " << sizeof(int*) << endl;
+	
+	cout << "sizeof(st_) " << sizeof(st_) << endl;
+	cout << "sizeof(empty) " << sizeof(empty) << endl;
+	cout << "sizeof(cls) " << sizeof(cls) << endl;
+	cout << "sizeof(cls_int) " << sizeof(cls_int) << endl;
+	cout << "sizeof(base0) " << sizeof(base0) << endl;
+	cout << "sizeof(derived) " << sizeof(derived) << endl;
 
     return 0;
 }

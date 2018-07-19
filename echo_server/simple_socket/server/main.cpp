@@ -7,22 +7,20 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <pthread.h>
+#include <list>
 
-#define INI_ADDR "127.0.0.1"
-#define INI_PORT 2370
-#define INI_MAXLINE 4096
-#define INI_TRDCNT 10
+const char *cfg_addr = "127.0.0.1";
+const unsigned short cfg_port = 2370;
+const unsigned int cfg_maxline = 4096;
+const unsigned int cfg_threadnum = 10;
 
-
-
-
-
+void *handle_accept(void *);
 
 int main(int argc, char *argv[])
 {
 	int listenfd, connfd;
 	struct sockaddr_in servaddr;
-	char buff[4096];
     if( (listenfd = socket(AF_INET, SOCK_STREAM, 0)) == -1 ) {
 	    printf("create socket error: %s(errno: %d)\n", strerror(errno), errno);
 	    exit(0);
@@ -31,7 +29,7 @@ int main(int argc, char *argv[])
 	memset(&servaddr, 0, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-	servaddr.sin_port = htons(INI_PORT);
+	servaddr.sin_port = htons(cfg_port);
 
 	if( bind(listenfd, (struct sockaddr*)&servaddr, sizeof(servaddr)) == -1) {
 		printf("bind socket error: %s(errno: %d)\n", strerror(errno), errno);
@@ -46,35 +44,57 @@ int main(int argc, char *argv[])
     
     struct sockaddr_in client;
     socklen_t socklen = sizeof(struct sockaddr);
-    int n = 0; 
+	std::list<pthread_t> thread_list;
 	while(1) {
         if( (connfd = accept(listenfd, (struct sockaddr *)&client, &socklen)) == -1) {
 	        printf("accept socket error: %s(errno: %d)", strerror(errno), errno);
 	        return -1;
         }
         printf("client on [ip:%s, port:%d]\n", inet_ntoa(client.sin_addr), client.sin_port);
-        
-        while (1) {
-		    n = recv(connfd, buff, INI_MAXLINE, 0);
-            if (n > 0)
-            {
-		        buff[n] = '\0';
-    		    printf("recv msg from client: %s\n", buff);
-            }
-            else if (n == 0)
-            {
-                break;
-            }
-            else
-            {
-                printf("recv error!\n");
-                return -1;
-            }
-        }
-	    close(connfd);
+ 
+		pthread_t thread;
+		int ret = 0;
+		if (ret = pthread_create(&thread, NULL, handle_accept, &connfd)) {
+			printf("pthread_create error\n");
+			continue;
+		}
+		thread_list.push_back(thread);
 	}
     
 	close(listenfd);
 
+	for (std::list<pthread_t>::iterator iter = thread_list.begin();
+			iter != thread_list.end(); ++iter) {
+		pthread_join(*iter, NULL);
+	}
+
 	return 0;
+}
+
+void *handle_accept(void *arg)
+{
+	int connfd = *(int *)arg;
+	char buff[4096] = {0};
+	while (1) {
+		int n = 0; 
+		n = recv(connfd, buff, cfg_maxline, 0);
+        if (n < 0)
+        {
+            printf("handle_accept() recv error!\n");
+            break;
+        }
+		else if (n == 0)// 断开
+        {
+            printf("handle_accept() client exit!\n");
+            break;
+        }
+		
+		buff[n] = '\0';
+    	printf("recv msg from client: %s\n", buff);
+
+		if (send(connfd, buff, strlen(buff), 0) < 0){
+			break;
+		}
+    }
+	close(connfd);
 }

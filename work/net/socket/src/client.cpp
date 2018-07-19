@@ -16,11 +16,12 @@ int main(int argc, char *argv[])
     char recvline[MAXLINE];
     char sendline[MAXLINE];
 	struct sockaddr_in servaddr;
+	const char *srv_addr = "127.0.0.1";
 
-	if( argc != 2){
-		printf("usage: ./client <ipaddress>\n");
-		exit(0);
-	}
+	//if( argc != 2){
+	//	printf("usage: ./client <ipaddress>\n");
+	//	exit(0);
+	//}
 
 	if( (sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0){
 		printf("create socket error: %s(errno: %d)\n", strerror(errno),errno);
@@ -30,8 +31,8 @@ int main(int argc, char *argv[])
 	memset(&servaddr, 0, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_port = htons(6666);
-	if( inet_pton(AF_INET, argv[1], &servaddr.sin_addr) <= 0){
-		printf("inet_pton error for %s\n",argv[1]);
+	if( inet_pton(AF_INET, srv_addr, &servaddr.sin_addr) <= 0){
+		printf("inet_pton error for %s\n", srv_addr);
 	    exit(0);
 	}
 

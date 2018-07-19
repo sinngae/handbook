@@ -1,6 +1,6 @@
 CC=g++
 INCLUDE=-I/opt/local/boost/include
-LIBRARY=-L/opt/local/boost/lib -lboost_system
+LIBRARY=-L/opt/local/boost/lib -lboost_system -lpthread
 
 all:server
 
