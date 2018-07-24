@@ -1,6 +1,5 @@
 查看系统中so文件版本
 
-
 linux
 ./bjam--build-type=minimal--with-date_time--with-filesystem--with-program_options--with-regex--with-serialization--with-system--with-threadvariant=releaselink=staticthreading=multistage
 
@@ -43,7 +42,7 @@ kill -96617
 
 killall -9；
 
-gcctest.c -otest
+gcc test.c -o test
 
 g++ -o test.exe test.cpp
 
