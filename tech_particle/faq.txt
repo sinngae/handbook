@@ -1,4 +1,3 @@
-
 2.多路复用
 多路复用本身是数据通信里或者互联网里的概念，指同一信道里同时传输多路信号，有时分多址、码分多址、频分多址等
 tcp通信里，epoll、select、poll的区别
@@ -10,8 +9,6 @@ tcp通信里，epoll、select、poll的区别
     6.epoll通过内核与用户控件mmap同一块内存实现，省去不必要的内存拷贝
 并发量低的情况，socket都比较活跃，select不一定比epoll慢；
 高并发时，任意时间，只有少数socket是活跃的，epoll效率更高
-
-
 
 
 3.select和epoll的机制和作用
