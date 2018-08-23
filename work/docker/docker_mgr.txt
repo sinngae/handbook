@@ -49,5 +49,4 @@ docker search [镜像名] //搜索镜像
 docker commit -m="commit log" -a="runoob" [容器id|容器名] runoob/[镜像名]:[版本号]
 //-m 提交描述
 //-a 指定镜像作者
-
 docker build -t 
