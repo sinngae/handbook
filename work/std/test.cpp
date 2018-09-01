@@ -17,7 +17,7 @@ struct st_
 {
 	char type;
 	unsigned int size;
-	char data[];
+	char data[10];
 };
 
 class empty
@@ -29,9 +29,29 @@ class cls
 	void func();
 };
 
+class cls_char
+{
+	char value;
+};
+
 class cls_int
 {
 	int value;
+};
+
+class cls_cmb
+{
+	char value;
+	int ivalue;
+	char value1;
+};
+
+class cls_cmb1
+{
+	char value;
+	long long llvalue;
+	char value1;
+	int ivalue;
 };
 
 class base0
@@ -71,7 +91,10 @@ int main(int argc, char *argv[])
 	cout << "sizeof(st_) " << sizeof(st_) << endl;
 	cout << "sizeof(empty) " << sizeof(empty) << endl;
 	cout << "sizeof(cls) " << sizeof(cls) << endl;
+	cout << "sizeof(cls_char) " << sizeof(cls_char) << endl;
 	cout << "sizeof(cls_int) " << sizeof(cls_int) << endl;
+	cout << "sizeof(cls_cmb) " << sizeof(cls_cmb) << endl;
+	cout << "sizeof(cls_cmb1) " << sizeof(cls_cmb1) << endl;
 	cout << "sizeof(base0) " << sizeof(base0) << endl;
 	cout << "sizeof(derived) " << sizeof(derived) << endl;
 
