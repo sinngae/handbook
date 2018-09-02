@@ -24,7 +24,7 @@ docker start [容器id|容器名] //启动容器
 docker rm [容器id|容器名] //删除容器
 
 1.容器使用
-docker //查看所有命令
+docker ps -a//查看所有命令
 docker stats //查看虚拟cpu使用io使用等
 docker top [容器id|容器名] //查看容器内运行情况
 docker pull training/webapp //载入镜像
@@ -37,6 +37,10 @@ docker run -d -p 5000:5000 training/webapp python app.py
 docker port [容器id|容器名称] // 查看端口映射情况
 docker inspect [容器id|容器名] 
 //查看docker底层信息，返回一个json记录着docker容器配置和状态
+docker attach [容器id|容器名称] // 进入一个正在运行的容器
+docker inspect -f '{{.ID}}' [容器id|容器名称]
+docker ps [local path] [上一命令的结果]:[container path]
+//从本地拷贝文件到容器
 
 2.使用镜像
 运行容器时，如果本地不存在，则从仓库中下载，默认从Docker Hub下载
