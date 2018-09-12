@@ -20,3 +20,5 @@ SQL标准中的四个隔离级别
 Read-uncommited Read-commited Repeatable-read serializable
 问题：脏读、非重复读 幻读（查询了未提交插入的表数据）
 mysql默认repeatable-read，其他大多read-commited
+
+
