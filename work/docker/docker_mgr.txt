@@ -41,6 +41,7 @@ docker attach [容器id|容器名称] // 进入一个正在运行的容器
 docker inspect -f '{{.ID}}' [容器id|容器名称]
 docker ps [local path] [上一命令的结果]:[container path]
 //从本地拷贝文件到容器
+docker cp src dest
 
 2.使用镜像
 运行容器时，如果本地不存在，则从仓库中下载，默认从Docker Hub下载
