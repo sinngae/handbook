@@ -1,15 +1,15 @@
 CC = gcc -g
 
 INC_DIR = -I. \
-	  -I/opt/local/libubox/include \
-	  -I/opt/local/ubus/include #\
-	  #-I/opt/local/ubus_app/include \
-	  #-I/opt/local/config/include
+	  -I/opt/local_bk/libubox/include \
+	  -I/opt/local_bk/ubus/include #\
+	  #-I/opt/local_bk/ubus_app/include \
+	  #-I/opt/local_bk/config/include
 
-LIB_DIR = -L/opt/local/libubox/lib/ -lblobmsg_json -lubox -ljson_script \
-	  -L/opt/local/ubus/lib/ -lubus #\
-	  #-L/opt/local/ubus_app/lib/ -lubus_app \
-	  -L/opt/local/config/lib/ -lconfig \
+LIB_DIR = -L/opt/local_bk/libubox/lib/ -lblobmsg_json -lubox -ljson_script \
+	  -L/opt/local_bk/ubus/lib/ -lubus #\
+	  #-L/opt/local_bk/ubus_app/lib/ -lubus_app \
+	  -L/opt/local_bk/config/lib/ -lconfig \
 	  -ljson-c -lzlog -lpthread -lsqlite3 -lcurl -lblkid -lm
 
 CUR_SOURCE = ${wildcard *.c}

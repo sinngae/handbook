@@ -13,10 +13,15 @@ static int test_notify(struct ubus_context *ctx, struct ubus_object *obj,
 			      struct ubus_request_data *req,
 			      const char *method, struct blob_attr *msg)
 {
-	printf("notify handler...\n");
+	//printf("notify handler...\n");
+	char *str;
+	if (! msg)
+		return 0;
+	str = blobmsg_format_json(msg, true);
+	printf("{ \"%s\": %s }\n", method, str);
 	counter++;
-	if (counter > 3)
-		ubus_unsubscribe(ctx, &test_event, obj_id); /* 取消订阅 */
+	//if (counter > 3)
+	//	ubus_unsubscribe(ctx, &test_event, obj_id); /* 取消订阅 */
 	return 0;
 }
  

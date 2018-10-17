@@ -44,7 +44,15 @@ static void notifier_main(void)
 	while (1) {
 		sleep(2);
 		/* step2: 广播notification消息。 */
-		ubus_notify(ctx,  &test_object, "say Hi!", NULL, -1);
+		static struct blob_buf b;
+		blob_buf_init(&b, 0);
+		 
+		/* 需要传递的参数 */
+		blobmsg_add_u32(&b, "major", 3);
+		blobmsg_add_u32(&b, "minor", 56);
+		blobmsg_add_string(&b, "name", "mmc01");
+
+		ubus_notify(ctx,  &test_object, "test", b.head, -1);
 	}
 }
  
