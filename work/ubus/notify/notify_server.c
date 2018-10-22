@@ -48,9 +48,9 @@ static void notifier_main(void)
 		blob_buf_init(&b, 0);
 		 
 		/* 需要传递的参数 */
-		blobmsg_add_u32(&b, "major", 3);
-		blobmsg_add_u32(&b, "minor", 56);
-		blobmsg_add_string(&b, "name", "mmc01");
+		blobmsg_add_string(&b, "path", "/media/sda/a.out");
+		blobmsg_add_string(&b, "cid", "asdfasdfasdf");
+		blobmsg_add_string(&b, "gcid", "asdfq4tiuqseyri");
 
 		ubus_notify(ctx,  &test_object, "test", b.head, -1);
 	}

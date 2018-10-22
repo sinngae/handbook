@@ -8,17 +8,39 @@ static struct ubus_context *ctx;
 static int counter = 0;
 static uint32_t obj_id;
 static struct ubus_subscriber test_event;
- 
+
+typedef enum tagEN_PRTN_ATTR{
+	PRTN_PATH,
+	PRTN_CID,
+	PRTN_GCID, 
+}EN_PRTN_ATTR;
+static const struct blobmsg_policy blobmsg_policy_etmfiledown_attr[] = {
+	[PRTN_PATH] = { .name = "path", .type = BLOBMSG_TYPE_STRING },
+	[PRTN_CID] = { .name = "cid", .type = BLOBMSG_TYPE_STRING },
+	[PRTN_GCID] = { .name = "gcid", .type = BLOBMSG_TYPE_STRING },
+};
+
+
 static int test_notify(struct ubus_context *ctx, struct ubus_object *obj,
 			      struct ubus_request_data *req,
 			      const char *method, struct blob_attr *msg)
 {
 	//printf("notify handler...\n");
 	char *str;
+	struct blob_attr *prtn_attr[ARRAY_SIZE(blobmsg_policy_etmfiledown_attr)] = {0};
+	int iRet;
 	if (! msg)
 		return 0;
-	str = blobmsg_format_json(msg, true);
-	printf("{ \"%s\": %s }\n", method, str);
+	//str = blobmsg_format_json(msg, true);
+	//printf("{ \"%s\": %s }\n", method, str);
+        iRet = blobmsg_parse(blobmsg_policy_etmfiledown_attr, 
+			ARRAY_SIZE(blobmsg_policy_etmfiledown_attr), 
+			prtn_attr, 
+			blobmsg_data(msg),
+			blobmsg_data_len(msg));
+	printf("%s, %s, %s, %s\n", method, blobmsg_get_string(prtn_attr[PRTN_PATH]), 
+			blobmsg_get_string(prtn_attr[PRTN_CID]),
+			blobmsg_get_string(prtn_attr[PRTN_GCID]));
 	counter++;
 	//if (counter > 3)
 	//	ubus_unsubscribe(ctx, &test_event, obj_id); /* 取消订阅 */
