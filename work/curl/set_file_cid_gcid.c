@@ -1,6 +1,6 @@
 #include <curl/curl.h>
 #include <string.h>
-
+/*
 struct curl_http_args_st
 {
     int data_len; // 文件数据保存在内存中的长度
@@ -81,12 +81,20 @@ int set_file_cid_gcid(const char *pathname, const char *cid, const char *gcid)
 
     return ret;
 }
+*/
 
 int main()
 {
     curl_global_init(CURL_GLOBAL_ALL);
 
-    set_file_cid_gcid("/media/sda1/xxx.mp4", "adfadsfasdfewwrqweref", "dafqwereqwerwe");
+    //set_file_cid_gcid("/media/sda1/xxx.mp4", "adfadsfasdfewwrqweref", "dafqwereqwerwe");
+
+    CURL *curl = curl_easy_init();
+    if (!curl) exit(-1);
+
+    char data[] = "! #$%&'()+,-.;=@[]^_`{}~";
+    char *data_encode = curl_easy_escape(curl, data, strlen(data));
+    printf(data_encode);
 
     return 0;
 }
