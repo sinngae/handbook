@@ -42,6 +42,15 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 0
 
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处
 
+" taglist 
+"Plugin 'taglist.vim'
+set rtp+=~/.vim/bundle/taglist.vim
+map <F3> :TlistToggle<CR>
+let Tlist_Use_Right_Window=1
+let Tlist_Show_One_File=1
+let Tlist_Exit_OnlyWindow=1
+let Tlist_WinWidt=25
+
 "插件管理器vim bundle
 set rtp+=~/.vim/bundle/Vundle.vim
 "vundle 初始化
@@ -52,6 +61,42 @@ Plugin 'VundleVim/Vundle.vim'
 "其他插件
 "Plugin '用户名/插件仓库名'
 "Plugin 'Valloric/YouCompleteMe'
+
+Plugin 'nerdtree'
+map <F2> :NERDTreeToggle<CR>
+let NERDTreeWinSize=25
+
+Plugin 'vim-airline/vim-airline'
+"优化界面
+"let g:airline#extensions#tabline#enabled=1
+"显示颜色
+set t_Co=256
+set laststatus=2
+"powerline字体
+let g:airline_powerline_fonts=1
+"tabline 
+let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#left_sep=' '
+let g:airline#extensions#tabline#left_alt_sep=' '
+let g:airline#extensions#tabline#buffer_nr_show=1
+"映射切换buff的键位
+nnoremap [b :bp<CR>
+nnoremap ]b :bn<CR>
+"映射<leader>num到num buffer 
+map <leader>1 :b 1<CR>
+map <leader>2 :b 2<CR>
+map <leader>3 :b 3<CR>
+map <leader>4 :b 4<CR>
+map <leader>5 :b 5<CR>
+map <leader>6 :b 6<CR>
+map <leader>7 :b 7<CR>
+map <leader>8 :b 8<CR>
+map <leader>9 :b 9<CR>
+
+Plugin 'vim-airline/vim-airline-themes'
+let g:airline_theme='bubblegum'
+
+Plugin 'Raimondi/delimitMate'
 
 "插件结束
 call vundle#end()
@@ -115,3 +160,34 @@ set smartindent
 set cinoptions={0,1s,t0,n-2,p2s,(03s,=.5s,>1s,=1s,:1s
 "行和段处使用制表符
 "set smarttab
+
+
+" 新建头文件
+autocmd BufNewFile *.h,*.hpp,*.sh exec ":call SetTitle()"
+" 自定义函数
+func SetTitle()
+	if &filetype == 'sh'
+		call setline(1, "#########################################")
+		call append(line("."), "# File Name: ".expand("%"))
+		call append(line(".")+1, "# Author: Philo")
+		call append(line(".")+2, "# mail: ")
+		call append(line(".")+3, "# Created Time: ".strftime("%c"))
+		call append(line(".")+4, "########################################")
+		call append(line(".")+5, "#!/bin/bash")
+		call append(line(".")+6, "")
+	else 
+		call setline(1, "/************************************************")
+		call append(line("."), "  > File Name: ".expand("%"))
+		call append(line(".")+1, "  > Author: Philo")
+		call append(line(".")+2, "  > Mail: ")
+		call append(line(".")+3, "  > Created Time: ".strftime("%c"))
+		call append(line(".")+4, "******************************************/")
+		call append(line(".")+5, "")
+	endif 
+	autocmd BufNewFile * normal G
+endfunc
+
+"encoding 
+set encoding=utf8
+set fileencodings=ucs-bom,utf-8,cp936,gb2312
+set termencoding=utf8
