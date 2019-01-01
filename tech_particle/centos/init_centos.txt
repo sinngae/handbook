@@ -4,6 +4,10 @@
 /usr/local/用于安装git库软体等
 /usr/local/src 用于存放源码
 
+## 时区修改为上海时间
+mv /etc/localtime /etc/localtime.bk
+ln -s /usr/share/zoneinfo/Asia/Hong_Kong /etc/localtime
+
 ## 编译python
 wget https://www.python.org/ftp/python/3.7.1/Python-3.7.1.tgz
 yum groupinstall "Development Tools"
