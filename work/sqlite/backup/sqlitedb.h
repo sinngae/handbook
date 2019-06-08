@@ -6,10 +6,12 @@
 ******************************************/
 #include <sqlite3.h>
 
-sqlite3* open_db(const char *filename);
+typedef struct st_sqlitedb sqlitedb;
 
-void default_backup_cb(int remaining, int pagecount);
+sqlitedb *sqlitedb_alloc(const char *filename);
 
-int backup_db(sqlite3 *pdb, const char *filename, void (*backup_db)(int, int));
+int sqlitedb_free(sqlitedb *db);
+
+int backup_db(sqlitedb *db, const char *filename, void (*backup_db)(int, int));
 
 int print_test();
