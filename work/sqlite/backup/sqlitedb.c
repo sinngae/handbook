@@ -2,31 +2,45 @@
 
 #include "sqlitedb.h"
 
-sqlite3 *open_db(const char *filename)
+struct st_sqlitedb
 {
-    int rc;
+    sqlite3 *entity;
+    sqlite3 *entity_bk;
+};
 
-    sqlite3 *p_file = NULL;
-    rc = sqlite3_open(filename, &p_file);
-    if (rc != SQLITE_OK)
+sqlitedb *sqlitedb_alloc(const char *filename)
+{
+    sqlitedb *db = malloc(sizeof(sqlitedb));
+    assert(db);
+    memset(db, 0x00, sizeof(sqlitedb));
+
+    int retcode;
+    if ((retcode = sqlite3_open(filename, &(db->entity))) != SQLITE_OK)
     {
-        printf("open %s failed: %s\n", filename);
+        printf("open %s failed: %d\n", filename, retcode);
+        free(db);
+        return NULL;
     }
 
-    return p_file;
+    return db;
 }
 
-void default_backup_cb(int remaining, int pagecount)
+int destroy_db(sqlitedb *db)
+{
+    if (db->)
+}
+
+static void default_backup_cb(int remaining, int pagecount)
 {
     printf("backuping [remaining:%d, pagecount:%d]\n", remaining, pagecount);
 }
 
-int backup_db(sqlite3 *pdb, const char *filename, void (*backup_cb)(int, int))
+int backup_db(sqlitedb *db, const char *filename, void (*backup_cb)(int, int))
 {
-    int rc;
-    sqlite3 *p_file = NULL;
-    rc = sqlite3_open(filename, &p_file);
-    if (rc != SQLITE_OK)
+    int retcode = 0;
+
+    retcode = sqlite3_open(filename, &(db->entity_bk));
+    if (retcode != SQLITE_OK)
     {
         printf("open %s failed: %s\n", filename);
         goto __end;
