@@ -1,0 +1,26 @@
+libevent 库实际上没有更换 select()、poll()或其他机制的基础。而是使用对于每个平台最高效的高性能解决方案在实现外加上一个包装器。
+
+为了实际处理每个请求，libevent库提供一种事件机制，它作为底层网络后端的包装器。事件系统让为连接添加处理函数变得非常简便，同时降低了底层I/O 复杂性。这是 libevent 系统的核心。
+
+libevent库的其他组件提供其他功能，包括缓冲的事件系统（用于缓冲发送到客户端/从客户端接收的数据）以及HTTP、DNS 和 RPC 系统的核心实现。
+
+创建 libevent服务器的基本方法是，注册当发生某一操作（比如接受来自客户端的连接）时应该执行的函数，然后调用主事件循环event_dispatch()。执行过程的控制现在由 libevent系统处理。注册事件和将调用的函数之后，事件系统开始自治；在应用程序运行时，可以在事件队列中添加（注册）或删除（取消注册）事件。事件注册非常方便，可以通过它添加新事件以处理新打开的连接，从而构建灵活的网络处理系统。
+
+int main(int argc, char **argv)
+{
+	...
+	ev_init();
+	
+	/* Setup listening socket */
+	
+	event_set(&ev_accept, listen_fd, EV_READ|EV_PERSIST,
+	on_accept, NULL);
+	event_add(&ev_accept, NULL);
+	
+	/* Start the event loop. */
+	event_dispatch();
+}
+
+event_set() 函数创建新的事件结构，
+event_add() 在事件队列机制中添加事件。
+event_dispatch() 启动事件队列系统，开始监听（并接受）请求
