@@ -32,3 +32,8 @@ python3 install.py --clang-completer
 sysctl -w kernel.core_pattern=/tmp/core-%e-%p
 sysctl -a|grep kernel.core
 
+
+## 安装第三方源
+yum install epel-release
+## 安装资源监控工具
+yum install iotop iftop
