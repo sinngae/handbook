@@ -191,3 +191,6 @@ endfunc
 set encoding=utf8
 set fileencodings=ucs-bom,utf-8,cp936,gb2312
 set termencoding=utf8
+
+nmap <F6> a<C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR><Esc>
+imap <F6> <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
