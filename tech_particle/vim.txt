@@ -28,10 +28,14 @@ install libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev
 
 
 
-格式化全局代码
+## 格式化全局代码
 ggvG
 =
 gg回到首行
 v进入visual模式
 G全选
 =缩进
+
+## 执行shell
+:![command]
+:r![command] 输入到当前编辑
