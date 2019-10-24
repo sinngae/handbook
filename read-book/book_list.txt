@@ -1,6 +1,0 @@
-agile_software_development
-code_complete
-computer_programming_art
-cpp_primer
-design_patterns
-effective_cpp
