@@ -15,24 +15,24 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "io.grpc.hiwork";
-option java_outer_classname = "hiwork";
-option objc_class_prefix = "FMD";
+option java_package = "io.grpc.examples.hiwork";
+option java_outer_classname = "HiworkProto";
+option objc_class_prefix = "HW";
 
 package hiwork;
 
-// The Hiwork service definition.
+// The greeting service definition.
 service Hiwork {
-  // test
-  rpc Test (TestRequest) returns (TestReply) {}
-  // generate thumbnail 
+  // Sends a greeting
+  rpc SayWork (HiworkRequest) returns (HiworkReply) {}
 }
 
-message TestRequest {
-	string testmsg = 1;
+// The request message containing the user's name.
+message HiworkRequest {
+  string name = 1;
 }
 
-message TestReply {
-	int32 retcode = 1;
-	string retmsg = 2;
+// The response message containing the greetings
+message HiworkReply {
+  string message = 1;
 }
