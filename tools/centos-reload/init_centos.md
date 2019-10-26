@@ -18,7 +18,7 @@
 `wget https://www.python.org/ftp/python/3.7.1/Python-3.7.1.tgz`<br>
 `yum groupinstall "Development Tools"`<br>
 `yum -y install zlib-devel  libpcap-devel xz-devel wget openssl-devel bzip2-devel expat-devel ncurses-devel gdbm-devel readline-devel sqlite-devel tk-devel libffi libffi-devel e2fsprogs-devel libuuid-devel tcl`<br>
-  ./configure --prefix=/usr/local --enable-optimizations --with-ssl-default-suites=openssl --enable-shared --with-openssl=/usr --with-cxx-main=g++<br>
+<del>./configure --prefix=/usr/local --enable-optimizations --with-ssl-default-suites=openssl --enable-shared --with-openssl=/usr --with-cxx-main=g++</del><br>
 `./configure --prefix=/usr/local --with-ssl-default-suites=openssl --enable-shared --with-openssl=/usr`<br>
 
 
