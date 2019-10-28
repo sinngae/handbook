@@ -14,6 +14,9 @@
 `yum clean all`<br>
 `yum makecache`<br>
 
+## 安装第三方源
+`yum install epel-release`<br>
+
 ## 编译python
 `wget https://www.python.org/ftp/python/3.7.1/Python-3.7.1.tgz`<br>
 `yum groupinstall "Development Tools"`<br>
@@ -21,31 +24,35 @@
 <del>./configure --prefix=/usr/local --enable-optimizations --with-ssl-default-suites=openssl --enable-shared --with-openssl=/usr --with-cxx-main=g++</del><br>
 `./configure --prefix=/usr/local --with-ssl-default-suites=openssl --enable-shared --with-openssl=/usr`<br>
 
-
-## 编译vim
+## 安装Vim
+### 编译vim
+最新的版本的vim需要依赖最新的python3
 `git clone https://github.com/vim/vim.git`<br>
 `./configure --enable-multibyte --enable-python3interp=yes --with-python-command=/usr/bin/python --with-python-config-dir=/usr/lib64/python2.7/config  --with-python3-command=/usr/local/bin/python3  --with-python3-config-dir=/usr/local/lib/python3.7/config-3.7m-x86_64-linux-gnu --prefix=/usr/local`<br>
 
-## 编译YouCompleteMe
+### 编译YouCompleteMe
 `git clone https://github.com/VundleVim/Vundle.vim.git`<br>
 `git clone https://github.com/Valloric/YouCompleteMe.git`<br>
 `install libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev python3-dev ruby-dev lua5.1 liblua5.1-dev libperl-dev git`<br>
 `git submodule update --init --recursive`<br>
 `python3 install.py --clang-completer`<br>
 
-## clang llvm
+### clang llvm
 
 ## core pattern
 `sysctl -w kernel.core_pattern=/tmp/core-%e-%p`<br>
 `sysctl -a|grep kernel.core`<br>
 
-
-## 安装第三方源
-`yum install epel-release`<br>
 ## 安装资源监控工具
+### iotop iftop
 `yum install iotop iftop`<br>
+### network
+`yum install -y bind-utils`<br>
+### performance
+`yum install -y sysstat`<br>
 
-## 安装cppcheck
+
+## 安装Clang检测工具cppcheck
 `wget https://github.com/danmar/cppcheck/archive/1.87.tar.gz`<br>
 `tar zxf 1.87.tar.gz && cd 1.87`<br>
 `mkdir /root/cppcheck_cfg`<br>
@@ -54,3 +61,10 @@
 `make install CFGDIR=/root/cppcheck_cfg`<br>
 使用示例<br>
 `cppcheck [file|dir] --enable=warning > a.out 2>&1`<br>
+`cppcheck [file|dir] --enable=all> a.out 2>&1`<br>
+
+## 安装代码统计工具cloc
+下载：git clone https://github.com/AlDanial/cloc.git<br>
+加入环境变量path：export PATH=$PATH:/...<br>
+使用示例：<br>
+cloc [filename|dirpath]<br>

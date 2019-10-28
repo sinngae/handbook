@@ -1,9 +1,3 @@
-## network
-`yum install -y bind-utils`<br>
-
-## performance
-`yum install -y sysstat`<br>
-
 ## install nginx
 `wget http://nginx.org/download/nginx-1.15.7.tar.gz`<br>
 `tar zxf nginx-1.15.7.tar.gz`<br>
