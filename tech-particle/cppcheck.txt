@@ -1,8 +1,0 @@
-wget https://github.com/danmar/cppcheck/archive/1.87.tar.gz
-
-mkdir /root/cppcheck_cfg
-cp -r cfg/* /root/cppcheck_cfg/
-make SRCDIR=build CFGDIR=/root/cppcheck_cfg HAVE_RULES=yes
-make install CFGDIR=/root/cppcheck_cfg
-
-cppcheck [file|dir] --enable=warning > a.out 2>&1

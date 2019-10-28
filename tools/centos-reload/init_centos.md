@@ -41,6 +41,16 @@
 
 
 ## 安装第三方源
-`yum install epel-release`
+`yum install epel-release`<br>
 ## 安装资源监控工具
-`yum install iotop iftop`
+`yum install iotop iftop`<br>
+
+## 安装cppcheck
+`wget https://github.com/danmar/cppcheck/archive/1.87.tar.gz`<br>
+`tar zxf 1.87.tar.gz && cd 1.87`<br>
+`mkdir /root/cppcheck_cfg`<br>
+`cp -r cfg/* /root/cppcheck_cfg/`<br>
+`make SRCDIR=build CFGDIR=/root/cppcheck_cfg HAVE_RULES=yes`<br>
+`make install CFGDIR=/root/cppcheck_cfg`<br>
+使用示例<br>
+`cppcheck [file|dir] --enable=warning > a.out 2>&1`<br>
