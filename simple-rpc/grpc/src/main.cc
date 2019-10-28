@@ -5,9 +5,8 @@
 
 using grpc::ServerBuilder;
 
-const char *default_config_file = "app_log.conf";
-const char *default_config_category = "hiwork";
-const char MODULE_NAME[] = "hiwork";
+const char *default_config_file = "mygrpc.conf";
+const char *default_config_category = "mygrpc";
 
 void RunServer() {
     LOG_PRINT(EN_LOG_WARN, "HIWORK start ...");
