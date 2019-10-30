@@ -10,6 +10,6 @@ cat /etc/samba/smb.conf.exmaple<br>
 firewall-cmd --permanent --add-service=smb<br>
 systemctl restart firewalld.service<br>
 
-##开机启动
+## 开机启动
 systemctl enable smb.service<br>
 systemctl enable nmb.service<br>

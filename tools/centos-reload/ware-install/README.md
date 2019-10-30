@@ -1,3 +1,7 @@
+# 概述
+此文件夹用于记录重装CentOS后安装一些软件或组件。包括开发工具、第三方库、编程语言等等。
+其中，大部分都是可以迁移到docker镜像中的，但为了更敏捷地开发，还是在本地也安装一下。
+
 ## install nginx
 `wget http://nginx.org/download/nginx-1.15.7.tar.gz`<br>
 `tar zxf nginx-1.15.7.tar.gz`<br>

@@ -12,6 +12,9 @@ $yum install vim
 编辑~/.vimrc添加插件项<br>
 命令模式执行:PluginInstall<br>
 
+### Installing YouCompleteMe
+附见:ycm_extra_conf.py
+
 ### Installing Ctags
 http://ctags.sourceforge.net/
 最简单的方式是下载Source RPM 格式，直接单击就可以安装。
