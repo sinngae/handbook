@@ -10,17 +10,17 @@
 # 目录及文件说明
 ## read-book
 读书笔记
+
 ## simple-rpc
 实现一些简单的RPC框架模型
+
 ## tech-particle
 总结一些技术上难点<br>
-部分会更新到个人网站，欢迎访问:www.sinngae.com
+部分会更新到个人网站，欢迎访问:www.sinngae.com<br>
+一些测试操作系统、第三方库、各种编程语言等等的小程序<br>
 
 ## tools
 常用工具、自己开发的脚本等
-## work
-一些测试操作系统、第三方库、各种编程语言等等的小程序
-
 
 # 总结
 如果想学习线程，可以从pthread api实践入手<br>
