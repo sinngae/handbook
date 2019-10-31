@@ -13,9 +13,9 @@
 ## simple-rpc
 实现一些简单的RPC框架模型
 ## tech-particle
-总结一些技术上难点
+总结一些技术上难点<br>
+部分会更新到个人网站，欢迎访问:www.sinngae.com
 
-不会再更新，逐渐迁移到个人网站，欢迎访问:www.sinngae.com
 ## tools
 常用工具、自己开发的脚本等
 ## work
