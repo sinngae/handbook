@@ -1,10 +1,18 @@
-Unix Domain Socket
-Unix Domain Socket 以下简称uds
+# Unix Domain Socket
+以下简称uds
+
 uds，也称IPC socket，进程间套接字
+
 是一种终端，可使同一操作系统上的两个或多个进程进行数据通信。
+
 与管道相比，uds即可使用字节流和数据队列，管道只能使用字节流。
+
 uds和Internet Socket很像，但不使用底层网络通讯。
+
 uds的功能是POSIX操作系统的一种组件。
+
 uds使用系统文件的地址作为自己的身份，它可以被系统进程引用。
+
 所有连个进程可以同时打开一个uds来通信。
+
 这种通信方式发生在内核里，不会在网络里传播。
