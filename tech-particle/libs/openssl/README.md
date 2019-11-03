@@ -1,3 +1,10 @@
+# 概述
+OpenSSL是一个安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其他目的。
+
+OpenSSL曾曝出漏洞，黑客可发起Heartbleed攻击，以抓取用户电脑上的内存数据。
+
+1、在本地机器建立CA服务器，生成密钥：
+
 openssl enc -des3 -in test.txt -e -out test.des3 //使用des3加密test.txt输出到test.des3 <br>
 openssl enc -des3 -in test.des3 -d -out test.txt		//使用des3解密test.des3输出到test.txt<br>
 
@@ -21,5 +28,3 @@ openssl ca -in my.csr -out my.crt -days 3656		//对证书请求my.csr生成证�
 
 x509 -in cacert.pem -text -noout		//查看证书pem格式证书的信息<br>
 openssl x509 -in certificate.der -inform der -text -noout		//同上查看DER格式证书<br>
-
-

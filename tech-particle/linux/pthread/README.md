@@ -1,3 +1,4 @@
+"""
 #include <pthread.h>  
 int pthread_rwlock_init(pthread_rwlock_t *rwlock, const pthread_rwlockattr_t *attr); 成功返回0，其它返回值表示出错  
 int pthread_rwlock_rdlock(pthread_rwlock_t *rwlock ); 成功返回0，其它返回值表示出错  
@@ -15,3 +16,4 @@ int pthread_rwlockattr_init(pthread_rwlockattr_t *attr); 成功返回0，其它�
 int pthread_rwlockattr_destroy(pthread_rwlockattr_t *attr); 成功返回0，其它返回值表示出错  
 int pthread_rwlockattr_setpshared(pthread_rwlockattr_t *attr, int pshared); 成功返回0，其它返回值表示出错  
 int pthread_rwlockattr_getpshared(const pthread_rwlockattr_t *attr, int *pshared); 成功返回0，其它返回值表示出错 
+"""
