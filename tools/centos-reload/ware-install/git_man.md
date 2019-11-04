@@ -21,6 +21,10 @@ cp -r git-repo /root/
 + feature分支
 + bugfix分支
 
+## 本地仓库配置
+git config user.name "Aren"
+git config user.email "zqren@foxmail.com"
+
 ## 查看Git仓库地址
 git remote -v
 
@@ -105,3 +109,9 @@ git remote update
 git checkout upstream/feature/fix-xx-xx -b feature/fix-xx-xx
 git push origin feature/fix-xx-xx
 ```
+3.push --mirror
+git push --mirror git @gitlab.sinngae.cn:s_projectx/demo.git
+cd ..
+rm -rf demo
+git clone xxx
+
