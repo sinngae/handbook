@@ -81,7 +81,13 @@ git branch --set-upstream-to origin/develop feature/demo
 git blame -L 160,+10 sha1_file.c 
 
 
-## 撤销commit
+## 撤销
++ 撤销未commit的add：
+```
+git reset HEAD .
+git reset HEAD -filename
+```
++ 撤销未push的commit
 
 ## svn cleanup =
 ```

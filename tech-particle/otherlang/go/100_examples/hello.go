@@ -1,3 +1,4 @@
+// test hello
 package main
 
 import "fmt"
