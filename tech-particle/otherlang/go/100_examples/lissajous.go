@@ -11,11 +11,12 @@ import (
 	"os"
 )
 
-var palette = []color.Color{color.White, color.Black}
+var palette = []color.Color{color.White, color.Black, color.RGBA{30, 144, 255, 0xff}}
 
 const (
 	whiteIndex = 0 // first color in palette
 	blackIndex = 1 // next color in palette
+	greenIndex = 2
 )
 
 func main() {
@@ -29,7 +30,7 @@ func lissajous(out io.Writer) {
 		nframes = 64    // number of animation frames
 		delay   = 8     // delay between frames in 10ms units
 	)
-	freq := rand.Float64() * 3.0 // relative frequency of y oscillator
+	freq := rand.Float64() * 3.0 // relative frequency of y oscillator y振荡器频率
 	anim := gif.GIF{LoopCount: nframes}
 	phase := 0.0 // phase difference
 	for i := 0; i < nframes; i++ {
@@ -38,8 +39,7 @@ func lissajous(out io.Writer) {
 		for t := 0.0; t < cycles*2*math.Pi; t += res {
 			x := math.Sin(t)
 			y := math.Sin(t*freq + phase)
-			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5),
-			blackIndex)
+			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5), greenIndex) // 染色
 		}
 		phase += 0.1
 		anim.Delay = append(anim.Delay, delay)

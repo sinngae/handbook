@@ -68,7 +68,7 @@ func countLines(f *os.File, counts map[string]int) {
 }
 
 func test2() {
-	counts := make(map[sting]int)
+	counts := make(map[string]int)
 	for _, filename := range os.Args[1:] {
 		data, err := ioutil.ReadFile(filename)
 		if err != nil {
