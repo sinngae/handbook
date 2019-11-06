@@ -14,14 +14,14 @@ var count int
 func main() {
 	http.HandleFunc("/", handler)	// each request calls handler 
 	http.HandleFunc("/count", counter)
-	gifhandler := func(w http.ResponseWriter, r *http.Request) {
+	/*gifhandler := func(w http.ResponseWriter, r *http.Request) {
 		lissajous(w)
 	}
 	http.HandleFunc("/gif", gifhandler)
 	/*http.HandleFunc("/gif", func(w http.ResponseWriter, r *http.Request) {
 		lissajous(w)
 	})*/
-	log.Fatal(http.ListenAndServe("localhost:8000", nil))
+	log.Fatal(http.ListenAndServe("0.0.0.0:8000", nil))
 }
 
 // handler echoes the Path component of the request URL 
