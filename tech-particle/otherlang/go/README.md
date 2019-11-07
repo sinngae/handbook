@@ -33,3 +33,6 @@ Imports管理 gopkgs
 方法和类的签名帮助信息godoc
 工作区符号搜索go-symbols
 保存时编译测试go-build gotest
+错误检查errcheck[github.com/kisielk/errcheck]
+显示文件函数结构体等定义gotags[github.com/jstemmer/gotags]，需要结合tagbar
+自动导入包goimports[github.com/bradfitz/goimports]
