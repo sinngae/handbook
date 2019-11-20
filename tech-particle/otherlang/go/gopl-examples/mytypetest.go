@@ -16,4 +16,17 @@ func main() {
 	fmt.Println(val0, val1)
 
 	fmt.Println(val0.PrintFunc())
+
+    var cache = struct {
+        sync.Mutex
+        mapping map[string]string
+    } {
+        mapping: make(map[string]string),
+    }
+
+    // func look up {
+    cache.Lock()
+    v := catche.mapping["adfa"]
+    catche.Unlock()
+    // return v }
 }
