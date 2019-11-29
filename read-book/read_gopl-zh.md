@@ -816,3 +816,30 @@ Go语言是静态类型的语言（类型是编译期间的概念；类型不是
 
 fmt包%T打印接口值的动态类型，使用反射来获取接口动态类型的名称。
 
+### 警告：一个包含nil指针的接口不是nil接口
+包含nil指针的接口变量和nil做!=比较的结果为true。
+遇到不能把nil做有效接受者的具体类型就容易发生问题，如*bytes.Buffer。
+Go语言很多是遵从契约编程，常常隐含nil值非法的先决条件，需要调用者保证不传入nil值。
+
+## 7.6 sort.Interface接口
+## 7.7 http.Handler接口
+## 7.8 error接口
+## 7.9 示例：表达式求值
+## 7.10 类型断言
+## 7.11 基于类型断言识别错误类别
+## 7.12 通过类型断言查询接口
+## 7.13 类型分支
+## 7.14 示例：基于标记的XML解码
+## 7.15 补充几点
+
+# 第八章 Goroutines和Channels
+Go语言中，程序并发使用两种手段实现，goroutine结合channel、多线程共享内存。
+CSP(communicating sequential processes)，顺序通信进程，是一种现代的并发编程模型。
+CSP中，值在不同的运行实例（goroutine）间传递（当然，大多数时候、大多数值在单一实例中）。
+
+## 8.1 Goroutines
+Go语言中，并发执行单元叫做goroutine，相当于线程。
+main函数即在一个单独的goroutine中运行，称为main gorotine，新的goroutine使用go语句创建。
+
+# 第九章 基于共享变量的并发
+
