@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	//"io"
+	"io"
 	"net/http"
 	"os"
 	"strings"
@@ -20,15 +20,17 @@ func main() {
 			fmt.Fprintf(os.Stderr, "fetch:%v\n", err)
 			os.Exit(1)
 		}
-		fmt.Println(resp.Status, resp.StatusCode, resp.Proto)
 
-		//io.Copy(os.Stdout, resp.Body)
-		/*b*/_, err0 := ioutil.ReadAll(resp.Body)
-		resp.Body.Close()
+		fmt.Println(resp.Status, resp.StatusCode, resp.Proto)
+        //fmt.Println(resp)
+
+		io.Copy(os.Stdout, resp.Body)
+		b, err0 := ioutil.ReadAll(resp.Body)
+		defer resp.Body.Close()
 		if err0 != nil {
 			fmt.Fprintf(os.Stderr, "fetch: reading %s: %v\n", url, err0)
 			os.Exit(1)
 		}
-		//fmt.Printf("%100s", b)
+		fmt.Printf("%100s\n", b)
 	}
 }

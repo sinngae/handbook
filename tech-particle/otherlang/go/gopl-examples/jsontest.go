@@ -28,7 +28,7 @@ func main() {
     if err != nil {
         log.Fatalf("json marshaling failed: %s", err)
     }
-    fmt.Printf("%s/n", data)
+    fmt.Printf("%s\n", data)
 
     var movies2 []Movie
     if err := json.Unmarshal(data, &movies2); err != nil {
