@@ -22,6 +22,8 @@ var movies = []Movie{
     {Title: "b movie", Year: 8327},
 }
 
+var batchStr = "[1, 2, 3]"
+
 func main() {
     data, err := json.MarshalIndent(movies, "", "    ")
     //data, err := json.Marshal(movies)
@@ -35,4 +37,10 @@ func main() {
         log.Fatalf("json unmarshal failed:%s", err)
     }
     fmt.Println(movies2)
+
+    var idBatch []int64
+    if err := json.Unmarshal([]byte(batchStr), &idBatch); err != nil {
+        log.Fatalf("json unmarshal failed:%s", err)
+    }
+    fmt.Println(idBatch)
 }
