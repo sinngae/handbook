@@ -11,9 +11,9 @@
     - multiset
     - multimap
 + 配置式容器
- + queue
- + stack
- + priority_queue
+    + queue
+    + stack
+    + priority_queue
 + 无序管理式容器
 
 cpp的std库中的vector list dequeue容器上有sort函数
