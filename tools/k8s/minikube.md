@@ -62,14 +62,13 @@ minikube stop
 ## 使用
 ### 验证
 ```
-// 查看集群状态
+# 查看集群状态
 kubectl cluster-info
-
-// 查看节点信息
+# 查看节点信息
 kubectl get nodes
-
-// 查看deploy状态
+# 查看deploy状态
 kubectl get pods
+
 ```
 ### 发布
 ```
