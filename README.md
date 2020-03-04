@@ -8,19 +8,16 @@
 郑重说明：该仓库中的所有内容，皆不涉及任何公司、团体及他人的机密，如有牵涉，请及时反馈给我。本人邮箱：zqren@foxmail.com，最迟一个月内回复。
 
 # 目录及文件说明
-## read-book
+## [read-book](read-book/README.md)
 读书笔记
-
-## simple-rpc
-实现一些简单的RPC框架模型
 
 ## [tech-particle](tech-particle/README.md)
 总结一些技术上难点<br>
 部分会更新到个人网站，欢迎访问:www.sinngae.com<br>
 一些测试操作系统、第三方库、各种编程语言等等的小程序<br>
 
-## tools
-常用工具、自己开发的脚本等
+## [tools](tools/README.md)
+常用工具、自己开发的工具等
 
 # 总结
 如果想学习线程，可以从pthread api实践入手<br>
