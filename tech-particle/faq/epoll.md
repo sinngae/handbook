@@ -20,7 +20,7 @@ epoll只有活跃的socket才会主动调用callback，效率提升。
 相比select模型，poll使用链表保存文件描述符，因此没有了监视文件数量的限制，但其他三个缺点依然存在。  
 并发量低的情况，socket都比较活跃，select不一定比epoll慢；  
 高并发时，任意时间，只有少数socket是活跃的，epoll效率更高  
-
+### epoll机制简介
 epoll通过在Linux内核中申请一个简易的文件系统(文件系统一般用什么数据结构实现？红黑树和双向链表)，把原先的select/poll调用分成了3个部分：
 + 调用epoll_create()建立一个epoll对象(在epoll文件系统中为这个句柄对象分配资源)
 + 调用epoll_ctl向epoll对象中添加这100万个连接的套接字
