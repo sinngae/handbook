@@ -3,7 +3,8 @@
 netstat -ano|findstr "49157"
 
 ## 配置host
-超级管理员启动文本编辑工具打开C:\Windows\System32\drivers\etc\hosts，添加"127.0.0.1 www.baidu.com"
+超级管理员启动文本编辑工具打开C:\Windows\System32\drivers\etc\hosts  
+添加"127.0.0.1 www.baidu.com"
 
 # 进程
 ## 查看进程信息
