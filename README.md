@@ -12,17 +12,17 @@
 读书笔记
 
 ## [tech-particle](tech-particle/README.md)
-总结一些技术上难点<br>
-部分会更新到个人网站，欢迎访问:www.sinngae.com<br>
-一些测试操作系统、第三方库、各种编程语言等等的小程序<br>
+总结一些技术上难点  
+部分会更新到个人网站，欢迎访问:www.sinngae.com  
+一些测试操作系统、第三方库、各种编程语言等等的小程序  
 
 ## [tools](tools/README.md)
 常用工具、自己开发的工具等
 
-# 总结
-如果想学习线程，可以从pthread api实践入手<br>
-如果想学习网络访问，可以从curl、nginx等源码入手<br>
-如果想学习数据信息存储，需要学的就多了，经典数据库推荐mysql、postgresql，nosql redis，hdfs等等<br>
-如果想学习算法？<br>
-如果想学习?<br>
+# 一点思考
+如果想学习线程，可以从pthread api实践入手  
+如果想学习网络访问，可以从curl、nginx等源码入手  
+如果想学习数据信息存储，需要学的就多了，经典数据库推荐mysql、postgresql，nosql redis，hdfs等等  
+如果想学习算法？  
+如果想学习?  
 ... ...
