@@ -31,7 +31,7 @@
 + SIGPR
 + SIGSYS - 非法的系统调用
 
-# 信号分类
+## 信号分类
 + 程序不可捕获、阻塞、或忽略的信号有:SIGKILL、SIGSTOP
 + 不能恢复至默认动作的信号有：SIGKILL、SIGTRAP
 + 默认会导致进程流产的信号有：SIGABRT，SIGBUS、SIGFPE、SIGILL、SIGIOT、SIGQUIT、SIGSEGV、SIGTRAP、SIGXCPU、SIGXFSZ

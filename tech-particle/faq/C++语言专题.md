@@ -24,6 +24,10 @@ vector封装数组，list封装了链表
 C++ STL中标准关联容器set, multiset, map, multimap内部采用的就是一种非常高效的平衡检索二叉树：红黑树，也成为RB树(Red-Black Tree)。RB树的统计性能要好于一般的平衡二叉树(有些书籍根据作者姓名，Adelson-Velskii和Landis，将其称为AVL-树)，所以被STL选择作为了关联容器的内部结构。
 
 ### C++迭代器失效问题
+vector/deque（序列式容器）插入和删除，导致（当前及其后的）迭代器失效（数组结构导致）   
+list插入，导致迭代器失效（当前迭代器失效）  
+对于关联容器(如map, set,multimap,multiset)，删除当前的iterator，仅仅会使当前的iterator失效，只要在erase时，递增当前iterator即可。这是因为map之类的容器，使用了红黑树来实现，插入、删除一个结点不会对其他结点造成影响。erase迭代器只是被删元素的迭代器失效，但是返回值为void，所以要采用erase(iter++)的方式删除迭代器。
+
 
 ### 2GB的数据可以存放到一个map结构中么
 抛离具体硬件和操作系统，这个问题没啥意义，32位勉强，64位就看具体内存了。  
