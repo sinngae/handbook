@@ -1,4 +1,5 @@
 # epoll
+
 ## 历史
 select()追溯到4.2BSD  
 poll system从Linux 2.1.23开始支持  
@@ -15,7 +16,7 @@ epoll通过内核与用户控件mmap同一块内存实现，省去不必要的�
 select需要复制大量的句柄数据结构，产生巨大的开销；
 + 4.select的触发方式是水平触发  
 应用程序如果没有完成对一个已经就绪的文件描述符进行IO操作，那么之后每次select调用还是会将这些文件描述符通知进程。  
-epoll只有活跃的socket才会主动调用callback，效率提升。
+epoll只有活跃的socket才会主动调用callback，效率提升。epool的ET边缘触发模式，只触发一次。
 
 相比select模型，poll使用链表保存文件描述符，因此没有了监视文件数量的限制，但其他三个缺点依然存在。  
 并发量低的情况，socket都比较活跃，select不一定比epoll慢；  
