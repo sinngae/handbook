@@ -80,3 +80,14 @@ docker build -t
 
 ### nginx
 docker pull nginx:latest
+
+
+### redis 
+docker pull redis
+
+redis 实例  
+docker run --name some-redis -d redis
+
+redis 持久化 实例  
+docker run --name some-redis -d redis redis-server --appendonly yes
+
