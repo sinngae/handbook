@@ -125,5 +125,6 @@ fclose会先把缓冲区的内容flush到磁盘，再关闭。close直接关闭�
 C语言的malloc/realloc/calloc失败没有系统提供回调函数处理（相比C++的new失败了有set_new_handler），需要程序员自己封装malloc等函数来实现
 
 ## OOM killer
+Out Of Memery  
 linux上因为有OOM等，一般程序是不用检查malloc是否返回NULL。而一定要保证稳定性，持续存在的程序，必须要判断malloc返回值
 
