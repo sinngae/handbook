@@ -13,4 +13,5 @@ tasklist|findstr "2720"
 ## 杀掉进程
 tastkill /f /t /im 360safe.exe
 
-
+## md5sum
+certutil -hashfile yourfilename.ext MD5
