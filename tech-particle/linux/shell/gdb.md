@@ -1,14 +1,17 @@
 # gdb命令
-```
+```shell
 set args
 
-gdb默认反汇编为att格式指令
-show disassembly-flavor // 查看反汇编指令格式
-set disassembly-flavor intel // 设置为intel
+## gdb默认反汇编为att格式指令
 
-disas/disass/disassemble [函数名|起始地址[,结束地址]]// 将内存中机器码程序以指令助记符形式显示出来
-
-info line [函数名|*内存地址] // 查看某个line的相关信息
+## 查看反汇编指令格式
+show disassembly-flavor
+## 设置为intel
+set disassembly-flavor intel
+## 将内存中机器码程序以指令助记符形式显示出来
+disas/disass/disassemble [函数名|起始地址[,结束地址]]
+## 查看某个line的相关信息
+info line [函数名|*内存地址]
 
 ni // 单步步过
 si // 单步步入
@@ -39,6 +42,9 @@ x /nfu // 查看内存单元
 
 p [变量名]  // 查看变量值
 p &[变量名] // 查看变量地址
+
+## 查看所有线程堆栈信息
+thread apply all bt
 ```
 
 有一组专用的gdb变量可以用来检查和修改计算机的通用寄存器，gdb提供了目前每一台计算机中实际使用的4个寄存器的标准名字：
