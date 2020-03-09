@@ -14,15 +14,14 @@ cp -r git-repo /root/
 放到环境变量PATH中
 
 ## 分支说明
-+ develop分支为了快速开发 
++ develop分支为了快速开发  
 只要是单元测试、联调测试通过的就可以合入develop分支
-+ feature分支
 + master分支
 + feature分支
 + bugfix分支
 
 ## 本地仓库配置
-git config user.name "Aren"
+git config user.name "zqren"
 git config user.email "zqren@foxmail.com"
 
 ## 查看Git仓库地址
@@ -67,15 +66,18 @@ git checkout -- filepath
 + 拉取远程仓库的指定分支到本地（本地不存在）（如果拉取不成功，需要现git fetch）: git checkout -b fix_demo2 origin/fix_demo2
 + 删除分支: git branch -d fix_demo
 + 关联远程分支到本地分支，这样后git pull可以拉取该远程分支:
+
 git branch --set-upstream-to origin/develop feature/demo
+
+git pull origin feature/test:feature/test
 
 ## can not merge问题
 当git提交多次时，后提交的代码先合入，先提交的代码会出现can not merge问题，下面是解决方法。
-+ 1、先执行命令：git stash
-<br>注：此命令是备份当前的工作区，防止当前工程中已修改的代码出现丢失，同时将工作区中的代码保存到git栈中。
++ 1、先执行命令：git stash  
+注：此命令是备份当前的工作区，防止当前工程中已修改的代码出现丢失，同时将工作区中的代码保存到git栈中。
 + 2、再执行命令：git pull
-+ 3、最后执行命令：git stash pop
-<br>注：此命令是从git栈中读取命令1保存的内容，恢复工作区。
++ 3、最后执行命令：git stash pop  
+注：此命令是从git栈中读取命令1保存的内容，恢复工作区。
 
 ## 查看代码变动者
 git blame -L 160,+10 sha1_file.c 

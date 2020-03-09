@@ -20,9 +20,5 @@
 常用工具、自己开发的工具等
 
 # 一点思考
-如果想学习线程，可以从pthread api实践入手  
-如果想学习网络访问，可以从curl、nginx等源码入手  
-如果想学习数据信息存储，需要学的就多了，经典数据库推荐mysql、postgresql，nosql redis，hdfs等等  
-如果想学习算法？  
-如果想学习?  
-... ...
+学习网络访问，可以从curl、nginx、nmap、ping等源码入手  
+学习数据信息存储，经典数据库推荐mysql、postgresql，nosql redis，hdfs等等  
