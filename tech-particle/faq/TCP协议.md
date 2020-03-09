@@ -85,7 +85,11 @@ ACK报文可以携带数据，如果不携带，则不消耗序号。
 ![示意图](tcp-close.png)
 内核缺省操作，close函数立即返回，如果发送缓冲区有数据则会把这些数据发送出去。
 
-MSL（Maximum Segment Lifetime），最长报文段寿命，RFC793规定MSL为2分钟，对于实际工程来说太长了，TCP允许使用更小的MSL值。  
+ESTABLISHED是正在通信，TIME_WAIT是主动关闭，CLOSE_WAIT是被动关闭。
+
+MSL（Maximum Segment Lifetime），最长报文段寿命，一个TCP Segment再网络上可以存活的最大时间。  
+RFC793规定（1981年，基于当时的网络情况）MSL为2分钟，对于实际工程来说太长了，TCP允许使用更小的MSL值。  
+调低该值，可以使端口等更快空出来给其他连线使用。
 
 ![RFC原文](tcp-time-wait.jpg)
 
@@ -103,7 +107,18 @@ MSL（Maximum Segment Lifetime），最长报文段寿命，RFC793规定MSL为2�
 回到MSL，在2MSL时间内，该地址上的连接（客户端地址，端口和服务器的端口地址）不能被使用，比如我们在建立一个连接后关闭连接然后迅速重启连接，那么就会出现端口不可用的情况。
 
 **大量time_wait产生原因**
-服务停止后立即重启，新套接字依旧适用同一五元组sock，导致大量TIME_WAIT状态。
+```shell
+netstat -n |awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+## 输出
+## CLOSE_WAIT 2
+## ESTABLISHED 2
+## FIN_WAIT2 1
+```
+服务停止后立即重启，新套接字依旧适用同一五元组sock，导致大量TIME_WAIT状态。  
+
+早期的HTTP 1.0/1.1服务器因为是大量tcp短链接，服务端主动关闭连接，请求量很大的时候，会有大量TIME_WAIT。
+比如server每秒1k请求，就会积压240*1000=240000个，远超端口数，和OS打开句柄数限制。
+HTTP 1.1规定默认KeepAlive，也就是会重用TCP连接传输多个req/res，主要就是因为这个。
 
 TIME_WATI状态过多，端口资源被耗尽（非内存资源被耗尽或五元组被占用），报错（cannot assign requested address）。
 （虽然五元组是唯一，但是每一个连接都需要使用一个端口号，实际可以利用五元组唯一，仅使用一个端口吧？）
@@ -113,10 +128,15 @@ TIME_WATI状态过多，端口资源被耗尽（非内存资源被耗尽或五�
 1.使用socket池化技术，服务重启，socket连接不关闭。
 2.setsockopt函数socket选项SO_LINGER，异常终止连接发送RST，不进入四次挥手(SO_LINGER会使close()“优雅”关闭，阻塞当前线程)。
 
-或者修改内核限制TIME_WAIT的数量？
+或者修改内核，优化TIME_WAIT相关的配置，比如MSL时长？
 
 端口资源耗尽  
 应从源头入手，定期清理不活跃连接；留足充分的端口空间；多IP同时提供服务；
+
+**大量close_wait产生原因**  
+如果是一个爬虫服务器，爬取网络上各web服务，获得数据后被对端异常断开连接，就会产生大量close_wait。
+close_wait可以通过修改业务层代码解决。
+
 
 **为什么握手三次，挥手四次？**  
 两次握手达不到让双方都得出自己、对方的接收、发送能力都正常的结论。四次握手多余。  
