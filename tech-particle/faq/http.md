@@ -1,4 +1,6 @@
 # HTTP
+![http](http-map.PNG)
+
 ## GET和POST区别
 简单地说，非Ajax api，GET用于获取一个资源（可以是html/css/图片/js代码等等）；POST用于提交表单form，并返回结果（可以是个网页？）。
 GET应具有幂等性，即不对数据有副作用；GET的数据可以被缓存在浏览器端/代理nginx/server端Etag等等。  
