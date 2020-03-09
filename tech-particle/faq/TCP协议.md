@@ -107,7 +107,7 @@ RFC793规定（1981年，基于当时的网络情况）MSL为2分钟，对于实
 回到MSL，在2MSL时间内，该地址上的连接（客户端地址，端口和服务器的端口地址）不能被使用，比如我们在建立一个连接后关闭连接然后迅速重启连接，那么就会出现端口不可用的情况。
 
 **大量time_wait产生原因**
-```shell
+```sh
 netstat -n |awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
 ## 输出
 ## CLOSE_WAIT 2
@@ -132,7 +132,30 @@ TIME_WATI状态过多，端口资源被耗尽（非内存资源被耗尽或五�
 
 端口资源耗尽  
 应从源头入手，定期清理不活跃连接；留足充分的端口空间；多IP同时提供服务；
+```sh
+#对于一个新建连接，内核要发送多少个 SYN 连接请求才决定放弃,不应该大于255，默认值是5，对应于180秒左右时间 
+net.ipv4.tcp_syn_retries=2
+#net.ipv4.tcp_synack_retries=2
+#表示当keepalive起用的时候，TCP发送keepalive消息的频度。缺省是2小时，改为300秒
+net.ipv4.tcp_keepalive_time=1200
+net.ipv4.tcp_orphan_retries=3
+#表示如果套接字由本端要求关闭，这个参数决定了它保持在FIN-WAIT-2状态的时间
+net.ipv4.tcp_fin_timeout=30  
+#表示SYN队列的长度，默认为1024，加大队列长度为8192，可以容纳更多等待连接的网络连接数。
+net.ipv4.tcp_max_syn_backlog = 4096
+#表示开启SYN Cookies。当出现SYN等待队列溢出时，启用cookies来处理，可防范少量SYN攻击，默认为0，表示关闭
+net.ipv4.tcp_syncookies = 1
 
+#表示开启重用。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为0，表示关闭
+net.ipv4.tcp_tw_reuse = 1
+#表示开启TCP连接中TIME-WAIT sockets的快速回收，默认为0，表示关闭
+net.ipv4.tcp_tw_recycle = 1
+
+##减少超时前的探测次数 
+net.ipv4.tcp_keepalive_probes=5 
+##优化网络设备接收队列 
+net.core.netdev_max_backlog=3000 
+```
 **大量close_wait产生原因**  
 如果是一个爬虫服务器，爬取网络上各web服务，获得数据后被对端异常断开连接，就会产生大量close_wait。
 close_wait可以通过修改业务层代码解决。
