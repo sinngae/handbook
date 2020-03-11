@@ -3,10 +3,11 @@
 
 ## ping
 ## nmap
+## netwox
 ## tcpdump
 
 ## curl
-```
+```sh
 curl选项
 # 上传文件
 curl "http://127.0.0.1:8801/media/sda3/.tmp/" -F "file=@a.mp4"

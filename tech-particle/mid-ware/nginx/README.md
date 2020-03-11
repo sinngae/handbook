@@ -38,6 +38,14 @@ lighttpd性能也高，问题也多
 
 ## 热部署
 启动容易，且可以7*24小时不间断运行数月不用重启，还支持平滑重启。
+```sh
+nginx -s reload
+nginx -s reopen 重启
+nginx -s stop 强制停止
+nginx -s quit 优雅退出
+nginx -t 测试配置文件
+
+```
 
 ## master-slave多进程模型
 充分利用SMP优势，减少worker进程在磁盘IO的阻塞延时。

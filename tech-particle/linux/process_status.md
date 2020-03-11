@@ -22,7 +22,7 @@ Linux是一个多用户，多任务的系统，可以同时运行多个用户的
 
 linux系统中也存在容易捕捉的TASK_UNINTERRUPTIBLE状态。执行vfork系统调用后，父进程将进入TASK_UNINTERRUPTIBLE状态，直到子进程调用exit或exec（参见《神奇的vfork》）。
 通过下面的代码就能得到处于TASK_UNINTERRUPTIBLE状态的进程：
-```
+```cpp
 void main() {
     if (!vfork())
         sleep(100);
@@ -30,8 +30,11 @@ void main() {
 ```
 
 编译运行，然后ps一下：
-```
-kouu@kouu-one:~/test$ ps -ax | grep a\.out  4371 pts/0    D+     0:00 ./a.out  4372 pts/0    S+     0:00 ./a.out  4374 pts/1    S+     0:00 grep a.out
+```sh
+ps -ax | grep a.out
+#   4371 pts/0    D+     0:00 ./a.out
+#   4372 pts/0    S+     0:00 ./a.out
+#   4374 pts/1    S+     0:00 grep a.out
 ```
 
 然后我们可以试验一下TASK_UNINTERRUPTIBLE状态的威力。不管kill还是kill -9，这个TASK_UNINTERRUPTIBLE状态的父进程依然屹立不倒。
@@ -56,7 +59,7 @@ kouu@kouu-one:~/test$ ps -ax | grep a\.out  4371 pts/0    D+     0:00 ./a.out  4
 子进程在退出的过程中，内核会给其父进程发送一个信号，通知父进程来“收尸”。这个信号默认是SIGCHLD，但是在通过clone系统调用创建子进程时，可以设置这个信号。
 
 通过下面的代码能够制造一个EXIT_ZOMBIE状态的进程：
-```
+```cpp
 void main() {
     if (fork())
         while(1)
@@ -65,8 +68,11 @@ void main() {
 ```
 
 编译运行，然后ps一下：
-```
-kouu@kouu-one:~/test$ ps -ax | grep a\.out  10410 pts/0    S+     0:00 ./a.out  10411 pts/0    Z+     0:00 [a.out]   10413 pts/1    S+     0:00 grep a.out
+```sh
+ps -ax | grep a.out
+#   10410 pts/0    S+     0:00 ./a.out
+#   10411 pts/0    Z+     0:00 [a.out]
+#   10413 pts/1    S+     0:00 grep a.out
 ```
 只要父进程不退出，这个僵尸状态的子进程就一直存在。那么如果父进程退出了呢，谁又来给子进程“收尸”？
 当进程退出的时候，会将它的所有子进程都托管给别的进程（使之成为别的进程的子进程）。托管给谁呢？可能是退出进程所在进程组的下一个进程（如果存在的话），或者是1号进程。所以每个进程、每时每刻都有父进程存在。除非它是1号进程。

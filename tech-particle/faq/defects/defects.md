@@ -42,7 +42,7 @@ SIGBUS与SIGSEGV信号的一般区别如下:
 
 
 ## 六、glib 程序报错到终端
-``` log
+```log
 1.*** Error in `/app/bin/demo': double free or corruption (out): 0xb6646800 ***
 	// 两次free
 2.*** Error in `/app/bin/demo': malloc(): smallbin double linked list corrupted: 0xb5c1f070 ***
@@ -54,9 +54,9 @@ SIGBUS与SIGSEGV信号的一般区别如下:
 5.*** Error in `/app/bin/demo': realloc(): invalid next size: 0xb4220018 ***
 	// strncpy堆越界后（必须越界很多，导致档案信息被覆盖），realloc时触发
 ```
-
 档案信息  
 使用malloc动态分配内存时，操作系统为这段空间建立一个档案信息，用于记录此空间的大小、位置等。
+
 ```
 ·············· 高地址    
 档案信息  
@@ -75,7 +75,7 @@ C++允许Foo*到const Foo*的转换（这是安全的）。但如果想要将Foo
 
 这么做的原因如下所示:  
 但首先，这里有个最普通的解决办法：只要把const Foo**改成const Foo* const*就可以了。
-```
+```cpp
  class Foo { /* ... */ };
  
  void f(const Foo** p);
@@ -91,7 +91,7 @@ C++允许Foo*到const Foo*的转换（这是安全的）。但如果想要将Foo
  }
 ```
 之所以Foo\*\*到const Foo\*\*的转换是危险的，是因为这会使你没有经过转换就在不经意间修改了const Foo对象。
-```
+```cpp
  class Foo {
  public:
    void modify();  // 修改this对象
@@ -128,3 +128,24 @@ C语言的malloc/realloc/calloc失败没有系统提供回调函数处理（相�
 Out Of Memery  
 linux上因为有OOM等，一般程序是不用检查malloc是否返回NULL。而一定要保证稳定性，持续存在的程序，必须要判断malloc返回值
 
+## snprintf/strncat
+snprintf 第2个入参为非负时起作用；
+当要写入的字符串的长度大于第2个参数时,snprintf返回的是写入的字符串的长度
+当写入的字符串的长度超过args的长度时，导致栈上申请的数组写溢出，破坏了线程栈，最终导致崩溃
+
+realloc申请堆上的存储空间，并没有初始化为0。
+strncat将第2个参数拷贝到第一个参数以0为结束的字符串的后面；第3个参数非负时起到限制拷贝的最大长度的限制。
+在第一次realloc申请到一块脏的堆内存后，后续strncat写都导致堆内存的溢出，溢出的长度取决于realloc脏数据直到0的长度，
+当该长度覆盖了堆分配的档案信息，造成了（invalid next size）堆崩溃
+
+## jpeg_compress
+```cpp
+    jpeg_compress.image_width = width;
+    jpeg_compress.image_height = height;
+    jpeg_compress.input_components = 3;
+    jpeg_compress.in_color_space = JCS_RGB;
+ 
+    jpeg_set_defaults(&(jpeg_compress));
+    jpeg_set_quality(&(jpeg_compress), quality * 10, TRUE);
+    jpeg_start_compress(&(jpeg_compress), TRUE); // 当上文中的width或height为0时，该libjpeg会exit(1)导致整个进程退出。
+```

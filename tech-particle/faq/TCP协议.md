@@ -29,7 +29,7 @@ C/S之间一次请求应答操作，一般都是服务器应答后，客户端�
 管理起来简单，存在都是有用的连接，不需要额外的控制手段。
 ### TCP长连接
 TCP keepalive功能  
-```
+```cpp
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 // 开启keepalive
 s.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
