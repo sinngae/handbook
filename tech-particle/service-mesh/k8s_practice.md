@@ -1,5 +1,6 @@
 ## 1.确认内核支持memory and swap accounting
 cat /boot/config-3.10.0-957.5.1.el7.x86_64 |grep CONFIG_MEMCG
+
 如何开启？
 
 ## 2.运行etcd

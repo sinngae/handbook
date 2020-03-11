@@ -32,10 +32,13 @@ k8s 支持docker containerd cri-o rktlet及任何实现了kubernetes CRI的容�
 ## 部署
 ### 1.为什么要关闭swap
 为了性能，当然如果运行容器较多，可以添加kubelet参数--fail-swap-on=false来解决
-```
-free	// 查看swap是否使用
-vim /etc/fstab swap 那行注释掉，永久关闭
-swapoff -a // 关闭
-swapon -a // 打开
-sysctl --system // 从所有的系统目录读取值
+```sh
+# 查看swap是否使用
+free
+vim /etc/fstab
+# swap 那行注释掉，则永久关闭swap功能
+swapoff -a  # 关闭
+swapon -a   # 打开
+# 从所有的系统目录读取值
+sysctl --system
 ```
