@@ -3,6 +3,10 @@ an open source(BSD licensed), in-memory data structure store, used as a database
 
 BSD协议开源的，in-memory数据结构存储的，作为数据库、缓存和消息的中介代理。
 
+
+redis可达10w/s读写，满足高性能。redis的value可以是数值/字符串/双向循环链表（消息队列）/Set（可实现tag系统，一种灵活的日志分类方式）/json结构，还支持过期时间。
+redis的value的最大长度远超memcache？
+
 ## 缓存设计思想
 key->value
 map？hashmap？hashtable？
