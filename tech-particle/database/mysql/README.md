@@ -15,10 +15,10 @@ MyISAM适用于历史库/数据仓库；InnoDB适用于当前库/业务数据库
 ## mysql 命令行
 ```sql
 -- 三种注释
-...
+'''dfadf'''
 -- ...
 /*...*/
--- 登录
+-- 登录shell
 -- mysql -h 127.0.0.1 -u root -p testdb;
 
 -- 事务
@@ -41,33 +41,31 @@ source /opt/openfire/resources/database/openfire_mysql.sql;
 ```
 
 ## mysql配置文件my.ini
-```shell
-## C:\ProgramData\MySQL\MySQL Server 5.7\my.ini
-@[name]			用户变量
-@@[name]			系统变量
+```sh
+## 编辑C:\ProgramData\MySQL\MySQL Server 5.7\my.ini
+#   @[name]			用户变量
+#   @@[name]			系统变量
 
 ## mysql 5.6 添加追踪日志
 vi /etc/my.cnf
 ## 添加以下两行
-general_log=ON
-general_log_file=runtime.log
+#   general_log=ON
+#   general_log_file=runtime.log
 
 ## 重启mysqld服务
 service mysqld restart
 
 ## 在以下路径，可看到runtime.log日志文件
-/var/lib/mysqlmysql二进制文件路径
-
+#   /var/lib/mysqlmysql二进制文件路径
 sc delete MySQL57
 ```
-配置外网访问
-``` sql
-mysql> CREATE USER 'monty'@'localhost' IDENTIFIED BY 'some_pass';
-mysql> GRANT ALL PRIVILEGES ON *.* TO 'monty'@'localhost'
--> WITH GRANT OPTION;
-mysql> CREATE USER 'monty'@'%' IDENTIFIED BY 'some_pass';
-mysql> GRANT ALL PRIVILEGES ON *.* TO 'monty'@'%'
--> WITH GRANT OPTION;
+
+## 配置外网访问
+```sql
+CREATE USER 'monty'@'localhost' IDENTIFIED BY 'some_pass';
+GRANT ALL PRIVILEGES ON *.* TO 'monty'@'localhost' WITH GRANT OPTION;
+CREATE USER 'monty'@'%' IDENTIFIED BY 'some_pass';
+GRANT ALL PRIVILEGES ON *.* TO 'monty'@'%' WITH GRANT OPTION;
 flush privileges;
 ```
 
@@ -82,4 +80,7 @@ update set x=x;
 update tbl0, tbl1
 set tbl0.x = tbl1.x, tbl1.x = tbl0.x
 where tbl0.y=y0 and tbl1.y=y1;
+
+-- 重置自增ID
+alter table tablename auto_increment=new;
 ```
