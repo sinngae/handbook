@@ -20,6 +20,8 @@ cp -r git-repo /root/
 + feature分支
 + bugfix分支
 
+**gitflow**
+
 ## git command
 ```sh
 ### 1.本地仓库配置
@@ -129,3 +131,10 @@ cd ..
 rm -rf demo
 git clone xxx
 ```
+
+
+## git自动化部署
+1. develop分支提交自动测试、自动部署到测试环境
+2. master分支tag自动部署到生产环境？不，测试环境（或者生产环境的测试节点）
+3. release分支？
+3. feature分支无自动化任务，鼓励提交代码到仓库，即使代码还未开发完整。

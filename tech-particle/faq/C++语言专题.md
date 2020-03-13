@@ -150,7 +150,7 @@ char *func() {
 ```
 “hi”是一个代码区的字符串常量，放在程序的静态数据区，被写保护，不能写;  
 前者在g++编译后返回的是nil，后者返回的是地址；  
-前者可以通过a[0] = 'a';修改，后者*p = 'a';运行时报段错误;  
+前者可以通过a[0] = 'a'修改；后者*p = 'a';运行时报段错误;  
 编译时，前者return处警告返回一个局部变量，后者在p初始化处警告将一个常量赋给char*。
 
 ## C++ 衰退
@@ -162,3 +162,22 @@ char *func() {
 ## c++的流 ，为何cout<<NULL后被关闭
 cout << NULL;后，标准输出被关闭，后续不能输出。 
 NULL默认关闭cout，再怎么打开呢？  
+
+## int* 转 int
+```cpp
+// 64位机器测试
+    long long a = (long long)(((int*)0)+4);
+    // cout << a，输出16
+    // int* a = 0, a++, a: 4，a++，a:8
+    // 指针的加法运算是按照指针值类型占用空间来计算的
+    // char *a = 0, a++, a: 1
+    // int64 *a = 0, a++, a: 8
+    
+    int a = (int)(((int*)0)+4); // 编译报错，error: cast from ‘int*’ to ‘int’ loses precision [-fpermissive]
+
+    long long lval = 123456789012345;
+    int a = (int)lval;  // a = -2045911175
+
+    float fval = 22.2;
+    int a = (int)fval;  // a = 22
+```
