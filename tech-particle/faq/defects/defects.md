@@ -45,10 +45,13 @@ SIGBUS与SIGSEGV信号的一般区别如下:
 ```log
 1.*** Error in `/app/bin/demo': double free or corruption (out): 0xb6646800 ***
 	// 两次free
+
 2.*** Error in `/app/bin/demo': malloc(): smallbin double linked list corrupted: 0xb5c1f070 ***
   // ？？？？头文件和库文件不一致（https://blog.csdn.net/shaochat/article/details/40817313）？？？
+
 3.*** Error in `/app/bin/demo': free(): invalid next size (fast): 0xb55191a8 ***
 	// strncpy堆越界后（必须越界很多，导致档案信息被覆盖），free时触发
+
 4.*** Error in `/app/bin/demo': corrupted double-linked list: 0xb5d18fd0 ***
 
 5.*** Error in `/app/bin/demo': realloc(): invalid next size: 0xb4220018 ***
@@ -71,10 +74,10 @@ SIGBUS与SIGSEGV信号的一般区别如下:
 
 因为把Foo\*\*转换成const Foo\*\*是非法且危险的。
 
-C++允许Foo*到const Foo*的转换（这是安全的）。但如果想要将Foo\*\*隐式转换成const Foo\*\*则会报错。
+C++允许Foo\*到const Foo\*的转换（这是安全的）。但如果想要将Foo\*\*隐式转换成const Foo\*\*则会报错。
 
 这么做的原因如下所示:  
-但首先，这里有个最普通的解决办法：只要把const Foo**改成const Foo* const*就可以了。
+但首先，这里有个最普通的解决办法：只要把const Foo\*\*改成const Foo\* const\*就可以了。
 ```cpp
  class Foo { /* ... */ };
  

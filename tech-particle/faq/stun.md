@@ -1,21 +1,20 @@
 # stun
 simple traversal of user datagram protocol through NetworkAddressTranslators 
-##NAT的UDP简单穿越
+## NAT的UDP简单穿越
 是一种网络协议，允许于多个NAT后的客户端找出自己的公网地址，查出自己位于哪种类型的NAT之后，以及NAT为某一个本地端口所绑定的Internet端端口。（这些信息用于另个同时处于NAT路由器之后的主机之间建立UPD通信）该协议由RFC3489定义（目前已被RFC5389取代，stun被定义为协助穿越NAT的工具，并不独立提供穿越解决方案，后续还有RFC7350）
 
 # turn
-traversal using relay NAT 通过Relay方式穿越NAT
+traversal using relay NAT 
+通过Relay方式穿越NAT
 
 
 # 基于UDP的P2P应用需要考虑NAT类型，不同NAT组合的穿透方式不一致
 NAT分为四种
 + 全锥型 Full Cone
-+ 受限锥型 Restricted Cone 
-
-  ip受限
-+ 端口受限锥形 Port Restricted Cone 
-
-  ip+port受限
++ 受限锥型 Restricted Cone  
+ip受限
++ 端口受限锥形 Port Restricted Cone  
+ip+port受限
 + 对称型 Symmetric
 
 NAT路由器为NAT内同一主机C的同一ip+port访问不同的公网ip+port组合S1和S2，分配不同的端口即为对称型，否则为锥型。

@@ -15,4 +15,7 @@ tastkill /f /t /im 360safe.exe
 
 ## md5sum
 certutil -hashfile yourfilename.ext MD5
+
+# hosts: 
+#   C:\Windows\System32\drivers\etc\hosts
 ```
