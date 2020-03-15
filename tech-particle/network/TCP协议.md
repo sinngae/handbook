@@ -49,7 +49,7 @@ s.connect(('127.0.0.1', 9999))
 长连接和短连接的产生在于client和server采取的关闭策略，具体的应用场景采用具体的策略，没有十全十美的选择，只有合适的选择。
 
 ## TCP报文
-![示意图](tcp-head.png)
+![示意图](.img/tcp-head.png)
 + 源端口，2字节；目的端口，2字节；
 + 序号，4字节；TCP报文使按顺序编号的；
 + 确认号，4字节；期望收到对方下一个报文的序号；
@@ -79,10 +79,10 @@ TCP协议规定，SYN报文不能携带数据，需要消耗一个序号；
 ACK报文可以携带数据，如果不携带，则不消耗序号。
 
 + 三次握手
-![示意图](tcp-connect.png)
+![示意图](.img/tcp-connect.png)
 
 + 四次挥手
-![示意图](tcp-close.png)
+![示意图](.img/tcp-close.png)
 内核缺省操作，close函数立即返回，如果发送缓冲区有数据则会把这些数据发送出去。
 
 ESTABLISHED是正在通信，TIME_WAIT是主动关闭，CLOSE_WAIT是被动关闭。
@@ -91,7 +91,7 @@ MSL（Maximum Segment Lifetime），最长报文段寿命，一个TCP Segment再
 RFC793规定（1981年，基于当时的网络情况）MSL为2分钟，对于实际工程来说太长了，TCP允许使用更小的MSL值。  
 调低该值，可以使端口等更快空出来给其他连线使用。
 
-![RFC原文](tcp-time-wait.jpg)
+![RFC原文](.img/tcp-time-wait.jpg)
 
 **为什么主动断开端，需要等待2MSL** 也即time_wait产生原因
 

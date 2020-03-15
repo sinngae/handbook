@@ -17,7 +17,7 @@ UDP更适合于消息的多播发布可以向多个点传送消息（因为没�
 基于UDP的应用层协议：DNS、TFTP（简单文件传输协议）、RIP（路由选择协议）、DHCP、BOOTP（是DHCP的前身）、IGMP（Internet组管理协议）
 
 ## UDP 报文
-![udp-head](udp-head.png)
+![udp-head](.img/udp-head.png)
 + 源端口  
 可选，发送端不一定写入该字段（而是写0）。业务层接收端可以用这个字段作为发送响应的目的端口。
 + 目的端口
