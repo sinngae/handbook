@@ -27,13 +27,14 @@ date -R             # 系统时间
 clock --systohc     # 硬件时间同步系统时间
 ```
 
-
-
 ### 几个时间服务器
 + Windows系统上自带的两个：time.windows.com 和 time.nist.gov
 + MacOS上自带的两个：time.apple.com 和 time.asia.apple.com
-+ NTP授时快速域名服务：cn.ntp.org.cn
++ NTP授时快速域名服务：cn.ntp.org.cn 中国授时
++ NTP授时快速域名服务：cn.ntp.org.cn 中国授时
+
 #### 阿里云 NTP服务器
++ time.pool.aliyun.com
 + ntp.aliyun.com             
 + ntp1.aliyun.com
 + ntp2.aliyun.com
