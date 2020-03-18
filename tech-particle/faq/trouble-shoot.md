@@ -8,5 +8,5 @@ troube shooting?
 ## code review
 
 ## 拆解代码
-
+对代码分段屏蔽，查看运行情况
 ## 
