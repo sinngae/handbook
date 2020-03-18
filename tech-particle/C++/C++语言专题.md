@@ -15,8 +15,9 @@ operator--();
 /* ... */
 ```
 每种容器有各自的迭代器。（C++原生指针Native Pointer（就是一般指针）也是一种迭代器）
+
 4. 仿函数 Fuctor  
-把算法的操作封装成统一的使用面向对象风格的对象（算法的策略类？Policy）,重载了operator()的Class/Class<Template>（或者带有参数多个）（具有函数特征的对象vs具有对象特征的函数？）。
+把算法的操作封装成统一的使用面向对象风格的对象（算法的策略类？Policy）,重载了operator()的`Class/Class<Template>`（或者带有参数多个）（具有函数特征的对象vs具有对象特征的函数？）。
 Policy + 模板机制，一般的函数指针也可以看作是仿函数对象。
 **smart function**
 STL标准函数对象在头文件<functional>。运算三类：算数、关系、逻辑。
@@ -252,6 +253,7 @@ NULL默认关闭cout，再怎么打开呢？
     int a = (int)fval;  // a = 22
 ```
 
+### C内存对齐
 
 ## C++ future
 **C++如何实现类似Go的Context**
