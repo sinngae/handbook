@@ -11,4 +11,7 @@ troube shooting?
 对代码分段屏蔽，查看运行情况
 
 ## 各种工具的使用
-gdb valgrind tcpdump netwox fiddler postman
+gdb valgrind strace
+tcpdump wiresharke
+fiddler postman 
+netwox 
