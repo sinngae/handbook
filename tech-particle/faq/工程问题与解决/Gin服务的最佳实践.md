@@ -2,3 +2,4 @@
 
 ## Gin as rpc
 router设计，Restful vs simply
+

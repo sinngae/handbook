@@ -17,5 +17,11 @@
 ### 程序员如何分级
 ![program-level](program-level.png)
 
+### Agile Software Development 敏捷软件开发
+Principles Pattern and practices 原则、模式和实践
+
+尽早地、持续地交付可工作的软件的核心目的
+
 ## 部署
 蓝绿部署/金丝雀升级（灰度升级）/A\B测试
+
