@@ -28,14 +28,15 @@ java8里的hashmap在元素增大到一定程度，就会从链表转成红黑�
 高负载下，数据查询慢
 
 ## 集群服务
+### redis slot
 负载均衡（一致性hash）
 
-主从复制redis replication
+### 主从复制redis replication
 Master/slave chains架构
 
-Redis Partition
+### Redis Partition
 
-Presharding
+### Presharding
 
 ## 数据结构
 string/list/set/sortedset/map
@@ -73,3 +74,11 @@ redis操作都是在内存上，较少涉及IO吞吐，读写分离不会提升�
 做了读写分离后，还要考虑主从一致性，主从延迟等问题，带来业务复杂度。
 
 Redis的主要问题是考虑容量，单机最多10-20G，key太多降低redis性能。因此采用分片集群来保证性能。
+
+6. **redis-cluster 为什么是16384个slot**
+函数crc16()有2^16 - 1=65535个不同的值。2^14=16384
++ redis间心跳包通讯需要带着节点的所有配置（通知到其他节点），其中包含该节点的slots配置。这就意味着：如果是16384个slot，大约需要2kb（压缩前）；如果是65535个slot，大约需要8kb。
++ redis-cluster规模很少达到1000个以上的master节点（因为其他的设计上的均衡）
+
+所以16384个slot足够保证1000个master节点的集群中每个maser节点的slot数量，又可以把slot的信息（位图形式）便捷地广播出去。
+注意：小型集群中，因为集群中master节点数N比较小，位图中slots/N个位被设置，因而很难压缩。
