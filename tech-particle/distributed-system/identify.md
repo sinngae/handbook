@@ -7,7 +7,7 @@
 百度开放平台
 
 
-## OAuth 2
+## OAuth2
 
 ## OpenID
 
