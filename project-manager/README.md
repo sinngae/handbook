@@ -25,3 +25,4 @@ Principles Pattern and practices 原则、模式和实践
 ## 部署
 蓝绿部署/金丝雀升级（灰度升级）/A\B测试
 
+## CI/CD
