@@ -5,19 +5,8 @@
 
 ## ping
 
-## nmap
+## telnet
 
-## netwox
-
-## tcpdump
-对网络上的数据包进行截获的包分析工具。 tcpdump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供and、or、not等逻辑语句来帮助你去掉无用的信息。
-```sh
-# 默认模式 - 监视第一个网络接口（网卡？）上所有的数据包
-tcpdump
-# 选项
-#   -i [eth name]   - 指定网络接口
-#   
-```
 ## curl
 ```sh
 curl选项
@@ -43,3 +32,22 @@ curl --no-buffer -XGET --unix-socket /docker.sock http:/events
 curl --cookies "sessionid=ws001.1F4A8047BBD38F237BD4E217F125AE49;userid=1000001028;" http://local.api-game-ssl.xunlei.com/dailytask/list
 ```
 ## wget
+
+## 其他
++ tcpdump 
++ wireshark
+    + npcap winpcap  
+Nmap Packet Capture (NPcap)
+NPcap is the Windows version of the libpcap library; it includes a driver to support capturing packets.
+Wireshark can use this library to capture live network data on Windows.
+General information about the NPcap project can be found at the NPcap web site.
+The libpcap file format description can be found at: Development/LibpcapFileFormat
+The (development) releases can be downloaded from https://github.com/nmap/npcap/releases. As it's still in development it's not considered stable at this time.
+Npcap is the Nmap Project's packet sniffing library for Windows. It is based on the wonderful Winpcap / Libpcap libraries, but with improved improved speed, portability, security, and efficiency. In particular, Npcap offers:
+NDIS 6 Support
+WinPcap compatibility
+Loopback Packet Capture
+
++ nmap
++ netwox netwag
++ fiddler + postman
