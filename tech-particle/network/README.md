@@ -38,7 +38,16 @@ http live streaming
 STUN，Session Traversal Utilities for NAT，NAT会话穿越应用程序。
 是一种网络协议，它允许位于NAT（或多重NAT）后的客户端**找出自己的公网地址**，查出自己位于哪种类型的NAT之后以及NAT为某一个本地端口所绑定的Internet端端口。这些信息被用来在两个同时处于NAT路由器之后的主机之间创建UDP通信。
 
-TURN，Traversal Using Relay NAT，即通过Relay方式穿越NAT，又称SPAN(Simple Protocol for Augmenting NATs）方式。TURN的局限性在于所有报文都必须经过TURNServer转发，增大了包的延迟和丢包的可能性。
+TURN，Traversal Using Relay NAT，即通过Relay方式穿越NAT，又称SPAN(Simple Protocol for Augmenting NATs）方式。TURN应用模型通过**分配TURNServer的地址和端口作为客户端对外的接受地址和端口**，即私网用户发出的报文都要经过TURNServer进行Relay转发。TURN的局限性在于所有报文都必须经过TURNServer转发，增大了包的延迟和丢包的可能性。
+
+### 局域网发现
+UPnP
+UPnP协议允许PC间的点对点连接、网际互连和无线设备。它是一种基于TCP/IP、UDP和HTTP的分布式、开放体系。
+UPnP使得任意两个设备能在LAN控制设备的管理下相互通信。
+
+DLNA
+
+mDNS
 
 ## TCP/IP协议栈安全缺陷与攻击
 1. 网络接口层
