@@ -45,7 +45,7 @@ docker login [registry.host]
 # 2.修改镜像的tag
 docker tag [image name]:master [registry.host.remote.image]:master
 # 3.然后执行docker push命令，将镜像推到registry中
-docker push registry.xunlei.cn/xl_yy/virtual_onecloud
+docker push registry.xule.cn/sng_yy/virtual_oc
 # 4.使用镜像
 docker pull [registry.host]/[remoe.image.name]:master
 # 输入docker hub账号密码

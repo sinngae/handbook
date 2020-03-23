@@ -3,8 +3,8 @@
 /*
 struct curl_http_args_st
 {
-    int data_len; // ÎÄ¼þÊý¾Ý±£´æÔÚÄÚ´æÖÐµÄ³¤¶È
-    char *data;   // ÎÄ¼þÊý¾Ý±£´æÔÚÄÚ´æÖÐµÄÖ¸Õë, ÓÃÍêºóÊÖ¶¯free
+    int data_len; // ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ï¿½ÐµÄ³ï¿½ï¿½ï¿½
+    char *data;   // ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ï¿½Ðµï¿½Ö¸ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½free
 };
 
 size_t curl_write_data_cb(void *buffer, size_t size, size_t nmemb, void *stream)
@@ -14,7 +14,7 @@ size_t curl_write_data_cb(void *buffer, size_t size, size_t nmemb, void *stream)
 
     if (stream)
     {
-        args->data = realloc(args->data, args->data_len + len + 1); // ¶à·ÖÅäÒ»¸ö×Ö½Ú, ÒÔ±£´æ\0
+        args->data = realloc(args->data, args->data_len + len + 1); // ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ö½ï¿½, ï¿½Ô±ï¿½ï¿½ï¿½\0
         if (!args->data)
         {
             XL_DEBUG(EN_PRINT_ERROR, "%s[%d]: realloc failed!!\n", __FUNCTION__, __LINE__);
@@ -27,9 +27,9 @@ size_t curl_write_data_cb(void *buffer, size_t size, size_t nmemb, void *stream)
     return len;
 }
 
-int set_file_cid_gcid(const char *pathname, const char *cid, const char *gcid)
+int set_file_md5sum(const char *pathname, const char *cid, const char *gcid)
 {
-    //´´½¨curl¶ÔÏó
+    //ï¿½ï¿½ï¿½ï¿½curlï¿½ï¿½ï¿½ï¿½
     CURL *curl;
     CURLcode return_code;
     char url[1024] = "/0";
@@ -42,9 +42,9 @@ int set_file_cid_gcid(const char *pathname, const char *cid, const char *gcid)
     struct curl_http_args_st args;
     memset(&args, 0x00, sizeof(args));
 
-    sprintf(url, "http://127.0.0.1:8801/fdrawer?opt=setfilecidgcid&path=%s,cid=%s,gcid=%s", pathname, cid, gcid);
+    sprintf(url, "http://127.0.0.1:8801/filedrawer?opt=setfilemd5&path=%s,md5sum=%s", pathname, cid, gcid);
 
-    //curl³õÊ¼»¯
+    //curlï¿½ï¿½Ê¼ï¿½ï¿½
     curl = curl_easy_init();
     if (!curl)
     {
@@ -52,16 +52,16 @@ int set_file_cid_gcid(const char *pathname, const char *cid, const char *gcid)
         return ret;
     }
 
-    curl_easy_setopt(curl, CURLOPT_HEADER, 0);                         //ÉèÖÃhttpheader ½âÎö, ²»ÐèÒª½«HTTPÍ·Ð´´«Èë»Øµ÷º¯Êý
-    curl_easy_setopt(curl, CURLOPT_URL, url);                          //ÉèÖÃÔ¶¶ËµØÖ·
-    curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);                       // TODO: ´ò¿ªµ÷ÊÔÐÅÏ¢
-    curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);                 //ÉèÖÃÔÊÐí302  Ìø×ª
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curl_write_data_cb); //Ö´ÐÐÐ´ÈëÎÄ¼þÁ÷²Ù×÷ µÄ»Øµ÷º¯Êý
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &args);                  // ÉèÖÃ»Øµ÷º¯ÊýµÄµÚ4 ¸ö²ÎÊý
-    curl_easy_setopt(curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);      //ÉèÖÃÎªipv4ÀàÐÍ
-    curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 30);                //ÉèÖÃÁ¬½Ó³¬Ê±£¬µ¥Î»s, CURLOPT_CONNECTTIMEOUT_MS ºÁÃë
-    curl_easy_setopt(curl, CURLOPT_TIMEOUT, 5);                        // Õû¸öCURL Ö´ÐÐµÄÊ±¼ä, µ¥Î»Ãë, CURLOPT_TIMEOUT_MSºÁÃë
-    curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1);                       //linux¶àÏß³ÌÇé¿öÓ¦×¢ÒâµÄÉèÖÃ(·ÀÖ¹curl±»alarmÐÅºÅ¸ÉÈÅ)
+    curl_easy_setopt(curl, CURLOPT_HEADER, 0);                         //ï¿½ï¿½ï¿½ï¿½httpheader ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½HTTPÍ·Ð´ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
+    curl_easy_setopt(curl, CURLOPT_URL, url);                          //ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½Ëµï¿½Ö·
+    curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);                       // TODO: ï¿½ò¿ªµï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+    curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);                 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½302  ï¿½ï¿½×ª
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curl_write_data_cb); //Ö´ï¿½ï¿½Ð´ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä»Øµï¿½ï¿½ï¿½ï¿½ï¿½
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &args);                  // ï¿½ï¿½ï¿½Ã»Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½4 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    curl_easy_setopt(curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);      //ï¿½ï¿½ï¿½ï¿½Îªipv4ï¿½ï¿½ï¿½ï¿½
+    curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 30);                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Î»s, CURLOPT_CONNECTTIMEOUT_MS ï¿½ï¿½ï¿½ï¿½
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT, 5);                        // ï¿½ï¿½ï¿½ï¿½CURL Ö´ï¿½Ðµï¿½Ê±ï¿½ï¿½, ï¿½ï¿½Î»ï¿½ï¿½, CURLOPT_TIMEOUT_MSï¿½ï¿½ï¿½ï¿½
+    curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1);                       //linuxï¿½ï¿½ï¿½ß³ï¿½ï¿½ï¿½ï¿½Ó¦×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ö¹curlï¿½ï¿½alarmï¿½ÅºÅ¸ï¿½ï¿½ï¿½)
 
     return_code = curl_easy_perform(curl);
     if (CURLE_OK != return_code)
@@ -70,7 +70,7 @@ int set_file_cid_gcid(const char *pathname, const char *cid, const char *gcid)
         ret = 0;
     }
 
-    if (args.data) // ÈôÒª¶Ô·µ»ØµÄÄÚÈÝ½øÐÐ´¦Àí, ¿ÉÔÚ´Ë´¦Àí
+    if (args.data) // ï¿½ï¿½Òªï¿½Ô·ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½Ý½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Ú´Ë´ï¿½ï¿½ï¿½
     {
         XL_DEBUG(EN_PRINT_ERROR, "set_file_cid_gcid %s !", args.data);
         free(args.data);
