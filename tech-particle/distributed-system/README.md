@@ -44,12 +44,13 @@ nginx/haproxy/openresty
 ## 微服务
 业务拆分=》中台化
 
-## 容器化
+## 虚拟化技术及容器
 资源虚拟化=》服务治理
 ### Dokcer
-### k8s
 
-### Service Mesh
+## Service Mesh
+### k8s
+### Istio
 
 ## 全链路技术
 全链路跟踪/压测
