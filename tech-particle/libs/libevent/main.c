@@ -24,7 +24,7 @@ http_request_cb(struct evhttp_request *v_req, void *v_arg)
     cJSON *pObj = NULL;
     char *pRsp = NULL;
 
-    DO_FMGR_REPORT_INIT(v_req);
+    DO_fsng_REPORT_INIT(v_req);
 
     if (NULL == v_req)
     {
@@ -44,7 +44,7 @@ http_request_cb(struct evhttp_request *v_req, void *v_arg)
     if (ret)
     {
         XL_DEBUG(EN_PRINT_ERROR, "parse http request fail ret=%d", ret);
-        cJSON_AddNumberToObject(pObj, "rtn", ECODE_FMGR_FAIL);
+        cJSON_AddNumberToObject(pObj, "rtn", ECODE_fsng_FAIL);
         goto RSP_OUT;
     }
 
@@ -52,17 +52,17 @@ http_request_cb(struct evhttp_request *v_req, void *v_arg)
     if (NULL == pReqPara)
     {
         XL_DEBUG(EN_PRINT_ERROR, "para opt not found");
-        cJSON_AddNumberToObject(pObj, "rtn", ECODE_FMGR_FAIL);
+        cJSON_AddNumberToObject(pObj, "rtn", ECODE_fsng_FAIL);
         goto RSP_OUT;
     }
 
-    for (idx = 0; g_fmgr_prot_list[idx].handler; idx++)
+    for (idx = 0; g_fsng_prot_list[idx].handler; idx++)
     {
-        if (strcmp(g_fmgr_prot_list[idx].name, pReqPara) == 0)
+        if (strcmp(g_fsng_prot_list[idx].name, pReqPara) == 0)
         {
-            if (PROT_IMM == g_fmgr_prot_list[idx].flag)
+            if (PROT_IMM == g_fsng_prot_list[idx].flag)
             {
-                g_fmgr_prot_list[idx].handler((void *)v_req);
+                g_fsng_prot_list[idx].handler((void *)v_req);
                 break;
             }
             else
@@ -84,7 +84,7 @@ http_request_cb(struct evhttp_request *v_req, void *v_arg)
                 }
 
                 memset(pthd, 0, sizeof(pthhandler_t));
-                pthd->handler = g_fmgr_prot_list[idx].handler;
+                pthd->handler = g_fsng_prot_list[idx].handler;
                 pthd->http = v_req;
 
                 job->job_function = server_job_function;
@@ -111,7 +111,7 @@ RSP_OUT:
         goto DEL_OUT;
     }
 
-    fmgr_http_rsp_send(v_req, pRsp);
+    fsng_http_rsp_send(v_req, pRsp);
     free(pRsp);
 
 DEL_OUT:
@@ -131,7 +131,7 @@ DEL_OUT:
  */
 void http_request_chunked_cb(struct evhttp_request *req, void *arg)
 {
-    fmgr_prot_upload_chunk_hndl(req);
+    fsng_prot_upload_chunk_hndl(req);
     return;
 }
 
@@ -145,7 +145,7 @@ void http_request_chunked_cb(struct evhttp_request *req, void *arg)
  */
 int http_request_header_cb(struct evhttp_request *req, void *arg)
 {
-    return fmgr_prot_upload_hdr_hndl(req);
+    return fsng_prot_upload_hdr_hndl(req);
 }
 
 /** 为上传文件协议的http request设置回调
@@ -184,7 +184,7 @@ void http_request_arrive_cb(struct evhttp_request *req, void *arg)
  * @param[in]
  * @return
  */
-void fmgr_http_service_thread(void)
+void fsng_http_service_thread(void)
 {
     struct event_base *base = NULL;
     struct evhttp *http = NULL;
@@ -192,7 +192,7 @@ void fmgr_http_service_thread(void)
     char sock_addr[256] = {0};
     int ret = 0;
 
-    snprintf(sock_addr, sizeof(sock_addr), "%s", "/tmp/nginx/socket/fmgr.sock");
+    snprintf(sock_addr, sizeof(sock_addr), "%s", "/tmp/nginx/socket/fsng.sock");
 
     /* 支持多线程 */
     ret = evthread_use_pthreads();
@@ -227,7 +227,7 @@ void fmgr_http_service_thread(void)
     }
 
     /* 设置请求包的回调函数 */
-    ret = evhttp_set_cb(http, "/fmgr", http_request_cb, NULL);
+    ret = evhttp_set_cb(http, "/fsng", http_request_cb, NULL);
     if (ret)
     {
         XL_DEBUG(EN_PRINT_ERROR, "set callback fail");
@@ -235,7 +235,7 @@ void fmgr_http_service_thread(void)
     }
 
     /* 为http请求设置回调 */
-    evhttp_set_req_arrive_cb("/fmgr", http_request_arrive_cb, NULL);
+    evhttp_set_req_arrive_cb("/fsng", http_request_arrive_cb, NULL);
 
     handle = evhttp_bind_unix_socket(http, sock_addr, 1);
     if (NULL == handle)
@@ -265,7 +265,7 @@ int main(int argc, char *argv[])
 
     // 创建模块APP协议处理线程
     pthread_t http_thread = 0;
-    retcode = pthread_create(&http_thread, NULL, (void *)fmgr_http_service_thread, NULL);
+    retcode = pthread_create(&http_thread, NULL, (void *)fsng_http_service_thread, NULL);
     if (retcode != 0)
     {
         XL_DEBUG(EN_PRINT_ERROR, "http service thread create fail!");

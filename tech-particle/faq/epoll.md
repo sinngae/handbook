@@ -3,7 +3,9 @@
 ## 历史
 select()追溯到4.2BSD  
 poll system从Linux 2.1.23开始支持  
-epoll API从Linux kernel 2.5.44 glibc 2.3.2开始支持  
+epoll API从Linux kernel 2.5.44 glibc 2.3.2开始支持
+
+
 
 ### epoll、select、poll的区别
 + 1.select最大并发数限制1024个，可以修改  
@@ -164,11 +166,23 @@ socket设为非阻塞，send函数虽然返回，但实际只是写到缓冲区�
 1. 该函数尽量将数据写入缓冲区再返回，返回-1表示错误。
 2. 当缓冲区满，send返回-1，errno=EAGAIN，稍等后重试，
 这样就在send_handler阻塞一段时间。
-更好的实现？操作系统支持用户进程回调函数拷贝数据到网卡？
-内核是问题本源呀
 
 **LT模式，socket可写时，一直触发可写事件**
 1. 需要写数据的时候，才把socket加入epfd，等待可写事件，写后移出epfd；
 2. 改进：一开始不把socket加入epfd，write/send返回EAGAIN再加入，在epfd事件驱动下写数据，发送后移出epfd；(可以减少一些epoll调用)
 
 **epoll调用频繁问题**
+
+
+**更好的实现？**
+操作系统支持用户进程回调函数拷贝数据到网卡？
+内核是问题本源呀
+
+windows的IOCP，真正意义上的网络异步I/O  
+process在recvfrom操作的两个处理阶段上都不能等待，也就是process调用recvfrom后立刻返回，kernel自行去准备好数据并将数据从kernel的buffer中copy到process的buffer，通知process读操作完成了，然后process继续处理。
+
+non-blocking I/O和asynchronous I/O的区别  
+non-blocking I/O仅仅要求等待数据时不阻塞即可，而asynchronous I/O要求从内核到用户进程拷贝也不阻塞。
+
+完全异步I/O的好处有待验证。
+

@@ -1,5 +1,0 @@
-Agile Software Development 敏捷软件开发
-Principles Pattern and practices 原则、模式和实践
-
-尽早地、持续地交付可工作的软件的核心目的
-

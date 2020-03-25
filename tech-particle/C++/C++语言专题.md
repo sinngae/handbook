@@ -1,5 +1,56 @@
 # C++语言专题
 
+## STL 六大组件
+1. 容器 Container  
+各种数据结构+模板机制，数据结构用于存放数据，模板用于扩展。
+2. 算法 Algorithm  
+Function+模板机制，Sort/Search/Copy/Erase/Insert算法用于处理数据，模板用于扩展。
+3. 迭代器 Iterator  
+把数据的操作封装成统一的使用指针风格的访问，泛型指针机制。（五种类型及其衍生？）
+```cpp
+operator*();
+operator->();
+operator++();
+operator--();
+/* ... */
+```
+每种容器有各自的迭代器。（C++原生指针Native Pointer（就是一般指针）也是一种迭代器）
+
+4. 仿函数 Fuctor  
+把算法的操作封装成统一的使用面向对象风格的对象（算法的策略类？Policy）,重载了operator()的`Class/Class<Template>`（或者带有参数多个）（具有函数特征的对象vs具有对象特征的函数？）。
+Policy + 模板机制，一般的函数指针也可以看作是仿函数对象。
+**smart function**
+STL标准函数对象在头文件<functional>。运算三类：算数、关系、逻辑。
+5. 适配器 Adapter  
+STL的queue和stack看似独立容器，实际封装了deque，适配出queue和stack。
+STL的反向迭代器/插入迭代器/IO流迭代器？
+STL的成员函数适配器/函数对象适配器？
+简化或者约束或者定制，提供特别的功能。
+**详细的适配器机制是怎样？**
+6. 分配器 Allocator  
+动态内存配置与管理 + 模板机制
+
+隐藏在容器后的内存管理工作是通过STL提供的一个默认的allocator实现的。用户也可以定制自己的allocator，只要实现allocator模板所定义的接口方法即可，然后通过将自定义的allocator作为模板参数传递给STL容器，创建一个使用自定义allocator的STL容器对象，如：`stl::vector<int, UserDefinedAllocator> array;`
+
++ 频繁使用操作系统的malloc，free开辟释放小块内存带来的性能效率的低下
++ 内存碎片问题，导致不连续内存不可用的浪费  
+程序中的小对象的分配极易造成内存碎片，给操作系统的内存管理带来了很大压力，系统中碎片的增多不但会影响内存分配的速度，而且会极大地降低内存的利用率。
+
+**STL默认的allocator**  
+这个allocator是一个由两级分配器构成的内存管理器，当申请的内存大小大于128byte时，就启动第一级分配器通过malloc直接向系统的堆空间分配，如果申请的内存大小小于128byte时，就启动第二级分配器，从一个预先分配好的内存池中取一块内存交付给用户，这个内存池由16个不同大小（8的倍数，8~128byte）的空闲列表组成，allocator会根据申请内存的大小（将这个大小round up成8的倍数）从对应的空闲块列表取表头块给用户。
+
+这种做法有两个优点：
++ 1)小对象的快速分配。  
+小对象是从内存池分配的，这个内存池是系统调用一次malloc分配一块足够大的区域给程序备用，当内存池耗尽时再向系统申请一块新的区域。
++ 2)避免了内存碎片的生成。  
+以内存池组织小对象的内存，从系统的角度看，只是一大块内存池，看不到小对象内存的分配和释放。
+
+问题：  
++ 内存池会带来一些内存的浪费。比如当只需分配一个小对象时，为了这个小对象可能要申请一大块的内存池。以空间换时间。
++ 内存持使用自由链表管理，被进程占用，进程退出才会释放。
+大多数情况下足够了。
+
+
 ## C++的数据结构
 结构    | 名称  | 有序无序  |
 ----- | ---- | ---- |
@@ -23,13 +74,35 @@ list是双向链表，内存空间是不连续的。
 
 ### map的数据结构
 vector封装数组，list封装了链表  
-C++ STL中标准关联容器set, multiset, map, multimap内部采用的就是一种非常高效的平衡检索二叉树：红黑树，也成为RB树(Red-Black Tree)。RB树的统计性能要好于一般的平衡二叉树(有些书籍根据作者姓名，Adelson-Velskii和Landis，将其称为AVL-树)，所以被STL选择作为了关联容器的内部结构。
+C++ STL中标准关联容器set, multiset, map, multimap内部采用的就是一种非常高效的平衡检索二叉树：红黑树，也成为RB树(Red-Black Tree)。RB树的统计性能要好于一般的平衡二叉树(平衡二叉树，一般指AVL树（根据作者姓名，Adelson-Velskii和Landis），AVL树与其他平衡二叉树的区别是算法不同)，所以被STL选择作为了关联容器的内部结构。
+
+查找算法复杂度：O(log n)  
+log 10000 约等于 14；log 20000 约等于 15；
+
+**C++的STL的map和set与C语言包装库的效率比较**  
+在许多unix和linux平台下，都有库（比如下面的isc）提供map的效果
+```cpp
+void tree_init(void **tree);
+void *tree_srch(void **tree, int (*compare)(), void *data);
+void tree_add(void **tree, int (*compare)(), void *data, void (*del_uar)());
+int tree_delete(void **tree, int (*compare)(), void *data,void (*del_uar)());
+int tree_trav(void **tree, int (*trav_uar)());
+void tree_mung(void **tree, void (*del_uar)());
+```
+许多人认为直接使用这些函数会比STL map速度快，因为STL map中使用了许多模板什么的。其实不然，它们的区别并不在于算法，而在于内存碎片。如果直接使用这些函数，需要自己去new一些节点，当节点特别多，而且进行频繁的删除和插入的时候，内存碎片就会存在。STL采用自己的Allocator分配内存，以内存池的方式来管理这些内存，会大大减少内存碎片，从而会提升系统的整体性能。把以前所有直接用isc函数的代码替换成map，程序速度基本一致，当运行很长时间后（例如后台服务程序），map的优势就会体现出来。从另外一个方面讲，使用map会大大降低编码难度，同时增加程序的可读性。
+
+### STL Allocator 内存碎片
+
 
 ### C++迭代器失效问题
 vector/deque（序列式容器）插入和删除，导致（当前及其后的）迭代器失效（数组结构导致）   
 list插入，导致迭代器失效（当前迭代器失效）  
 对于关联容器(如map, set,multimap,multiset)，删除当前的iterator，仅仅会使当前的iterator失效，只要在erase时，递增当前iterator即可。这是因为map之类的容器，使用了红黑树来实现，插入、删除一个结点不会对其他结点造成影响。erase迭代器只是被删元素的迭代器失效，但是返回值为void，所以要采用erase(iter++)的方式删除迭代器。
 
+**set和map迭代器为什么不会失效？**  
+set和map内部使用红黑树，红黑树在插入和删除后，不会为了保持平衡而做旋转么，如果旋转了，不就失效了么？
+
+set和map插入后会返回当前iter，删除时使用erase(iter++)，当前迭代器都不会失效。而红黑树旋转，其元素地址没有变化，只是元素之前的顺序发生变化。
 
 ### 2GB的数据可以存放到一个map结构中么
 抛离具体硬件和操作系统，这个问题没啥意义，32位勉强，64位就看具体内存了。  
@@ -134,8 +207,6 @@ memcpy memncpy memmove memset bcopy
 
 如有用到自己编写的动态库，保证编译环境和程序的一致
 
-
-
 ## char[]和char*的区别
 ```cpp
 char *func() {
@@ -181,3 +252,10 @@ NULL默认关闭cout，再怎么打开呢？
     float fval = 22.2;
     int a = (int)fval;  // a = 22
 ```
+
+### C内存对齐
+
+## C++ future
+**C++如何实现类似Go的Context**
+
+C++ Barrier

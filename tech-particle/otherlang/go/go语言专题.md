@@ -3,7 +3,9 @@
 然而再创造一门语言应该是简单的，难的是把一个语言用好。
 比如看到go语言的routine/垃圾回收，可以想想C++怎么实现，会在go语言和C++语言上都理解地很深。
 
+
 ## Go routine并发模型
+http://www.sizeofvoid.net/goroutine-under-the-hood/
 
 ## Go 垃圾回收机制
 

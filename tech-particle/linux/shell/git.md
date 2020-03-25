@@ -113,7 +113,7 @@ git clean -df
 # 迁移demo项目的feature/fix-xx-xx分支举例：
 # 目标仓库：git@gitlab.sinngae.cn:s_projectx/demo.git
 # 源仓库：git@test-gitlab.sinngage.cn:s_projectx/demo.git
-git clone git@gitlab.sinngae.cn:xl_onecloud_firmware/demo.git 
+git clone git@gitlab.sinngae.cn:sng_oc_firmware/demo.git 
 # 1.源仓库已存在feature/fix-xx-xx分支:
 git checkout origin/feature/fix-xx-xx -b feature/fix-xx-xx
 git remote add upstream git@test-gitlab.sinngae.cn:s_projectx/demo.git

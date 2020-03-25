@@ -55,11 +55,18 @@ zookeeper做了选举leader的优化，只有leader才能提交proposer。
 
 大规模集群的长期运行中，必然产生宕机、断网等导致master不可用的情况。master/slaver模式下，slaver快速获知并迅速切为master。zookeeper用watcher和分布式锁机制解决监控切换问题。但存在脑裂问题（假死导致的，多批节点间通讯故障，互认为已死）。
 
-怎么判断假死
+**怎么判断假死**
 zookeeper使用心跳判断节点是否活着。
 如果一些节点连上新的master，而另有一些节点连着原master，问题就严重了（裂开的zk之间数据不一致）（zk集群与zkclient判断并不完全同步造成的）
 如何避免
 slaver切换master并不立马进行，而是等待一段时间（zk定义的超时时间），确保原master获知变更且做了shutdown操作，再切换。（此间，zk集群不可用）
+
+**解决方式**
++ 允许不超过(n-1)/2的节点失效，超过则集群不可用（ZK默认）  
+leader假死时，达到（n-1）/2的followers选举出新leader并生成新epoch。假死leader恢复时，校验epoch，成为follower与新leader做数据同步。
++ 冗余通信，防止一种通信故障，多条线路
++ 共享资源，只有能访问能共享资源
++ 设置仲裁机制，比如顺延下一个节点作为leader
 
 ## 命令速记
 ```

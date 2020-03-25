@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 2.8.7)
 
 project(client)
 
-set(CMAKE_C_FLAGS "-Wno-error=format-security -DONECLOUD -D_FILE_OFFSET_BITS=64 -DLIMIT_TAG -DUBUS -DIOS11 -fPIC -pipe -I/opt/local/fdrawer_dep/include -I/opt/local/fdrawer_dep/include/utils ${CMAKE_C_FLAGS}")
-set(CMAKE_EXE_LINKER_FLAGS "-L/opt/local/fdrawer_dep/lib ${CMAKE_EXE_LINKER_FLAGS}")
+set(CMAKE_C_FLAGS "-Wno-error=format-security -D_FILE_OFFSET_BITS=64 -DLIMIT_TAG -DUBUS -fPIC -pipe -I/opt/local/dep/include -I/opt/local/dep/include/utils ${CMAKE_C_FLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS "-L/opt/local/dep/lib ${CMAKE_EXE_LINKER_FLAGS}")
 
 file(GLOB SOURCES *.c)
 add_executable(${PROJECT_NAME} ${SOURCES})
