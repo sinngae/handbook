@@ -1,5 +1,8 @@
+# Lua basis
+
+```lua
 #!/usr/bin/lua
---[[
+--[[ 注释
 --author:renzq
 --date:20171207
 --description:for fun
@@ -36,3 +39,4 @@ tbl["no"] = "hi,no"
 
 print(tbl[0])
 print(tbl["no"])
+```
