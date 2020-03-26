@@ -10,5 +10,14 @@
         + 超虚拟化
         + 操作系统虚拟化 即容器技术
 
-## docker
+## 容器
+容器的核心技术：Cgroup + Namespace
+
+容器 = cgroup + namespace + rootfs + 容器引擎
++ cgroup：资源控制
++ namespace：访问隔离
++ rootfs：文件系统隔离，镜像的本质就是一个rootfs文件
++ 容器引擎：生命周期控制
+
+### docker
 docker在同一主机的操作系统上虚拟出不同的运行时环境，支持不同环境的进程运行。比虚拟出整个操作系统的vmware和vbox更轻量级。容器完全符合沙箱机制，相互之间不会有接口。
