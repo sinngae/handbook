@@ -45,7 +45,7 @@ tcpdump -X -r a.cap
 tcpdump -i eth0 port [端口号]
 
 # ip排序
-tcpdump -n -r a.cap | wak'{print$3}'|sort -u
+tcpdump -n -r a.cap |awk '{print$3}'|sort -u
 # 只显示指定源IP
 tcpdump -n src host [ip addr] -r a.cap
 # 只显示指定目的IP
