@@ -27,3 +27,13 @@ libc，ANSI C 函数库是基本的 C 语言函数库，包含了 C 语言最基
 char buff[1024] = {0};
 scanf("%[^\n]", buff);
 ```
+
+## <stdlib.h>
+```C
+/* 随机数发生器的初始化函数
+*/
+void srand(unsigned int seed);
+/* 产生伪随机数[seed, RAND_MAX(0x7fff))间的随机整数
+*/
+int rand(void);
+```

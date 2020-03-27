@@ -3,84 +3,46 @@ C语言基础详见《C程序语言设计》
 
 本章仅记录一些常见的问题。
 
-## faq
-### 字节对齐
-自然对齐：一个变量的内存地址正好是它长度的整数倍。
-字节对齐的根本原因是CPU访问内存的线路的效率问题（比如int放在偶数地址只需一次脉冲读取，放在奇数地址需要两次脉冲读取，然后拼接在一起），自然对齐访问最快。
-一些系统对对齐要求严格，未对齐会报错。
-```c
-char ch[8];
-char *p = &ch[1];
-int i = *(int*)p; /* 运行时报错，segment error，x86上只是效率下降 */
+## libc/glibc/glib
+libc实际上是泛指实现了C标准规定的库，都是一种libc 。
+libc是Linux下的ANSI C函数库，详见[libc.md](libc.md)。
+glibc是GNU组织对libc的一种实现，是unix/linux的根基之一。
+微软也有自己的 libc实现，叫msvcrt 。
+嵌入式行业里还常用uClibc，是一个迷你版的libc 。
+
+Linux下原来的标准c库Linux libc逐渐不再被维护。Linux下面的标准c库不仅有这一个，如uclibc、klibc，以及上面被提到的Linux libc，但是glibc无疑是用得最多的。
+```sh
+# glibc version
+ldd  --version
+/lib/libc.so.6
 ```
+### glibc
+glibc是Linux下的GUN C函数库。GNU C函数库是一种类似于第三方插件的东西。glibc是linux下面C标准库的实现，即GNU C Library。glibc本身是GNU旗下的C标准库，后来逐渐成为了Linux的标准c库。glibc在/lib目录下的.so文件为libc.so.6。
 
-**正确对齐**  
-+ 1.标准数据类型  
-其地址是它长度整数倍，char 1，short 2，int/float 4, double 8，long/指针 4（x86，8 x64）
-+ 2.数组  
-按基本数据类型对齐，第一个是对齐的，其他也就是对齐的。
-+ 3.联合类型 union  
-按其成员的最大的数据类型对齐。
-+ 4.结构体 struct  (或者C++的类)
-    + 结构体变量的首地址能够被其最宽基本类型成员的大小所整除；
-    + 结构体每个成员相对于结构体首地址的偏移量都是成员大小的整数倍，如有需要编译器会在成员之间加上填充字节；
-    + 结构体的总大小为结构体最宽基本类型成员大小的整数倍，如有需要编译器会在最末一个成员之后加上填充字节。
-```c
-struct stu { 
-    char val1;
-    int val2;
-    char val3[10];
-};
-/* sizeof(stu) = 20 :
-最大的是val3长度为10，stu的首地址必须是10的整数倍，stu整个大小是10的整数倍，20；val3前的val1和val2占用10；val1后填充3个字节，val2的地址是4的倍数，后面填充2个字节；
-x86和x64相同*/
-struct stu1 {
-    char val1;
-    int val2;
-    char val3;
-};
-struct stu2 {
-    char val1;
-    double val2;
-    char val3;
-};
-/* sizeof(stu1) = 12 , sizeof(stu2) = 24
-编程中考虑节约空间，可以按长度由小到大生命结构体或类的每个成员，减少填补空间，并显现添加填补部分的提示效果。
- */
-```
+### glib
+glib是用C写的一些utilities，即C的工具库，和libc/glibc没有关系。
+glib是GTK+的基础库，它由基础类型、对核心应用的支持、实用功能、数据类型和对象系统五个部分组成。
+glib 是 Gtk+ 库和 Gnome 的基础。
+glib 可以在多个平台下使用，比如 Linux、Unix、Windows 等。
+glib 为许多标准的、常用的 C 语言结构提供了相应的替代物。 
 
-**__attribute__选项**
-```c
-struct stu3 {
-    char val1;
-    int val2;
-    char val3[10];
-} __attribute__((packed));
+glib是一个综合用途的实用的轻量级的C程序库，它提供C语言的常用的数据结构的定义、相关的处理函数，有趣而实用的宏，可移植的封装和一些运行时机能，如事件循环、线程、动态调用、对象系统等的API。GTK+是可移植的，当然glib也是可移植的，可以在linux下，也可以在windows下使用它。使用gLib2.0（glib的2.0版本）编写的应用程序，在编译时应该在编译命令中加入`pkg-config --cflags --libs glib-2.0`，如：
+`gcc pkg-config --cflags --libs glib-2.0 hello.c -o hello`
+使用glib最有名的就是GNOME了。
 
-#pragma pack(2)
-struct stu4 {
-    char val1;
-    int val2;
-    char val3[10];
-};
-#pragma pack()
+## Posix
+POSIX，Portable Operating System Interface，可移植操作系统接口，IEEE为Unix操作系统系列定义的API的标准总称，其X代表对Uinx API的传承。
+Linux逐步实现了POSIX兼容，但并没有正式加如POSIX认证。
+Windows NT部分实现了POSIX标准。
 
-// } __attribute__((aligned(1))); 实测 sizeof(stu3) = 20
-/* sizeof(stu3) = 15 ， sizeof(stu4) = 16:
-__attribute__((packed))使变量或者结构体成员使用最小的对齐方式，即对变量是一字节对齐，对域（field）是位对齐。
-*/
-```
++ Base Definitions
++ System Interfaces
++ Shell and Utilities
++ Rationale
 
-**场景**
-处理不同的CPU之间的通信时，或编写硬件驱动程序涉及寄存器的结构时候，都需按1字节对齐，即使看起来就是自然对齐的。
-隐患：
-读取1字节对齐的数据，并强制类型转换会导致以奇数地址访问偶数长度类型数据。
-
-**对齐赋值问题查找**
-+ 编译器大小端设置  
-x86上，栈由高地址增长到地址，堆反过来。
-大小端指数据的高字节再内存中的位置，与CPU内存架构相关。
-大端模式，数据高位放在内存中的低地址，方便人理解、自然，如MIPS
-小端模式，数据高位放在内存中的高地址，x86 ARM
-+ 查看是否支持非对齐访问
-+ 是否设置了对齐，或不应该设置对齐？
++ pthread
++ socket
+## Linux api
+fork
+clone
+alarm

@@ -1,3 +1,13 @@
+# C++ STD
+头文件名都不带.h后缀
+
+## C library
+C库头文件
+
+## container
+
+## input/output
+```cpp
 #include <fstream>
 #include <time.h>
 #include <stdlib.h>
@@ -18,3 +28,8 @@ int main(int argc, char *argv[])
 	fs.close();
 	return 0;
 }
+```
+
+## multi-threading
+
+## other
