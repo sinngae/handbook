@@ -10,6 +10,18 @@
         + 超虚拟化
         + 操作系统虚拟化 即容器技术
 
+## 虚拟机
+VMWare Vbox Hyper-V kvm(libvirtd)
+
+**vmware转Hyper-V**
+windows最新自带Hyper-V管理工具，之前vmware和vbox基于Hyper-V提供虚拟机功能。
+那怎么从vmware/vbox转hyper-v，如果是windows虚拟机可以使用MVMC(windows提供，把运行中的虚拟机转移)和StartWind V2V Convertor（提供磁盘文件的转换），但对于linux虚拟机两者支持都不好，最后只能关闭Hyper-V管理，然后使用vmware。
+1.把services.msc中Hyper服务禁用；
+2.控制面板，windows功能禁用Hyper服务；
+3.管理员启动cmd，执行`bcdedit /set hypervisorlaunchtype off`;
+
+**bcdedit**
+
 ## 容器
 容器的核心技术：Cgroup + Namespace
 

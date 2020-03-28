@@ -1,32 +1,28 @@
 # Docker
 
-## centos 安装docker
-1.docker要求linux内核版本在3.10以上
-```
+```sh
+# 1.centos 安装docker
+#   docker要求linux内核版本在3.10以上
 uname -r    # 查看内核版本
-```
-2.安装docker
-```
-yum -y install docker-io
-```
-3.启动docker服务
-```
-service docker start
-```
-4.测试hello-world
-```
-docker run hello-world
-```
 
-## docker使用
-```
+# 2.安装docker
+yum -y install docker-io
+
+# 3.启动docker服务
+service docker start
+
+# 4.测试hello-world
+docker run hello-world
+
+# 5.docker使用
 docker run centos:7 /bin/echo "hi,world"
 docker run -i -t centos:7 /bin/bash
-# -i 允许与容器内的标准输入交互
-# -t 在新容器内指定一个伪终端或终端
-# 可使用exit命令或CTRL+D退出容器
-docker run -d centos:7 /bin/sh -c "while true; do echo hello world; sleep 1;
-done" # 返回一串长字符，是容器ID，用来查看容器内发生了什么
+#   -i 允许与容器内的标准输入交互
+#   -t 在新容器内指定一个伪终端或终端
+#   可使用exit命令或CTRL+D退出容器
+docker run -d centos:7 /bin/sh -c "while true; do echo hello world; sleep 1; done" 
+
+# 6.返回一串长字符，是容器ID，用来查看容器内发生了什么
 docker ps                           # 查看容器在运行，-l 查询最后一次创建的容器
 docker logs [容器id|容器名]         # 查看容器的标准输出
 # -f 像tail -f 一样来输出容器的标准输出
@@ -34,9 +30,9 @@ docker logs [容器id|容器名]         # 查看容器的标准输出
 docker stop [容器id|容器名]         # 停止容器
 docker start [容器id|容器名]        # 启动容器
 docker rm [容器id|容器名]           # 删除容器
-```
+
 ### 1.容器使用
-```
+
 docker ps -a                    # 查看所有命令
 docker stats                    # 查看虚拟cpu使用io使用等
 docker top [容器id|容器名]       # 查看容器内运行情况
