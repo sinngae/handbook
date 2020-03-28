@@ -8,7 +8,10 @@
 郑重说明：该仓库中的所有内容，皆不涉及任何公司、团体及他人的机密，如有牵涉，请及时反馈给我。本人邮箱：zqren@foxmail.com，最迟一个月内回复。
 
 # 目录及文件说明
-## [read-book](read-book/README.md)
+## [code-snippet](code-snippet/README.md)
+codlet代码片段
+
+## [read-diary](read-book/README.md)
 读书笔记
 
 ## [tech-particle](tech-particle/README.md)
@@ -16,7 +19,7 @@
 部分会更新到个人网站，欢迎访问:www.sinngae.com  
 一些测试操作系统、第三方库、各种编程语言等等的小程序  
 
-## [tools](tools/README.md)
+## [toolbox](toolbox/README.md)
 常用工具、自己开发的工具等
 
 # 一点思考
