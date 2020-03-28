@@ -11,7 +11,7 @@
 ## [code-snippet](code-snippet/README.md)
 codlet代码片段
 
-## [read-diary](read-book/README.md)
+## [book-mark](book-mark/README.md)
 读书笔记
 
 ## [tech-particle](tech-particle/README.md)
