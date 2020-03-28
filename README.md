@@ -5,7 +5,6 @@
 
 人之为人，概因其思而存在。思考让我们，与万物不同。
 
-郑重说明：该仓库中的所有内容，皆不涉及任何公司、团体及他人的机密，如有牵涉，请及时反馈给我。本人邮箱：zqren@foxmail.com，最迟一个月内回复。
 
 # 目录及文件说明
 ## [code-snippet](code-snippet/README.md)
@@ -26,3 +25,13 @@ codlet代码片段
 # 一点思考
 学习网络访问，可以从curl、nginx、nmap、ping等源码入手  
 学习数据信息存储，经典数据库推荐mysql、postgresql，nosql redis，hdfs等等  
+
+
+# 本人简历
+
+Name：  Aren
+
+Email： zqren@foxmail.com
+
+Phone：13537677057
+
