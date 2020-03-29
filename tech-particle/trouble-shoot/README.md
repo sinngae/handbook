@@ -1,8 +1,14 @@
 # trouble shoot
 troube shooting?
 
-## gdb/valgrind
+## gdb/valgrind/strace
 运行时堆栈/寄存器/汇编原理/反编译
+
+pmap 打印进程的内存地址映射信息
++ -x   extended       Show the extended format. 显示扩展格式
++ -d   device         Show the device format.   显示设备格式
++ -q   quiet          Do not display some header/footer lines. 不显示头尾行
++ -V   show version   Displays version of program. 显示版本
 
 ## 打印日志
 临时侵入
