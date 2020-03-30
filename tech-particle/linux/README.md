@@ -1,8 +1,28 @@
 # linux
-本集用于记录Linux相关的api/shell命令/内核机制等
-
-## api
-OS API/POSIX API/Glibc API
+研究Linux内核
 
 ## shell
-shell命令：资源管理/网络监听/程序调试/代码编译/等等
+shell script
+
+## 内存管理
+
+## 进程管理
+
+## 信号
+
+## epoll/cgroup/coredump
+
+## gcc/git
+
+## 常用shell命令
+```sh
+## 查看cpu占用高的线程
+ps H -eo user,pid,ppid,tid,time,%cpu,cmd --sort-%cpu
+
+## 查看os版本
+cat /etc/os-release
+uname -a
+
+# win文件乱码
+iconv -f gb2312 a.txt -o a2.txt
+```

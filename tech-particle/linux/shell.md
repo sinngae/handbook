@@ -7,44 +7,31 @@
 ## 1.当命令的返回值为非零状态时，立即退出脚本的执行，而不是继续执行（很多shell默认执行）
 ## 如果想根据民工执行的返回值，输出log，则不适用此命令，而是通过exit命令来做退出
 set -e
+
+$# # 是传给脚本的参数个数
+$0 # 是脚本本身的名字
+$1 # 是传递给该shell脚本的第一个参数
+$2 # 是传递给该shell脚本的第二个参数
+$@ # 是传给脚本的所有参数的列表
+$* # 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个
+$$ # 是脚本运行的当前进程ID号
+$? # 是显示最后命令的退出状态，0表示没有错误，其他表示有错误
+
+$< # 规则中的第一个相关文件
+$^ # 所有的依赖目标的集合。以空格分隔。如果在依赖目标中有多个重复的,那个这个变量会去除重复的依赖目标,只保留一份。
+$@ # 规则的目标所对应的所有文件。表示规则中的目标文件集。在模式规则中，如果有多个目标，那么"$@"就是匹配于目标中模式定义的集合。
+
+
+# $* 和 $@
+#   都表示传递给函数或脚本的所有参数。
+#   不被双引号(" “)包含时，都以”$1" “$2"…"$n” 的形式输出所有参数。
+#   当它们被双引号(" “)包含时，”$*" 会将所有的参数作为一个整体，以"$1 $2 … $n"的形式输出所有参数；"@" 会将各个参数分开，以"$1" “$2"…"$n” 的形式输出所有参数。
+
+export          # 变量导出，所有的子makefile皆可使用
+include         # 将其他文件展开在当前位置
+override        # 忽略某个变量的赋值？
+define-endef    # 定义多个变量？
+@               # 放在行首，表示不打印此行
+
 ```
 
-## bash命令
-```sh
-## 查看cpu占用高的线程
-ps H -eo user,pid,ppid,tid,time,%cpu,cmd --sort-%cpu
-
-## 查看os版本
-cat /etc/os-release
-
-## 如何测算一个机器的io上限
-vnstat -i eth0 -l # 实时流量情况
-vnstat -i eth0 -h # 按小时查询流量情况
-vnstat -i eth0 -d # 按天数查询流量情况
-vnstat -i eth0 -m # 按月数查询流量情况
-vnstat -i eth0 -w # 按周数查询流量情况
-vnstat -i eth0 -t # 查询TOP10流量情况
-## 更多命令帮助信息可以 vnstat --help 进行查看。
-
-# top
-top
-#    us: is meaning of "user CPU time"
-#    sy: is meaning of "system CPU time"
-#    ni: is meaning of" nice CPU time"
-#    id: is meaning of "idle"
-#    wa: is meaning of "iowait" 
-#    hi: is meaning of "hardware irq"
-#    si: is meaning of "software irq"
-#    st: is meaning of "steal time"
-#    us: 用户空间占用CPU百分比
-#    sy: 内核空间占用CPU百分比
-#    ni: 用户进程空间内改变过优先级的进程占用CPU百分比
-#    id: 空闲CPU百分比
-#    wa: 等待输入输出的CPU时间百分比
-#    hi: 硬件中断
-#    si: 软件中断 
-#    st: 实时（来源http://bbs.chinaunix.net/thread-1958596-1-1.html）
-
-# win文件乱码
-iconv -f gb2312 a.txt -o a2.txt
-```
