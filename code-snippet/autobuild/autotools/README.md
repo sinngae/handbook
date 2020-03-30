@@ -13,20 +13,13 @@ autotools工具是个系列工具，主要有：aclocal、autoscan、autoconf、
 + 7.运行配置脚本configure，生成Makefile
 
 ## 解析
-名称		功能<br>		
-autoscan	autoscan是用来扫描源代码目录生成configure.scan文件的。<br>
-		configure.scan包含了系统配置的基本选项，里面都是一些宏定义。我们需要将它改名为configure.in<br>
-
-aclocal		aclocal是一个perl脚本程序。aclocal根据configure.in文件的内容，自动生成aclocal.m4文件。aclocal的定义是：<br>
-		“aclocal - create aclocal.m4 by scanning configure.ac”。生成的aclocal.m4是宏展开文件<br>
-
-autoconf	autoconf是用来产生configure文件的 <br>
-		configure.in文件的内容是一些宏，这些宏经过autoconf处理后会变成检查系统特性、环境变量、软件必须的参数的shell脚本<br>
-
-autoheader	自动生成config.h.in	在configure生成config.h时候的in文件<br>
-
-automake	我们使用automake --add-missing来产生Makefile.in <br>
-		Makefile.am是用来生成Makefile.in的，需要你手工书写<br>
+|名称|功能|
+|---|---|
+|autoscan|autoscan是用来扫描源代码目录生成configure.scan文件的。configure.scan包含了系统配置的基本选项，里面都是一些宏定义。我们需要将它改名为 `configure.in`|
+|aclocal|aclocal是一个perl脚本程序。aclocal根据configure.in文件的内容，自动生成aclocal.m4文件。aclocal的定义是：“aclocal - create aclocal.m4 by scanning configure.ac”。生成的aclocal.m4是宏展开文件|
+|autoconf|autoconf是用来产生configure文件的configure.in文件的内容是一些宏，这些宏经过autoconf处理后会变成检查系统特性、环境变量、软件必须的参数的shell脚本|
+|autoheader|自动生成`config.h.in`，在configure生成config.h时候的in文件|
+|automake|我们使用automake --add-missing来产生Makefile.in Makefile.am是用来生成Makefile.in的，需要你手工书写|
 
 ## 安装
 yum install automake
@@ -56,13 +49,13 @@ yum install automake
 | AC_CONFIG_FILES	| 生成相应的Makefile文件，不同文件夹下的Makefile通过空格分隔。例如：AC_CONFIG_FILES([Makefile,src/Makefile]) |
 | AC_OUTPUT         | 用来设定 configure所要产生的文件，如果是makefile，configure会把它检查出来的结果带入makefile.in文件产生合适的makefile。 |
 
-Automake工具会根据 configure.in 中的参量把 Makefile.am 转换成 Makefile.in文件。<br>
-最终通过Makefile.in生成Makefile文件，所以Makefile.am这个文件非常重要，定义了一些生成Makefile的规则。<br>
-1).AUTOMAKE_OPTIONS：由于GNU对自己发布的软件有严格的规范,比如必须附带许可证声明文件COPYING等，否则automake执行时会报错.automake提供了3中软件等级:foreign,gnu和gnits,供用户选择。默认级别是gnu。在本例中，使用了foreign等级,它只检测必须的文件。<br>
-2). bin_PROGRAMS =auto_test：生成的可执行文件名称，生成多个可执行文件，可以用空格隔开。<br>
-3). auto_test_SOURCES：生成可执行文件auto_test需要依赖的源文件。其中auto_test_为可执行文件的名称。<br>
-<br>
-执行automake --add-missing命令。<br>
-该命令生成 Makefile.in 文件。使用选项"--add-missing"可以让Automake自动添加一些必需的脚本文件。<br>
-如果发现一些文件不存在，可以通过手工touch命令创建。<br>
+Automake工具会根据 configure.in 中的参量把 Makefile.am 转换成 Makefile.in文件。
+最终通过Makefile.in生成Makefile文件，所以Makefile.am这个文件非常重要，定义了一些生成Makefile的规则。
+1).AUTOMAKE_OPTIONS：由于GNU对自己发布的软件有严格的规范,比如必须附带许可证声明文件COPYING等，否则automake执行时会报错.automake提供了3中软件等级:foreign,gnu和gnits,供用户选择。默认级别是gnu。在本例中，使用了foreign等级,它只检测必须的文件。
+2). bin_PROGRAMS =auto_test：生成的可执行文件名称，生成多个可执行文件，可以用空格隔开。
+3). auto_test_SOURCES：生成可执行文件auto_test需要依赖的源文件。其中auto_test_为可执行文件的名称。
+
+执行automake --add-missing命令。
+该命令生成 Makefile.in 文件。使用选项"--add-missing"可以让Automake自动添加一些必需的脚本文件。
+如果发现一些文件不存在，可以通过手工touch命令创建。
 
