@@ -11,7 +11,7 @@ pmap 打印进程的内存地址映射信息
 + -V   show version   Displays version of program. 显示版本
 
 ## 打印日志
-临时侵入
+侵入性强
 
 ## code review
 人工审查，比较低效。
