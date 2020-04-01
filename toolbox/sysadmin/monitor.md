@@ -24,8 +24,12 @@ top
 ```
 
 ## stat系列
-vmstat/iostat/mpstat/vnstat
+stat/vmstat/iostat/mpstat/vnstat
+
+dstat?
 ```sh
+stat # 查看某文件
+
 # 怎么衡量计算机的负载是高还是低
 vmstat          # 输出一条记录，子系统上次重起后到现在的平均值
 vmstat -s       # 显示各种统计计数和内存统计信息
@@ -34,8 +38,9 @@ mpstat -P ALL   # 每个cpu的使用情况都打印出来，按cpu编号
 mpstat 2 100    # 每2秒刷新一次，刷新100次
 uptime          # 打印系统总共已经运行了多长时间和系统的最近1分钟5分钟15分钟平均负载
 
-# 磁盘io 命令 
+# 磁盘io命令 
 iostat          # 查看系统io状态 -c 查看cpu信息-d磁盘信息
+# sar是sysstat的一部分
 sar -u 1 3      # 统计cpu使用情况，间隔1秒，统计3次
 sar -b 1 10
 
@@ -48,6 +53,12 @@ vnstat -i eth0 -w # 按周数查询流量情况
 vnstat -i eth0 -t # 查询TOP10流量情况
 ## 更多命令帮助信息可以 vnstat --help 进行查看。
 ```
+
+## /proc文件系统
+记录着内核统计信息
+
+## 监控其他用户
+acct/psacct 
 
 ## 其他
 free
