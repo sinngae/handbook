@@ -152,3 +152,8 @@ strncat将第2个参数拷贝到第一个参数以0为结束的字符串的后�
     jpeg_set_quality(&(jpeg_compress), quality * 10, TRUE);
     jpeg_start_compress(&(jpeg_compress), TRUE); // 当上文中的width或height为0时，该libjpeg会exit(1)导致整个进程退出。
 ```
+
+## root用户启动与普通用户启动
+root用户启动demo后关闭，dev用户再启动demo启动失败，
+经查看，是因为root用户启动kcbp创建了demo.pid文件并创建了系统消息队列和共享内存，而ctsdev用户启动的demo程序没有权限删除并重新创建它们。
+教训：设计程序，要考虑到linux环境的多用户场景，创建的文件和ipc要使用777/555权限
