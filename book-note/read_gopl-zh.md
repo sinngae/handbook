@@ -54,7 +54,7 @@ Go语言中，map实例本身是一个引用，作为参数传入函数时，被
 实现上，bufio.Scanner/ioutil.ReadFile/ioutil.WriteFile都使用*os.File的Read和Write函数这些低级函数，但bufio、ioutil的高级函数更易用。
 
 ## 1.4 GIF动画
-imort的包，只需使用最后那层单词表示。
+import的包，只需使用最后那层单词表示。
 目前常量的声明值，仅限于数字值、字符串、或布尔值。
 
 复合声明表达式：[]pack.Func{a, b, ...}和pack.Construct{t: t0},前者生成切片，后者生成struct结构体。
