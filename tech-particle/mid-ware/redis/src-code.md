@@ -84,7 +84,6 @@ Redis源码的模块划分，可分为数据结构、内存编码、数据类型
 相比于B数、BR树，提供较简单的实现和相同的搜索速度，且更少的锁，更少的rebalance开支。
 
 ### dict
-渐进式rehash
 
 ## faq
 **hyperlog log基数评估算法**  

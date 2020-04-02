@@ -41,6 +41,9 @@ Master/slave chains架构
 ## 数据结构
 string/list/set/sortedset/map
 
+
+## 渐进式rehash
+
 ## 持久化
 
 ## FAQ
