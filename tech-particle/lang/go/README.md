@@ -45,6 +45,10 @@ govendor init
 # 将GOPATH中本工程会用到的依赖包自动移动到vendor目录中
 govendor add +external
 govendor add +e
+
+# go helper
+# go get 添加包到gopath
+go get -u -v github.com/a/b
 ```
 
 ## Windows+VSCode配置Go环境
