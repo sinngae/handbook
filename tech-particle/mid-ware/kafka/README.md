@@ -54,5 +54,12 @@ kafka中，kafka优先采用2。
 1. follower只需同步消息（与consumer消费一样）
 2. leader跟踪所有follower状态，如果follower落后太多或失效，就把它从relicas队列中删除。
 3. 当所有follower都将一条消息保存成功，才称为是committed，消费者才消费得到。
-4. 至少有一个replics中的实例存活即可，
-
+4. 至少有一个replics中的实例存活即可，HBase需要多数派存活。
+5. leader失效，会选取一个up-to-date的follower，且其server上不会有太多其他leader。
+### 日志
+1. 如果一个topic名为mytopic，有2个partition，那么日志保存在mytopic_0和mytopic_1两个目录中。
+2. 日志文件中保存了一序列log-entries日志条目，每个log-entry格式为4字节的数字N表示消息的长度，N个字节的消息内容。
+3. 每个日志都有一个offset来唯一标记一条消息，offset是一个8字节的数字，标识此消息在此partition中所处的起始位置。
+4. 每个partition在物理存储层面，有多个logfile组成，称为segment。segment-file的命名为最小的offset，即起始消息的offset。所有partition中所持有的segment列表信息存储在zk中。
+5. segment文件尺寸达到一定阀值时（默认1GB），将会创建一个新文件。
+6. buffer中消息条数达到阀值，或距离最近一次flush时间差达到阀值，也会触发flush到日志文件
