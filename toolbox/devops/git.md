@@ -61,7 +61,7 @@ git log --name-status
 git commit --amend //进入修改vim界面，修改备注
 
 # 拉取远程文件
-同步远程文件，覆盖本地改动：
+#   同步远程文件，覆盖本地改动：
 git checkout -- filepath
 
 ## 分支管理 
