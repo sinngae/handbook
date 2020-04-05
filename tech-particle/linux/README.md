@@ -1,5 +1,5 @@
 # linux
-研究Linux内核
+Linux内核五大模块，进程调度模块/内存管理模块/文件系统模块/进程间通信模块/网络接口模块。
 
 ## shell
 shell script
@@ -9,6 +9,8 @@ shell script
 ## 进程管理
 
 ## 信号
+
+## 内核模块编写
 
 ## epoll/cgroup/coredump
 

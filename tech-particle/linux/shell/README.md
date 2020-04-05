@@ -6,13 +6,64 @@
 
 ## sh/fork/exec/source/(./)的区别
 
+## 环境变量
+linux是多用户操作系统，每个用户登录都有专有的一组环境变量，提供专用的运行环境。
+常见的环境变量有PATH/HOME/HISTSIZE/LOGNAME/SHELL/LANG/MAIL/PS1。
+
+### set命令
+```sh
+# set命令
+#	仅对当前脚本进程起作用，对子进程不起作用
+set			# 显示本地/当前变量
+set -[x]	# 开启x指定的模式
+set +[x]	# 关闭x指定的模式
+set -o		# 查看打开的模式
+#	常用：
+#	-f	取消使用通配符，会造成通配符匹配文件失败
+#	-e	若指令传回值不等于0，则立即退出shell
+#		如set -e；ls xxx；xxx不存在，则退出终端
+#	-m	使用监视模式
+#	-v	打印读入shell的输入行
+#	-x	执行命令前打印命令；执行指令后，打印
+```
+```txt
+# set -o返回的shell模式
+allexport      	off
+braceexpand    	on
+emacs          	on
+errexit        	off
+errtrace       	off
+functrace      	off
+hashall        	on
+histexpand     	on
+history        	on
+ignoreeof      	off
+interactive-comments	on
+keyword        	off
+monitor        	on
+noclobber      	off
+noexec         	off
+noglob         	off
+nolog          	off
+notify         	off
+nounset        	off
+onecmd         	off
+physical       	off
+pipefail       	off
+posix          	off
+privileged     	off
+verbose        	off
+vi             	off
+xtrace         	on
+```
+
+**总结set/declare/evn/export命令**
++ set 显示本地变量/当前变量/当前用户的变量
++ env 显示环境变量/当前用户的变量
++ export 显示/设置环境变量，显示当前导出成用户变量的shell变量
+
 ## shell script
 ```sh
-## 仅对当前脚本进程起作用，对子进程不起作用
-## 1.当命令的返回值为非零状态时，立即退出脚本的执行，而不是继续执行（很多shell默认执行）
-## 如果想根据民工执行的返回值，输出log，则不适用此命令，而是通过exit命令来做退出
-set -e
-
 $# # 是传给脚本的参数个数
 $0 # 是脚本本身的名字
 $1 # 是传递给该shell脚本的第一个参数
