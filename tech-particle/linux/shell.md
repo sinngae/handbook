@@ -4,6 +4,8 @@
 
 ## 流程控制
 
+## sh/fork/exec/source/(./)的区别
+
 ## shell script
 ```sh
 ## 仅对当前脚本进程起作用，对子进程不起作用
