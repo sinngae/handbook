@@ -12,6 +12,16 @@ make install # 安装到/root/bin?
 git clone https://gerrit.googlesource.com/git-repo
 cp -r git-repo /root/
 # 放到环境变量PATH中(略)
+
+# 配置
+#   本地仓库配置
+git config user.name "zqren"
+git config user.email "zqren@foxmail.com"
+#   颜色
+git config --global color.status auto
+git config --global color.diff auto
+git config --global color.branch auto
+git config --global color.interactive auto
 ```
 ## 分支说明
 + develop分支为了快速开发  
@@ -24,9 +34,6 @@ cp -r git-repo /root/
 
 ## git command
 ```sh
-### 1.本地仓库配置
-git config user.name "zqren"
-git config user.email "zqren@foxmail.com"
 # 查看Git仓库地址
 git remote -v
 
