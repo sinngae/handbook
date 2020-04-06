@@ -19,8 +19,8 @@
 + SIGCHLD - 子进程结束
 + SIGCONT - 
 + SIGSTOP - 停止（stopped）进程的执行。本信号不能被阻塞，可以用一个handler来让程序由stopped状态变为继续执行时完成特定的工作。例如，重新显示提示符。
-+ SIGTTIN
-+ SIGTTOUT
++ SIGTTIN - 后端进程请求TTY的输入
++ SIGTTOUT - 后端进程发送到TTY的输出，且被stty tostop否定
 + SIGURG
 + SIGXCPU
 + SIGXFSZ
@@ -30,6 +30,8 @@
 + SIGIO
 + SIGPR
 + SIGSYS - 非法的系统调用
++ SIGTSTP - TTY信号，一般是Ctrl-Z被按下
+
 
 ## 信号分类
 + 程序不可捕获、阻塞、或忽略的信号有:SIGKILL、SIGSTOP
