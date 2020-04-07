@@ -12,13 +12,13 @@ db2 "select name,type,creator from sysibm.systables where type='T' and name like
 # 查看表定义
 db2 "describe table [db name].[tbl name]"
 db2 "describe indexes for table [db name].[tbl name]"
-db2look -d kgdb -z db2inst1 -t "[tbl name]" -a -e -c
+db2look -d [db name] -z db2inst1 -t "[tbl name]" -a -e -c
 
 # 查询表数据
 db2 "select * from [db name].[tbl name]"
 
 # 查询优化
-db2expln -d kgdb -statement "select * from [db name].[tbl name] where id=100" -terminal
+db2expln -d [db name] -statement "select * from [db name].[tbl name] where id=100" -terminal
 
 # 事务
 db2 +c "update [db name].[tbl name] set type='2' where id=100"
