@@ -1,5 +1,5 @@
 # trouble shoot
-troube shooting?
+troube shooting?/性能调优
 
 ## gdb/valgrind/strace
 运行时堆栈/寄存器/汇编原理/反编译
@@ -25,7 +25,6 @@ pmap 打印进程的内存地址映射信息
 cppcheck
 ```
 
-
 ## 各种工具的使用
 进线程工具：gdb valgrind strace
 
@@ -36,3 +35,5 @@ cppcheck
 + fiddler
 + postman 
  
+## 性能调优
+perf
