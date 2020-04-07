@@ -25,6 +25,9 @@ set -o		# 查看打开的模式
 #	-m	使用监视模式
 #	-v	打印读入shell的输入行
 #	-x	执行命令前打印命令；执行指令后，打印
+#	-e/-x对于调试shell特别实用
+set first second third	# 依次给shell参数赋值
+echo $3 $2 $1
 ```
 ```txt
 # set -o返回的shell模式

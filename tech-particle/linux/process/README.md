@@ -109,6 +109,12 @@ pgid_t pgid = getpgid(p);   // 获取进程p的进程组ID
 */
 setpgid(pid, pgid);
 
+/* 设置进程组ID
+    如果当前进程非会话leader，设置当前进程的进程组ID为当前进程PID。
+    如果创建了一个新会话，新会话没有控制终端
+*/
+setpgrp();
+
 /* 向同一进程组的所有进程发送信号 */
 killpg(pgrp, sig);
 /* 父进程等待其所有子进程 */
