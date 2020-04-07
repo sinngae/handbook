@@ -1,20 +1,25 @@
 # linux
 Linux内核五大模块，进程调度模块/内存管理模块/文件系统模块/进程间通信模块/网络接口模块。
 
+## linux历史
+（略）
+
+## linux 内核代码
+（略）
+
 ## shell
 shell script
 
 ## 内存管理
-
-## 进程管理
-
-## 信号
+详见memory
+## 进程管理及信号
+详见process
 
 ## 内核模块编写
 
 ## epoll/cgroup/coredump
 
-## gcc/git
+## inotify
 
 ## 常用shell命令
 ```sh
