@@ -1,24 +1,22 @@
-# C++/C 知识图谱
+# C++
+C++知识图谱
 
-## C
-（略）
+## basis
+[基础知识](basis/README.md)
 
-## C++
-### libstdc++与libc++
+## libstdc++与libc++
 
-### STD
+## STD
 标准库
-#### STL
+
+### STL
 标准模板库
 
-### boost
+## boost
 准标准库
 
-### C++11
+## C++11
 C98之后新的里程碑
-
-### Lua
-简介优美的脚本语言，非常亲和C/C++
 
 ## faq
 **C/C++如何实现一个barrier？**

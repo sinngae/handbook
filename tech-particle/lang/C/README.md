@@ -1,7 +1,7 @@
 # C语言
-C语言基础详见《C程序语言设计》
 
-本章仅记录一些常见的问题。
+## basis
+[基础](basis.md)
 
 ## libc/glibc/glib
 libc实际上是泛指实现了C标准规定的库，都是一种libc 。
@@ -42,6 +42,7 @@ Windows NT部分实现了POSIX标准。
 
 + pthread
 + socket
+
 ## Linux api
 fork
 clone
