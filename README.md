@@ -7,6 +7,9 @@
 
 
 # 目录及文件说明
+## [book-noe]()
+摘录与记录（杂记）
+
 ## [code-snippet](code-snippet/README.md)
 codlet代码片段
 

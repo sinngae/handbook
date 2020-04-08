@@ -17,6 +17,10 @@ db2look -d [db name] -z db2inst1 -t "[tbl name]" -a -e -c
 # 查询表数据
 db2 "select * from [db name].[tbl name]"
 
+# 查询分页
+db2 "select * from [tbl name] fetch first [nums] rows only"
+db2 "SELECT * FROM (SELECT rownumber() OVER (ORDER BY ID) AS ROW_NEXT,tbl0.* FROM tabel0 as tbl0) AS tbl2 WHERE ROW_NEXT BETWEEN 21 and 40"
+
 # 查询优化
 db2expln -d [db name] -statement "select * from [db name].[tbl name] where id=100" -terminal
 
@@ -24,6 +28,23 @@ db2expln -d [db name] -statement "select * from [db name].[tbl name] where id=10
 db2 +c "update [db name].[tbl name] set type='2' where id=100"
 db2 +c "[sql2]"
 db2 "commit"
+
+# db2look
+#   输出DB的DDL到out.sql
+db2look -d [db name] -u [user] -e -o [out.sql]
+#   模式名
+db2look -d [db name] -z [scheme name] -e -o [out.sql]
+#   输出用户创建表的统计信息
+db2look -d [db name] -u [user] -m -o [out.sql]
+#   输出用户创建表的DDL语句，适用于W1的联合对象的DDL
+db2look -d [db name] -u [user] -e -wrapper W1 -o [out.sql]
+#   输出用户创建表的DDL语句，适用于S1的联合对象DDL
+db2look -d [db name] -u [user] -e -server S1 -o [out.sql]
+#   输出表的DDL
+db2look -d [db name] -z [scheme name] -t "T1" -a -e -c
+
+# 中文乱码？测试没有这个命令，可能是环境的问题
+db2set db2codepage=1252
 ```
 
 ## 隔离级别
