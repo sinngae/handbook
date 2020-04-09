@@ -27,9 +27,13 @@ Set-VMProcessor -VMName <VMName> -ExposeVirtualizationExtensions $true
 没能成功
 
 ### 安装
-详见：https://yq.aliyun.com/articles/221687
+详见：
 
-安装kvm：https://github.com/jaywcjlove/handbook/blob/master/CentOS/CentOS7%E5%AE%89%E8%A3%85KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%AF%A6%E8%A7%A3.md
+[阿里云教程](https://yq.aliyun.com/articles/221687)
+
+[英文教程](https://www.howtoforge.com/learning-kubernetes-locally-via-minikube-on-linux-manjaro-archlinux/)
+
+[github上教程](https://github.com/jaywcjlove/handbook/blob/master/CentOS/CentOS7%E5%AE%89%E8%A3%85KVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%AF%A6%E8%A7%A3.md)
 
 
 ### 安全策略

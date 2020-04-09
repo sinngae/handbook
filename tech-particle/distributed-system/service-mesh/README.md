@@ -1,5 +1,11 @@
 # Service Mesh
 
+## openstack
+美国NASA牵头，各IT巨头参与的OpenStack，私有云框架。
+现在美国NASA已停止Openstack开发，并迁移到aws上。
+美国国内云计算厂商前三是亚马逊AWS、微软Azure、谷歌GCP无一不是走自主研发路线，OpenStack已经势微。OpenStack是拼凑出来的，现在也面临烂尾。
+有意思的是主流云计算都是互联网公司研发，而OpenStack都是传统IT厂家如IBM/Intel/华为/思科/惠普。Openstack对传统IT也许就是换个方式卖硬件，而互联网的迭代升级和快速响应，且本身就是做大规模业务服务的，更多地是把自身积累的理念和经验外部化。
+
 ## 综合
 1.Pod Node app redis
 亲和性和反亲和性
