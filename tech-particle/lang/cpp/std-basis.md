@@ -4,8 +4,8 @@
 ## C library
 C库头文件
 
-## container
-### array
+### cctype
+isalnum/isalpha/islower/isupper/isdigit/isxdigit/iscntrl/isgraph/isspace/isblank/isprint/ispunct/tolower/toupper
 
 ## input/output
 ```cpp
@@ -32,5 +32,8 @@ int main(int argc, char *argv[])
 ```
 
 ## multi-threading
+
+## container
+### array
 
 ## other
