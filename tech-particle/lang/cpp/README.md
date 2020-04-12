@@ -1,5 +1,5 @@
 # C++
-C++知识图谱
+cpp-map C++知识图谱
 
 ## basis
 [基础知识](basis/README.md)
