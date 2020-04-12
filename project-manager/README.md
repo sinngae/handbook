@@ -17,6 +17,11 @@
 ### 程序员如何分级
 ![program-level](program-level.png)
 
++ 基础层：知道怎么用，完成分配任务，并自我练习测试提升，可以不追根究底  
+结硬寨，打呆仗
++ 进阶层：了解设计原理和思想，构建技能树和专项能力
++ 精通层：改造设计原理和思想。
+
 ### Agile Software Development 敏捷软件开发
 Principles Pattern and practices 原则、模式和实践
 
