@@ -1,17 +1,17 @@
 # Lua basis
-??????????????C/C++
+Lua??
 
 ## hiwork
 ```lua
 #!/usr/bin/lua
---[[ 注释
+--[[ ??
 --author:renzq
 --date:20171207
 --description:for fun
 --]]
+print("hi,lua"); --????
 
-print("hi,lua");
-
+-- ??
 function create_a_counter()
 	local count = 0
 	return function()
@@ -24,7 +24,7 @@ func = create_a_counter()
 print(func())
 print(func())
 
-
+-- ??????
 tab = {"hi", "lua", a=1, b=2, c=3, z=4, "bye"}
 for k,v in pairs(tab) do
 	print(k.."\t"..v)
@@ -42,3 +42,6 @@ tbl["no"] = "hi,no"
 print(tbl[0])
 print(tbl["no"])
 ```
+
+## coroutine
+Lua???api/?????/???PL?????

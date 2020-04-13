@@ -33,12 +33,14 @@ svn di
 svn merge -r m:n [path]
 # revert
 svn revert [path]
+svn revert -R . # 回退所有修改
+svn status --no-ignore | grep -E '(^\?)|(^\I)' | sed -e 's/^. *//' | sed -e 's/\(.*\)/"\1"/' | xargs rm -rf # 删除所有未trace的文件
 # tag
 svn cp trunk/ tags/platform_2020 
 # 其他
 svn ls
 svn mkdir
 svn switch [url path] # 切换仓库
-svn cleanup
+svn cleanup # svn update失败，清理锁
 # svn 钩子
 ```
