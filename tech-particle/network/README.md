@@ -9,10 +9,10 @@ TCP/IP 协议族包括 TCP 协议、IP 协议和 ICMP 协议和 HTTP 协议等
 ## 网际层
 
 
-## 传输层
+## 传输层 net-trans-layer
 TCP/IP
 
-## 应用层
+## 应用层 net-apply-layer
 
 ### HTTP超文本传输协议
 websocket 和 HTTP2中的长连接的区别与优劣？
