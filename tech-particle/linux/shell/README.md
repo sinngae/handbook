@@ -95,6 +95,7 @@ function Fun2()
 	echo "Fun2 " # 此处$$不能获取进程pid
 	#kill -s TERM $mainpid
 	kill -9 -$mainpid # 杀死整个进程组
+	#kill -9 0	# 杀死当前进程组
 	exit 2
 	echo "how" >&2
 }
@@ -116,3 +117,17 @@ sleep 20
 
 ```
 
+## 管道&xargs
+管道把上一个命令的标准输出作为下一个命令的标准输入。如果下一个命令不是从标准输入读取数据，而是从其参数读取数据，就需要xargs把上一个命令的标准输出转成下一个目标命令的参数（多个参数）。
+```sh
+seq 9	# 输出1\n2\n3...9
+seq 9|xargs	# 输出1 2 3..9
+seq 9|xargs -n3 # 输出1 2 3\n4 5 6\n7 8 9
+
+seq 9|xargs test.sh 
+# test.sh
+#	#!/bin/sh
+#	for item in $@; do
+#		cat $item
+#	done
+```

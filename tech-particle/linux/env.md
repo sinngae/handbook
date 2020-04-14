@@ -20,3 +20,5 @@ HISTSIZE        | history大小
 MAIL            | 邮箱
 LANG            | 语言
 RANDOM          | 随机数
+
+# locale

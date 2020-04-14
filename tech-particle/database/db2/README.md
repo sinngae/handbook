@@ -3,7 +3,7 @@ IBM DB2
 
 ## 常用命令
 ```sh
-db2 connect to [db name] user [user name] using [port]
+db2 connect to [db name] user [user name] using [passwd]
 
 # 搜索库/表
 db2 "list active databases"
@@ -45,6 +45,36 @@ db2look -d [db name] -z [scheme name] -t "T1" -a -e -c
 
 # 中文乱码？测试没有这个命令，可能是环境的问题
 db2set db2codepage=1252
+```
+
+```sh
+# db2命令查看
+db2 list command options
+#   db2 [option ...] [db2-command | sql-statement | 
+#       [? [phrase | message | sqlstate | class-code]]]
+#       option：-a、-c、-e{c|s}、-finfile、-lhistfile、-n、-o、-p、-rreport、-s、-t、
+#       -td;、-v、-w、-x 和 -zoutputfile。
+#   -a 显示 SQLCA                            OFF
+#   -c 自动落实                              ON
+#   -e 显示 SQLCODE/SQLSTATE                 OFF
+#   -f 读取输入文件                          OFF
+#   -l 将命令记录到历史文件中                 OFF
+#   -n 除去换行字符                          OFF
+#   -o 显示输出                              ON
+#   -p 显示 db2 交互式提示符                  ON
+#   -r 将输出报告保存到文件                   OFF
+#   -s 在命令出错时停止执行                   OFF
+#   -t 设置语句终止字符                       OFF
+#   -v 回送当前命令                           OFF
+#   -w 显示 FETCH/SELECT 警告消息             ON
+#   -x 不打印列标题                           OFF
+#   -z 将所有输出保存到输出文件                OFF
+
+# 执行sql脚本
+db2 -tvf [sql filename]
+db2 -td@ -f [sql filename]  # 以@做结束符
+db2 -svtf [sql filename]    # 常用
+
 ```
 
 ## 隔离级别
