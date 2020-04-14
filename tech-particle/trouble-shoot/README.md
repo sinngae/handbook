@@ -25,15 +25,18 @@ pmap 打印进程的内存地址映射信息
 cppcheck
 ```
 
-## 各种工具的使用
-进线程工具：gdb valgrind strace
+## linux工具
+进线程工具：gdb(基于ptrace) valgrind strace
 
-网络工具：
+## 网络工具：
 + tcpdump 
 + netwox 工具包
 + wiresharke
 + fiddler
 + postman 
  
-## 性能调优
-pprof(go语言)/perf(linux)
+## 动态追踪技术
+"进程活体分析技术"
++ Solaris的DTrace是动态追踪技术鼻祖，后来发展成一整套工具族和方法论
++ Linux内核一直没有引入DTrace，但是有perf/ftrace。RHEL引入了systemTap。后来内核引入了BPF/eBPF，基于BPF的bcc
++ pprof(go语言)
