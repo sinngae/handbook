@@ -46,6 +46,9 @@ string/list/set/sortedset/map
 
 ## 持久化
 
+## 单点性能/集群性能
+变量：机器性能/不同操作系统/value长度/redis不同配置
+
 ## FAQ
 1. **Redis事务？**  
 Redis Cluster集群中，key分配在不同的Redis节点上的，Redis的事务机制会带来集群的不可用（性能很差）。

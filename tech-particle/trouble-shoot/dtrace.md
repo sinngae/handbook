@@ -1,5 +1,5 @@
 # 动态追踪技术
-DTrace，Dynamically trace，动态追踪。
+DTrace，Dynamically trace，动态追踪。Sun开发的DTrace是动态跟踪技术的鼻祖。
 
 ## perf
 perf，linux的性能分析工具，基于linux内核子系统linux性能计数器(2.6.31首次加入，称为Performace counter，仅仅作为PMU的抽象；2.6.32中正式改名为Performance Event，可以处理所有性能相关的事件)。
@@ -27,6 +27,34 @@ tracepoint时内核源代码里散落的hook，使能后，可以在程序运行
 ```sh
 # 安装，内核高于2.6.31即可
 yum install perf
+
+# 查看所有能够触发perf采样点的事件，2.3k多种
+#   三类：硬件事件/软件事件/tracepoint事件
+perf list   # man perf-list
+
+# 输出被调用程序运行的整体情况和汇总数据
+#   task-clock              CPU时间片使用量及占用率，该值越高，说明越倾向于CPU计算型
+#   context-switches        进程切换次数及频率
+#   cpu-migrations          cpu迁移次数及频率，（CPU迁移指被调度器从一个CPU转移到另一个CPU）
+#   page-faults             页错误次数及频率
+#   cycles                  处理器时钟量
+#   instructions            机器指令量
+#   branches                
+#   branch-misses
+#   seconds time elapsed    
+#   seconds user
+#   seconds sys
+perf stat [exe file]
+perf stat -e [event] # 指定事件
+
+# 查看系统里的资源消耗“大户”
+perf top
+perf top -e [event] # 指定事件
+
+# 程序运行及汇总数据写入文件
+#   -e 指定事件
+#   -g 使能调用图(call-gragh)，堆栈记录
+perf record -e [event] [exe file] # 记录程序运行的某事件统计信息到perf.data
+perf report # 查看perf.data
 ```
 ## Dtrace
-strace的大哥？
