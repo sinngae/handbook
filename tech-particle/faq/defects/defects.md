@@ -133,8 +133,8 @@ linux上因为有OOM等，一般程序是不用检查malloc是否返回NULL。�
 
 ## snprintf/strncat
 snprintf 第2个入参为非负时起作用；
-当要写入的字符串的长度大于第2个参数时,snprintf返回的是写入的字符串的长度
-当写入的字符串的长度超过args的长度时，导致栈上申请的数组写溢出，破坏了线程栈，最终导致崩溃
+当要写入的字符串的长度大于第2个参数时,snprintf返回的是写入的字符串的长度；
+当写入的字符串的长度超过args的长度时，导致栈上申请的数组写溢出，破坏了线程栈，最终导致崩溃；
 
 realloc申请堆上的存储空间，并没有初始化为0。
 strncat将第2个参数拷贝到第一个参数以0为结束的字符串的后面；第3个参数非负时起到限制拷贝的最大长度的限制。
@@ -157,3 +157,36 @@ strncat将第2个参数拷贝到第一个参数以0为结束的字符串的后�
 root用户启动demo后关闭，dev用户再启动demo启动失败，
 经查看，是因为root用户启动kcbp创建了demo.pid文件并创建了系统消息队列和共享内存，而ctsdev用户启动的demo程序没有权限删除并重新创建它们。
 教训：设计程序，要考虑到linux环境的多用户场景，创建的文件和ipc要使用777/555权限
+
+
+## strncpy错误使用
+```c
+/* [root@localhost c]# ./test 
+qwertyuiopfghjkiqwertyuiopfghjkijkljoqeyurqurp, 0x7ffd5f20bec0, 0x7ffd5f20beb0, 0x7ffd5f20be90[root@localhost c]# 
+[root@localhost c]# cat test.c */
+#include <string.h>
+#include <stdio.h>
+
+int main() {
+  char buff[] = "qwertyuiopfghjkijkljoqeyurqurp";
+  char temp[16] = {0};
+  char tmp[] = "1234567890123456";
+  strncpy(temp, buff, sizeof(temp));
+  printf("%s, %p, %p, %p", temp, buff, temp, tmp);
+}
+/*[root@localhost c]# vim test.c
+[root@localhost c]# gcc -o test test.c
+[root@localhost c]# ./test
+qwertyuiopfghjk, 0x7ffd1cfb7480, 0x7ffd1cfb7470, 0x7ffd1cfb7450[root@localhost c]# 
+[root@localhost c]# cat test.c */
+#include <string.h>
+#include <stdio.h>
+
+int main() {
+  char buff[] = "qwertyuiopfghjkijkljoqeyurqurp";
+  char temp[16] = {0};
+  char tmp[] = "1234567890123456";
+  strncpy(temp, buff, sizeof(temp)-1);
+  printf("%s, %p, %p, %p", temp, buff, temp, tmp);
+}
+```
