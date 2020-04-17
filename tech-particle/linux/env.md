@@ -22,3 +22,23 @@ LANG            | 语言
 RANDOM          | 随机数
 
 # locale
+
+# sys
+```sh
+# 查看 "kernel version"
+cat /proc/version
+# 查看 "system version"
+lsb_release -a
+cat /etc/os-release
+cat /etc/redhat-release
+rpm -q centos-release
+uname -a
+
+# 以ls为例查看"program info"
+file /bin/ls
+# 查看机器字长
+getconf LONG_BIT
+
+# 查看 "cpu info"
+cat /proc/cpuinfo |grep name 
+```
