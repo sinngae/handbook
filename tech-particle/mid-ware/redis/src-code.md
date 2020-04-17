@@ -1,4 +1,33 @@
 # redis源码阅读
+
+## 数据结构
+应用层5种数据结构
++ string
++ hash
++ list
++ set
++ zset，sorted set
+
+7种编码方式
++ raw
++ int
++ zipmap
++ linkedlist
++ ziplist
++ intset
+
+redisObject用于表示key和value，实际包括数据类型type/编码方式encoding/数据指针ptr/虚拟内存vm/等等
+
+redis的key是string数据类型。key->string/key->hmap/key->list/key->set/key->zset
+
+string类型可以存储任何二进制数据，包括图片、序列化的对象等，最大512M。
+hash类型，key->value映射表，hget/hset/hgetall。
+list类型，按插入顺序排序，lpush/rpush/lpop/rpop/lrange。
+list实现是双向链表。
+set类型是value的无序集合，实现是hashtable，sdd/spop/smembers/sunion等，去重，可用于判断元素是否可存在。
+zset类型也是value的集合，去重，有一个优先级参数为zset排序，zadd/zrange/zrem/zcard，实现是hashmap和跳跃表。
+
+## 源码划分
 Redis源码的模块划分，可分为数据结构、内存编码、数据类型
 1. 阅读Redis的数据结构部分，位于如下文件：
 + 内存分配 zmalloc.c和zmalloc.h

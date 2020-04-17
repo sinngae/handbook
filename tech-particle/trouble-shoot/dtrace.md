@@ -1,7 +1,10 @@
 # 动态追踪技术
-DTrace，Dynamically trace，动态追踪。Sun开发的DTrace是动态跟踪技术的鼻祖。
+DTrace，Dynamical tracing，动态跟踪技术。Sun开发的DTrace是动态跟踪技术的鼻祖。
+不影响程序运行地跟踪程序运行。
 
-动态追踪技术就像中医的把脉，现代的核磁。
+动态跟踪技术就像中医的把脉，现代的核磁。
+
+计算机调试里，profiling指对应用程序的画像，描述的是程序使用CPU、内存等资源的情况。
 
 ## perf
 perf，linux的性能分析工具，基于linux内核子系统linux性能计数器(2.6.31首次加入，称为Performace counter，仅仅作为PMU的抽象；2.6.32中正式改名为Performance Event，可以处理所有性能相关的事件)。
@@ -166,5 +169,50 @@ FlameGraph/flamegraph.pl perf.folded > perf.svg
 + Differential。
 
 ## systemtap
-比perf更强大，更贴近Dtrace，需要先学习其语言。
+Linux上内核或应用程序的非功能性或功能性诊断工具，提供命令行和脚本语言，提供live analysis/programmable on-line response/whole-system symbolic access。
+
+参考 https://sourceware.org/systemtap/getinvolved.html
+
+### 内部tapset
+### 探针 probe
+### 安装
+```sh
+# install
+yum install systemtap kernel-devel yum-utils debuginfo-install kernel
+
+# 测试
+stap -ve 'probe begin { log("hello world") exit () }'
+stap -c df -e 'probe syscall.* { if (target()==pid()) log(name." ".argstr) }'
+```
+**一个stap例子**
+```sh
+#!/usr/bin/stap
+global tm;
+
+probe begin {
+    printf("Begin...\n");
+}
+
+probe process("/usr/local/nginx/sbin/nginx").function("kcbgtcr").return {
+    tm = gettimeofday_us();
+}
+probe process("/usr/local/nginx/sbin/nginx").function("kcbrls").return {
+    printf("Time:%d\n", gettimeofday_us() - tm);
+}
+```
+
+### mysql优化
+MySQL处理binlog/UNDO/REDO/DO
+
+## eBPF
+
+## go pprof
+go语言自带的profiling工具：
++ CPU profile，以一定频率采集应用程序在CPU上的数据
++ Memory profile，又称Heap profile
++ Block profile，gorotine不运行的情况，用于分析阻塞、查找死锁等性能瓶颈
++ Gorotine profile，goroutine的运行及其互相调用关系
+
+wrk压测工具/go tool pprof生成分析报告/go-torch生成火焰图/
 ## Dtrace
+（略）

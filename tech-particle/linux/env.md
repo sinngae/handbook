@@ -1,8 +1,13 @@
 # env
 
-可使用echo $变量名 查看  
++ 全部用户配置：/etc/profile
++ 当前用户配置：~/.bashrc ？ ~/.bash_profile
+
+可使用echo $变量名 查看
+
 printenv 打印变量名
 
+常用变量
 PATH              |     bin目录
 ------------------|--------------
 LD_LIBRARY_PATH   |     动态库目录
