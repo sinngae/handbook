@@ -82,5 +82,5 @@ set tbl0.x = tbl1.x, tbl1.x = tbl0.x
 where tbl0.y=y0 and tbl1.y=y1;
 
 -- 重置自增ID
-alter table tablename auto_increment=new;
+alter table tablename auto_increment=[new start];
 ```
