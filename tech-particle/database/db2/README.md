@@ -75,6 +75,8 @@ db2 -tvf [sql filename]
 db2 -td@ -f [sql filename]  # 以@做结束符
 db2 -svtf [sql filename]    # 常用
 
+# explain
+db2expln -database ttdb -statement "SELECT col1,col2 FROM ttdb.demo WHERE id=1" -terminal
 ```
 
 ## 隔离级别
