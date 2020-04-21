@@ -133,7 +133,42 @@ C++11使用override描述符修饰派生类重载函数，指示编译器该派�
 委派构造函数可以使用try包裹，并catch捕获异常，只做跟踪，更外面不被处理的话，仍会终止运行。
 
 ### 移动构造函数
-`T(T &&t) : ptr(t.ptr) { t.ptr = nullptr; }` t1从t0"偷走了"堆上分配的内存。
+C/C++一般把可以放到赋值运算左边的叫做左值lvalue，能放在右边的叫做右值rvalue。更广泛地定义是可以取地址的有名字的是左值，反之就是右值。
+
+C++11中，右值可分为两种，纯右值(prvalue)和**将亡值**(xvalue,expiring value)。
+纯右值是指临时变量或者不跟对象关联的值，比如函数返回的临时变量值(非引用的，局部变量)，运算表达式，lambda表达式，字面量值，类型转换函数的返回值。
+C++11新增的将亡值是将要被移动的对象，可以理解为纯右值的引用，比如函数返回的右值引用T&&，std::move的返回值，函数的转换为T&&的类型转换函数的返回值。(其他的都是左值，所有值必属于三者之一)
+
+
+
+```cpp
+class T {
+public:
+    T() : ptr(new int(10)) {}
+
+    T(const T & t) : ptr(new int(10)) { /* 深拷贝 */ }
+
+    T(T && t) : ptr(t.ptr) { t.ptr = nullptr; } // t1从t0"偷走了"堆上分配的内存
+private:
+    int *ptr;
+};
+
+T GetTemp() {
+    T t;
+    return t;
+}
+
+int main() {
+    /* 为了实现调用者更简洁的书写：*/
+    calc(GetTemp(), some(other(), maybe()); // 书写高效，可读性高
+
+    T a = GetTemp(); // 需要深拷贝
+
+    T & b = GetTemp(); // 左值引用
+
+    T && a = GetTemp(); // 右值引用
+} 
+```
 
 
 ## 泛型
