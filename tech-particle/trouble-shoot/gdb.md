@@ -87,3 +87,52 @@ thread apply all bt
   watch              # 在程序中设置一个监测点（即数据断点）     
   whatis             # 显示变量或函数类型 
 ```
+
+## attach
+```sh
+gdb
+(gdb)attach xxx
+(gdb)stop # 暂停子进程
+(gdb)break 137            #
+(gdb)break test.cpp:137   #
+(gdb)break Test::foo      #
+(gdb)break # 例程断点
+(gdb) # 动态库断点？
+(gdb)
+(gdb)info break # 查看断点
+(gdb)continue   # 继续
+# ... 触发断点
+(gdb)step # 单步
+(gdb)n
+```
+
+## list
+```sh
+(gdb)list [bgn],[end] # bgn->end line num code
+(gdb)list
+(gdb)list n
+(gdb)list [func]
+(gdb) # 查看文件?
+```
+
+## run
+```sh
+(gdb)set args -x
+(gdb)show args
+(gdb)run
+```
+
+## print
+```
+(gdb)print p
+(gdb)whatis p
+```
+
+## file
+```
+(gdb)search text
+(gdb)file [exe file]
+(gdb)load [so file]
+(gdb)dir [src code dir]
+(gdb)sharedlibrary [so dir]
+```
