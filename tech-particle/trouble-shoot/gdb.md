@@ -1,17 +1,17 @@
 # gdb命令
 ```sh
-set args
-
-## gdb默认反汇编为att格式指令
-# 查看反汇编指令格式
+# gdb默认反汇编为att格式指令
+#   查看反汇编指令格式
 show disassembly-flavor
-# 设置为intel
+#   设置为intel
 set disassembly-flavor intel
-# 将内存中机器码程序以指令助记符形式显示出来
+#   将内存中机器码程序以指令助记符形式显示出来
 disas/disass/disassemble [函数名|起始地址[,结束地址]]
 
-## 查看某个line的相关信息
-info line [函数名|*内存地址]
+# 查看某个line的相关信息
+info [line|函数名|*内存地址]
+#   可以查看namespace下的成员
+# info 某个文件？
 
 ni // 单步步过
 si // 单步步入
@@ -68,7 +68,7 @@ thread apply all bt
   frame              # 选择下一条continue命令的帧     
   info               # 显示与该程序有关的各种信息     
   jump               # 在源程序中的另一点开始运行     
-  kill               # 异常终止在gdb   控制下运行的程序     
+  kill               # 异常终止在gdb控制下运行的程序     
   list               # 列出相应于正在执行的程序的原文件内容     
   next               # 执行下一个源程序行，从而执行其整体中的一个函数     
   print              # 显示变量或表达式的值     
@@ -88,21 +88,38 @@ thread apply all bt
   whatis             # 显示变量或函数类型 
 ```
 
+## break
+```sh
+(gdb)info break               # 查看所有断点
+(gdb)break 137                #
+(gdb)break test.cpp:137       #
+(gdb)break Test::foo          #
+(gdb)break                    # 例程断点
+(gdb)                         # 动态库断点？
+(gdb)disable                  # 默认禁用所有断点，如果其后运行continue将不会触发断点，所以continue前应该留至少一个断点。如果被调试进程没有处理SIGINT，可以用kill -2 pid向其发送SIGINT信号。其他情况没啥好办法，所以应该尽量避免。
+(gdb)disable [break id...]    # 
+(gdb)enable [break id...]     # 使能
+(gdb)enable once [break id]   # 使能一次，下次运行禁用
+(gdb)clear # 删除当前中断的断点
+```
+
+## 流程控制
+```sh
+(gdb)c(ontinue)         # 执行到断点
+(gdb)step               # si，步入函数
+(gdb)fin(ish)           # 执行完当前函数，并打印返回值
+(gdb)return             # 立马返回，可以返回一个表达式
+```
+
 ## attach
 ```sh
 gdb
 (gdb)attach xxx
-(gdb)stop # 暂停子进程
-(gdb)break 137            #
-(gdb)break test.cpp:137   #
-(gdb)break Test::foo      #
-(gdb)break # 例程断点
-(gdb) # 动态库断点？
-(gdb)
-(gdb)info break # 查看断点
-(gdb)continue   # 继续
-# ... 触发断点
-(gdb)step # 单步
+(gdb)stop               # 暂停子进程
+(gdb)# 设置断点
+(gdb)continue           # 继续
+# ... 等待触发断点
+(gdb)n                  # 单步
 (gdb)n
 ```
 
@@ -136,3 +153,9 @@ gdb
 (gdb)dir [src code dir]
 (gdb)sharedlibrary [so dir]
 ```
+
+## faq
+### 如何打印变量的中文字符串值？
+
+# ddd
+gdb的前端，图形化界面单步调试

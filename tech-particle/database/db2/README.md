@@ -12,7 +12,7 @@ db2 "select name,type,creator from sysibm.systables where type='T' and name like
 # 查看表定义
 db2 "describe table [db name].[tbl name]"
 db2 "describe indexes for table [db name].[tbl name]"
-db2look -d [db name] -z db2inst1 -t "[tbl name]" -a -e -c
+db2look -d [db name] -z db2inst1 -t "[tbl name]" -a -e -c # 详细
 
 # 查询表数据
 db2 "select * from [db name].[tbl name]"
