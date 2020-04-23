@@ -162,8 +162,8 @@ int main() {
     calc(GetTemp(), some(other(), maybe()); // 书写高效，可读性高
 
     T a = GetTemp(); // 需要深拷贝
-    T & b = GetTemp(); // 左值引用，C++98中编译报错
-    T && a = GetTemp(); // 右值引用
+    T & b = GetTemp(); // 左值引用，C++98中报错，bool &flag = true不会报错
+    T && c = GetTemp(); // 右值引用，比a要少了一次构造析构
 
     /* 右值引用不能绑定到左值 */
     int m;
