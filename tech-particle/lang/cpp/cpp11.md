@@ -186,6 +186,34 @@ std::forward
 + forward用于实现make_pair/make_unique等一系列模板函数
 (待补充)
 
+### 隐式类型转换
+转换构造函数带来方便，也带来隐患，C++98使用explicit添加约束，使调用者只能显式转换。
+C++11把explicit约束扩大到类型转换操作符函数。
+
+### 列表初始化
+```cPP
+int brr[3] = {0};
+int brr[] = {1, 2, 3};
+int brr[] {1, 2, 3};            // C++11支持
+vector<int> v{1, 3, 5};         // ...
+map<int, int> m = {{1, 5}, {2, 6}, {3, 7}}; // ...
+
+int i(1); int i{1}; // 没有区别
+
+int *ptr = new int(1);
+long *ptr = new long{2};
+
+vector<int> func() { return {1, 3}; }
+
+MyData d;               // MyData有一个operator[](<initializer_list>)函数 和 operator=(int)函数
+d[{1, 3, 5}] = 3;       // 把第1、3、5位置，设置3
+```
++ {}初始化，同()
++ STL容器{}初始化的支持来自于`<initializer_list>`头文件，使用模板类`initializer_list<T>`作为参数，即可实现自定义的列表初始化。
++ `<initializer_list>`还可以用于普通函数参数列表，还可用于`operator []`等操作符函数，可以实现调用者的编码灵活性
++ `<initializer_list>`还可以用于函数返回值，与返回一个字面常量相同
+
+
 ## 泛型
 ### 函数模板的默认模板参数
 可以用=提供类模板/函数模板的默认模板参数及默认值。
