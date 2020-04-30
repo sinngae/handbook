@@ -26,7 +26,10 @@ C++11是C++98后，第二个具有真正意义的C++标准，增加很多现代�
 
 ## 《Understanding C++11 ReadNOte》note
 ```cpp
-vector<list<int>> veclist; // C++11 有效；C++98/03报错>>被解释为右移 
+vector<list<int>> veclist; // C++11 有效；C++98/03报错>>被解释为右移
+
+template <int i> class X {};
+X<1 >> 5> x; // C++98编译通过，C++11编译错误，吧第一个>优先和<匹配了，需要用圆括号把`1 >> 5`括起来
 
 // 强类型枚举
 enum class Color {red, blue, green};
@@ -308,7 +311,30 @@ C++11支持了局部类型/匿名类型做模板实参。如匿名结构体/联�
 
 ## 类型推导
 ### auto
-auto [var name] = [var value];
+```cpp
+auto var = expr; // 适用基本类型/结构体/类等，也支持命名空间、模板
+auto * var = expr; // 指针类型
+auto & var = expr; // 引用类型
+// C++11规定，auto不能从初始化表达式中获取cv限制符（声明为引用/指针的，保持与其引用的对象相同的属性），但是可以和cv限制符一起适用
+// cv限制符，const volatile
+const auto var = expr;
+volatile auto var = expr;
+auto x = expr1, y = expr2; // 多变量声明需要类型相同，否则编译报错
+auto i = 1, &ref = i, *ptr = &p; // 从左到右推导
+const auto *cptr = &i, j = 2;
+// ? auto k = 3, const* cptr = &k;
+auto var(expr);
+auto var{expr};
+auto var = new auto(expr);
+```
+auto并非一种类型声明，而是一个类型声明占位符placeholder。在编译时期，由编译器填充推导出的类型。
+C++11只保留auto的类型指示符永福，C++98和C语言中的`auto int i = 1`
+
+auto并非万能，受制于语法不能二义性约束(也有可能受限于开发编译器的复杂度)，人为观察很容易推导，但C++11还不支持的：
++ 不能做函数形参类型；
++ 不能做结构体的非静态成员变量类型(即使有初始值，可推导出类型，仍然被标准禁止)；
++ 不能声明auto数组，如`auto var[3]`
++ 不能使用auto实例化模板
 
 好处：
 + 简化迭代器书写（之前迭代器都很长）
@@ -321,7 +347,11 @@ auto [var name] = [var value];
 + 不能用于数组
 + 不能用于模板参数
 
+nonconst的左值引用不能和一个临时变量绑定；指针不能指向临时变量。
+
 ## decltype
-decltype([exp]) [varname] = [value];
+```cpp
+decltype(exp) var = value;
+```
 
 ## 智能指针
