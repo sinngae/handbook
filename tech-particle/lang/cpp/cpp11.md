@@ -353,5 +353,12 @@ nonconst的左值引用不能和一个临时变量绑定；指针不能指向临
 ```cpp
 decltype(exp) var = value;
 ```
+C完全不支持动态类型，C++98就有了RTTI。
+C++ RTTI，runtime type identify，C++ 运行时类型识别。该机制为每个类型产生一个type_info类型的数据，可以使用typeid查询变量的type_info信息。type_info的name成员函数返回类型名（不同的编译器会打印出不同的名字，g++打印出的带有前缀5），C++11中增加了hash_code函数返回该类型唯一的哈希值。
+is_same模板函数是在编译器获得结果，RTTI是运行时。
+C++ RTTI会带来一些运行时的开销，一些编译器提供选项关闭该特性（XL C/C++的-qnortti；GCC的-fno-rttion；微软编译器的/GR-）。
+运行时确定类型带来某些场景编码的灵活性，但更多的需要在编译期确定类型、运行期使用类型。
+
+类型推导是为了模板和泛型编程的广泛使用而引入的
 
 ## 智能指针
