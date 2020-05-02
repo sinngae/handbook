@@ -352,6 +352,27 @@ nonconst的左值引用不能和一个临时变量绑定；指针不能指向临
 ## decltype
 ```cpp
 decltype(exp) var = value;
+
+T t;
+decltype(t) var = val;
+Ta t1;
+decltype(t+t1) var = val;
+
+// 匿名的强类型枚举/union/struct数组
+enum class{E1, E2, E3}anon_e;
+union {
+    decltype(anon_e) key;
+    char *name;
+} anon_u;
+struct {
+    int d;
+    decltype(anon_u) id;
+} anon_a[100];
+
+int i;
+decltype(i) a;
+decltype((i)) b; // 编译失败
+
 ```
 C完全不支持动态类型，C++98就有了RTTI。
 C++ RTTI，runtime type identify，C++ 运行时类型识别。该机制为每个类型产生一个type_info类型的数据，可以使用typeid查询变量的type_info信息。type_info的name成员函数返回类型名（不同的编译器会打印出不同的名字，g++打印出的带有前缀5），C++11中增加了hash_code函数返回该类型唯一的哈希值。
@@ -359,6 +380,26 @@ is_same模板函数是在编译器获得结果，RTTI是运行时。
 C++ RTTI会带来一些运行时的开销，一些编译器提供选项关闭该特性（XL C/C++的-qnortti；GCC的-fno-rttion；微软编译器的/GR-）。
 运行时确定类型带来某些场景编码的灵活性，但更多的需要在编译期确定类型、运行期使用类型。
 
-类型推导是为了模板和泛型编程的广泛使用而引入的
+类型推导是为了模板和泛型编程的广泛使用而引入的。泛型编程中，类型对编写者是未知的，编译器辅助做类型推导，增加了泛型编程的适用范围和编写方式。
+auto/decltype之前，各编译器有自己的类型推导，如gcc的typeof操作符。C++11中标准化为auto/decltype。
+
++ decltype编译时从表达式推导类型，而不用取其值。
++ decltype 与 using/typedef结合使用，可以增加代码可读性（复杂类型的变量或表达式时）。
++ 匿名的强类型枚举/union/struct/struct数组  
+匿名一般是不想被复用，decltype留了后路
++ decltype扩大了泛型编程的适用范围  
+常用于推导返回类型；如果推导结果并不合法（比如数组相加），还是需要提供合法的实现。
++ decltype不能用函数名做参数，可以用函数调用表达式，但不会真的调用函数
+
+<type_traits>里std::result_of底层即使用了decltype。
+标准内部使用declval语法技巧？
+
+`decltype(expr)`:
+1. 如果expr是没带括号的标记符表达式(id-expression)或类成员访问表达式，那么decltype(expr)就是expr所命名的实体的类型。如果expr是重载函数，编译会报错。
+2. 否则，假设expr的类型是T，且是一个将亡值，则得到T&&；
+3. 否则，假设expr的类型是T，且是一个左值，则得到T&;
+4. 否则，假设expr的类型是T，则得到T;
+
+标记符表达式/id-expr：代码中除去关键字、字面量、等编译器需要使用的标记之外的，程序员自定义的标记(token)都可以是标记符(identifier)。
 
 ## 智能指针
