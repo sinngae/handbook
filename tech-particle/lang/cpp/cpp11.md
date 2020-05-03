@@ -471,6 +471,117 @@ auto pf() -> auto (*)() -> int (*)() {}
 + 简化一些函数定义，提高可读性
 
 ### for循环
+```cpp
+int arr[3] = {1, 2, 3};
+// for三元循环
+for (int i = 0; i < sizeof(arr)/sizeof(arr[0]); ++i) { /**/ }
+// for_each模板三元循环
+for_each(arr, arr + sizeof(arr)/sizeof(arr[0]), /**/);
+// C++11 基于运行时范围的for循环
+for (int & e: arr) { /**/ }
+for (int e: arr) { /**/ }   // 迭代的值不会被修改
+for (auto e: arr) { /**/ }  // 
+```
 
+可以使用基于范围的for循环的条件：
+1. for循环迭代的范围是可确定的，有begin和end函数的类/数组
+2. 迭代的对象实现++和==等操作符
 
-## 智能指针
+符合的有：
+标准库容器，如string/array/vector/deque/list/queue/map/set等。
+可以确定大小的数组。
+
+for三元循环中使用auto是迭代器类型，基于范围for循环使用auto是解引用后的对象。
+
+## 类型安全
+### 强类型枚举
+宏定义枚举；匿名/具名枚举类型枚举；静态常量枚举；
+
+C/C++枚举类型的缺陷：(非强类型作用域；允许隐式转换成整型；占用存储空间及符号不确定)
++ enum类型的名字及其成员的名字都是全局可见，与C++的ns/class/struct/union不同，不同enum类型的成员可能会冲突，而且ns中的成员可能被enum成员污染。
++ 作者想要的是枚举类型比较，但编译器执行的是枚举转化成int类型数据的比较。
++ 占用空间大小不确定，由编译器决定，visual C++使用无符号类型支持枚举；g++为不同枚举类型使用不同的类型。
+
+可以使用类内部枚举类型(封装)避免类型污染，但1.增加复杂度；2.class类型丢失POD属性；3.被系统ABI判定为结构体，不能使用寄存器传递；
+
+C++11 引入强类型枚举 strong-typed enum （强作用域；转换限制；可指定底层类型）
+```cpp
+enum class position {up, down, left, right};
+enum class position : int {up, down, left, right}; // 可指定除wchar_t以外的任何整型
+position pos = position::up;
+position pos = up; // 枚举成员的名字自动输出到父作用域
+
+/* enum struct 同 enum class
+    匿名的enum class对象，不能设置值/比较值，所以一般都是具名；匿名的enum struct可以；
+*/
+enum struct position {/**/}
+
+enum position : int {/**/} // 也是合法的
+```
+
+### 智能指针
+堆内存管理/智能指针/垃圾回收
+
+C/C++程序常会发生运行时闪退，内存占用增长等最终重启的症状，大都与堆内存管理有关。
++ 野指针：内存单元(或其一部分)已被释放，指向其的指针仍被使用。特别在该内存单元重新被分配使用，结果无法预测。
++ 重复释放：释放已经被释放的内存单元，或被重新分配的内存单元。通常会导致程序打印大量错误及诊断信息。
++ 内存泄漏：不再需要的内存单元没有及时释放。
+
+C++98中，智能指针通过模板类型auto_ptr实现；可以避免堆内存忘记释放的问题；但拷贝时返回一个左值，且不能调用delete[]，在C++11中被废弃了。
+C++11中，使用unique_ptr/shared_ptr/weak_ptr等实现智能指针。
+```cpp
+unique_ptr<int> up1(new int(11));
+unique_ptr<int> up2 = up1;              // 编译错误
+unique_ptr<int> up3 = move(up1);        // up1失效，*up1运行时错误
+up3.reset();                            // 显式释放内存，*up3运行时错误
+up1.reset();                            // do nothing
+
+shared_ptr<int> sp1(new int(22));
+shared_ptr<int> sp2 = sp1;
+sp1.reset();                            // sp2 仍可访问
+```
+*操作符访问数据；reset函数释放堆内存；
+unique_ptr是独占堆内存对象的，仅能通过move语义转移到另一个unique_ptr；
+unique_ptr是一个删除了拷贝构造函数，保留移动构造函数的指针封装类型；
+unique_ptr仅可使用右值构造；
+shared_ptr是共享堆内存对象的；
+shared_ptr使用引用计数实现，只有引用计数归零时，才会真正释放所占有的堆内存空间；
+weak_ptr可以指向shared_ptr对象，却不增加引用计数，使用其lock成员可返回一个shared_ptr对象（如果其堆内存对象已无效，则返回nullptr，可用于检测shared_ptr是否有效）；
+
+#### 垃圾回收机制
+Garbage Collection，完全不用写作者考虑回收堆内存的方案。
+两种GC：基于引用计数的GC和基于跟踪处理的GC（reference counting/tracing）。
+前者实现简单，没有程序暂停；存在环形引用的问题，引用计数的开销并不小。
+
+后者产生跟踪对象的关系图，做垃圾回收：
+1. 标记-清除（Mark-Sweep）
+该算法将程序中正在使用的对象作为根对象(栈内存对象？静态区数据？)，从根内存查找堆内存对象，并做标记。被标记的就是可达对象或活的对象，没有被标记的就是垃圾，第二步中被清理。
+一般GC时被标记的活对象不会被移动，存在大量的内存碎片问题。
+2. 标记-整理（Mark-Compact）
+标记同1，标记后将活的对象向左靠齐（向堆地址低地址对齐？），解决内存碎片问题。
+根对象及活对象等对堆内存的引用都需要更新。
+3. 标记-拷贝（Mark-Copy）
+把堆内存分为两部分From/To，从From从拷贝活对象到To，然后释放From，再反向操作一次。只是2的一种实现，且堆的内存只利用一半。
+
+#### C++垃圾回收
+C++11指针也没有解决环形引用的问题，使用上有限制。
+
+C++垃圾回收库Boehm，提供堆内存分配函数显式地替代malloc；实际使用还是有限制，可移植性也不好。
+
+2007 C++垃圾回收议案，过于复杂，而且依然有问题。
+
+C/C++的垃圾回收复杂来源于其堆指针的过分灵活，编译器即使实现了隐藏指针分析，其代价必然很大。
+```cpp
+// 指针运算
+int *p = new int;
+p += 10;                // 垃圾回收p？
+p -= 10;                // GC处理p？
+*p = 10;                // 失效？
+
+int *p = new int;
+int *q = (int*)(reinterpret_cast<long long>(p) ^ 2012);
+// GC回收p
+q = (int*) (reinterpret_cast<long long>(q) ^ 2012); 
+*q = 10;                // 失效
+```
+
