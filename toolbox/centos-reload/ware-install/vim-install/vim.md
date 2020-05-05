@@ -22,7 +22,8 @@ TAB替换为空格：
 ## 编译YouCompleteMe
 install libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev python3-dev ruby-dev lua5.1 liblua5.1-dev libperl-dev git
 
-## 
+## .vimrc
+```.vimrc
 " YouCompleteMe
 " Python Semantic Completion
 let g:ycm_python_binary_path = '/usr/bin/python3'
@@ -54,7 +55,7 @@ let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:ycm_key_invoke_completion = ['<C-Space>']
 " 停止显示补全列表(防止列表影响视野), 可以按<C-Space>重新弹出
 let g:ycm_key_list_stop_completion = ['<C-y>']
-
+```
 
 
 
