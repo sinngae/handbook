@@ -563,7 +563,7 @@ Garbage Collection，完全不用写作者考虑回收堆内存的方案。
 3. 标记-拷贝（Mark-Copy）
 把堆内存分为两部分From/To，从From从拷贝活对象到To，然后释放From，再反向操作一次。只是2的一种实现，且堆的内存只利用一半。
 
-#### C++垃圾回收
+#### C++最小垃圾回收支持
 C++11指针也没有解决环形引用的问题，使用上有限制。
 
 C++垃圾回收库Boehm，提供堆内存分配函数显式地替代malloc；实际使用还是有限制，可移植性也不好。
@@ -584,4 +584,30 @@ int *q = (int*)(reinterpret_cast<long long>(p) ^ 2012);
 q = (int*) (reinterpret_cast<long long>(q) ^ 2012); 
 *q = 10;                // 失效
 ```
+C++11标准了最小的垃圾回收支持，但各编译器没有实现的。
 
+安全派生的指针(safely derived pointer)：指向由new分配的对象或其子对象的指针。
+
+安全派生指针的安全派生操作包括：
++ 解引用上的引用，&*p
++ 具有定义的指针操作，p+1
++ 具有定义的指针转换，static_void<void *>(p)
++ 指针和整型之间的reinterpret_cast<intptr_t>(p)，intptr_t是？
+
+安全派生指针的不安全派生操作：如上文的异或(^2012)；整数转指针(*p = 10;)；
+
+C++11 通过`pointer_safety get_pointer_safety() noexcept`判定编译器是否支持最小的垃圾回收。pointer_safety::[strict/relax/preferred]分别代表支持/略支持/不支持。
+
+C++11的最小垃圾回收支持包括：
++ declare_reachable，显式通知GC某对象是可到达的，即使GC判定不可达
++ undeclare_reachable，取消可达声明
++ declare_no_pointers，声明一大片内存不存在有效的指针
++ undeclare_no_pointers，取消无有效指针声明
+
+垃圾回收带来兼容性问题，难以处理。
+
+C++11最小垃圾回收支持，仅限于系统new操作符分配内存，不包括malloc分配内存。malloc分配需要作者自己管理。
+
+## 常量表达式
+C++11中，使用constexpr关键字修饰函数表达式，称为常量表达式，使编译器在编译时对该函数表达式做计算，并获得一个常量（实际编译器可以不这么做，但要起到同样的效果）。
+常量表达式还可以是
