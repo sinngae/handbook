@@ -1,3 +1,19 @@
+# vim install
+Vim安装指南
+
+## 安装Vim
+```sh
+# 0. 最新的版本的vim需要依赖最新的python3
+./configure --prefix=/usr/local/python3/ --enable-optimizations--with-ssl-default-suites=openssl --enable-shared
+
+# 1. 编译vim
+git clone https://github.com/vim/vim.git
+./configure --enable-multibyte --enable-pythoninterp --with-python-config-dir=/usr/lib64/python2.7/config --enable-python3interp=yes --with-python3-config-dir=/usr/local/python3/lib/python3.7/config-3.7m-x86_64-linux-gnu --prefix=/usr/local/vim8
+#./configure --enable-multibyte --enable-python3interp=yes --with-python-command=/usr/bin/python --with-python-config-dir=/usr/lib64/python2.7/config  --with-python3-command=/usr/local/bin/python3  --with-python3-config-dir=/usr/local/lib/python3.7/config-3.7m-x86_64-linux-gnu --prefix=/usr/local
+```
+
+## 编辑.vimrc
+```.vimrc
 在.vimrc中添加以下代码后，重启vim即可实现按TAB产生4个空格：
 set ts=4  (注：ts是tabstop的缩写，设TAB宽4个空格)
 set expandtab
@@ -12,17 +28,20 @@ TAB替换为空格：
 :set ts=4
 :set noexpandtab
 :%retab!
-
-## 编译python
-./configure --prefix=/usr/local/python3/ --enable-optimizations--with-ssl-default-suites=openssl --enable-shared
-
-## 编译vim
-./configure --enable-multibyte --enable-pythoninterp --with-python-config-dir=/usr/lib64/python2.7/config --enable-python3interp=yes --with-python3-config-dir=/usr/local/python3/lib/python3.7/config-3.7m-x86_64-linux-gnu --prefix=/usr/local/vim8
-
-## 编译YouCompleteMe
+```
+## Vundle + YCM
+```sh
+# 1. 安装vundle
+# 2.编译YouCompleteMe
+git clone https://github.com/VundleVim/Vundle.vim.git
+git clone https://github.com/Valloric/YouCompleteMe.git
 install libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev python3-dev ruby-dev lua5.1 liblua5.1-dev libperl-dev git
+git submodule update --init --recursive
+python3 install.py --clang-completer
 
-## .vimrc
+#   3.clang llvm
+```
+.vimrc
 ```.vimrc
 " YouCompleteMe
 " Python Semantic Completion
@@ -57,16 +76,3 @@ let g:ycm_key_invoke_completion = ['<C-Space>']
 let g:ycm_key_list_stop_completion = ['<C-y>']
 ```
 
-
-
-## 格式化全局代码
-ggvG
-=
-gg回到首行
-v进入visual模式
-G全选
-=缩进
-
-## 执行shell
-:![command]
-:r![command] 输入到当前编辑

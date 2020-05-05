@@ -18,27 +18,12 @@ yum makecache
 # 安装第三方源
 yum install epel-release
 
-# 编译python
+# 编译python3
 wget https://www.python.org/ftp/python/3.7.1/Python-3.7.1.tgz
 yum groupinstall "Development Tools"
 yum -y install zlib-devel  libpcap-devel xz-devel wget openssl-devel bzip2-devel expat-devel ncurses-devel gdbm-devel readline-devel sqlite-devel tk-devel libffi libffi-devel e2fsprogs-devel libuuid-devel tcl
 # ./configure --prefix=/usr/local --enable-optimizations --with-ssl-default-suites=openssl --enable-shared --with-openssl=/usr --with-cxx-main=g++
 ./configure --prefix=/usr/local --with-ssl-default-suites=openssl --enable-shared --with-openssl=/usr
-
-# 安装Vim
-#   编译vim
-#   1.最新的版本的vim需要依赖最新的python3
-git clone https://github.com/vim/vim.git
-./configure --enable-multibyte --enable-python3interp=yes --with-python-command=/usr/bin/python --with-python-config-dir=/usr/lib64/python2.7/config  --with-python3-command=/usr/local/bin/python3  --with-python3-config-dir=/usr/local/lib/python3.7/config-3.7m-x86_64-linux-gnu --prefix=/usr/local
-
-#   2.编译YouCompleteMe
-git clone https://github.com/VundleVim/Vundle.vim.git
-git clone https://github.com/Valloric/YouCompleteMe.git
-install libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev python3-dev ruby-dev lua5.1 liblua5.1-dev libperl-dev git
-git submodule update --init --recursive
-python3 install.py --clang-completer
-
-#   3.clang llvm
 
 # core pattern
 sysctl -w kernel.core_pattern=/tmp/core-%e-%p
