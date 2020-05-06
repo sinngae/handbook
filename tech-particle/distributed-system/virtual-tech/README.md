@@ -16,9 +16,14 @@ VMWare Vbox Hyper-V kvm(libvirtd)
 **vmware转Hyper-V**
 windows最新自带Hyper-V管理工具，之前vmware和vbox基于Hyper-V提供虚拟机功能。
 那怎么从vmware/vbox转hyper-v，如果是windows虚拟机可以使用MVMC(windows提供，把运行中的虚拟机转移)和StartWind V2V Convertor（提供磁盘文件的转换），但对于linux虚拟机两者支持都不好，最后只能关闭Hyper-V管理，然后使用vmware。
-1.把services.msc中Hyper服务禁用；
-2.控制面板，windows功能禁用Hyper服务；
-3.管理员启动cmd，执行`bcdedit /set hypervisorlaunchtype off`;
++ services.msc禁止Hyper服务自动启动；
++ 打开控制面板，windows功能禁用Hyper服务；
++ 管理员启动cmd，执行`bcdedit /set hypervisorlaunchtype off`;
+
+逆操作：
++ services.msc配置Hyper被禁止的服务自动启动(其他保留手动触发即可)；
++ 打开控制面板，windows功能禁用Hyper服务；
++ 管理员启动cmd，执行`bcdedit /set hypervisorlaunchtype auto`;
 
 **bcdedit**
 

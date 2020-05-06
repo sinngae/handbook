@@ -610,4 +610,128 @@ C++11最小垃圾回收支持，仅限于系统new操作符分配内存，不包
 
 ## 常量表达式
 C++11中，使用constexpr关键字修饰函数表达式，称为常量表达式，使编译器在编译时对该函数表达式做计算，并获得一个常量（实际编译器可以不这么做，但要起到同样的效果）。
-常量表达式还可以是
+常量表达式还可以是数据声明，类的构造函数等。
+
+常量表达式函数要求：
++ 函数体只有一条return语句  
+可以有不会产生实际代码的语句，如`static_assert(0 == 0, "assert fail.")`，using指令，typedef指令等
++ 函数必须返回非void值
++ 在使用前必须已有定义
++ return返回语句中，不能使用非常量表达式的函数、全局变量，且必须是一个常量表达式
+
+对编译环境和运行环境，浮点数精度可能不同，C++11允许编译时浮点数常量表达式，但要求起精度不低于运行时浮点数常量精度。
+
+C++11中，constexpr不能用于修饰自定义类型，可用于修饰类型构造函数，不可用于修饰虚函数。用于修饰类型构造函数：
++ 函数体必须为空
++ 初始化列表只能由常量表达式来赋值
+
+常量表达式可用于模板函数，如果模板特化结果不满足常量表达式，constexpr被忽略。
+
+常量表达式支持递归，C++11中规定，常量表达式应支持512层递归。
+
+```cpp
+constexpr int f();
+int a = f();                // 运行时调用
+const int b = f();          // 运行时调用
+constexpr int c = f();      // 编译时使用，但是没有定义，报编译错误
+constexpr int f() { return 1; }
+constexpr int d = f();      // 编译时使用
+
+const int i = 1;            // 如果i在全局命名空间，则编译器一定会为i产生数据
+constexpr int j = 1;        // 如果不被其他代码显式使用，编译器可以不产生值(类似右值字面常量，具名无数据枚举值的编译时常量)
+
+struct Data {
+    constexpr Data(int d) : data(d) {}
+    constexpr int GetData() { return data; }
+private:
+    int data;
+};
+constexpr Data data {10};
+constexpr int d = data.GetData();
+```
+
+C++模板有基于编译时期运算的编程方式，称为模板元编程，template meta-programming。
+constexpr元编程，与template元编程都是图灵完备的？，而且constexpr支持浮点数计算，三元表达式，逗号表达式。
+constexpr元编程有赖编译器的支持。
+
+## 变长模板
+```cpp
+// C++ 变长函数 variadic function
+void fun(int argc, ...) {
+    va_list offset;
+    va_start(offset, argc);               // 获得变长列表句柄argv
+    for (int i = 0; i < argc; ++i) {
+        double db = va_arg(offset, double);   // 每次获取一个参数
+        /* do something */
+    }
+    va_end(offset);
+    return;
+}
+```
+printf使用没有定义转义字的非POD数据，会导致未定义行为。变长参数破坏了C++的类型安全，是个不规范的后门。
+
+C++11标准中的tuple类模板，比C++98的pair类模板更泛化。可以接受更多不同类型的组合，如`std::tuple<int, double, char, std::string> collects`；
+可以使用模板函数特化tuple模板类型，如`std::make_tuple(1, 1.2, '3', "hiwork");`；
+tuple类模板使用的既变长模板。
+```cpp
+template <typename... Elements> class tuple;
+// Elements称为模板参数包，template parameter pack
+// 上文是类型的模板参数包，也可以是非类型的，甚至模板类型的
+template <int...A> class NonTypeVarTmpl{};
+NonTypeVarTmpl<1, 0, 2> ntvt;
+
+template<typename... B> class B{};
+template<typename... A> class Tmpl : private B<A...> {};    // A...称为包扩展
+template<X, Y> xy;
+
+
+// tuple的变长模板的递归实现
+template<typename... Elements> class tuple; // tuple是变长模板
+template<typename Head, typname... Tail>
+class tuple<Head, Tail...> : private tuple<Tail...> { // 递归的偏特化定义
+    Head head;
+}
+template<> class tuple<> {};                // 递归推导到此边界为止
+
+// 函数参数包，function parameter pack
+template<typename ... T> void f(T ... args);
+```
+
+变长模板远强于变长函数。
+
+C++11中，参数包可以展开的位置：
++ 表达式
++ 初始化列表
++ 基类描述列表
++ 类成员初始化列表
++ 模板参数列表
++ 通用属性列表
++ lambda 函数的捕捉列表
+
+参数包展开的方式可以是Arg.../Arg&&...等
+```cpp
+template<typename... A> class T: private B<A>...{};
+// 解包为class T<X, Y> : private B<X>, private B<Y>{}
+template<typename... A> class T: private B<A...>{};
+// 解包为class T<X, Y> : private B<X, Y>{}
+
+// 比较复杂的
+template<typename A, typename B> struct S{};
+template<
+    template<typename... > class T, typename... TArgs
+   ,template<typename... > class U, typename... UArgs
+   > struct S< T< TArgs... >, U< UArgs... > > {};
+S<int, float> var;
+S<std::tuple<int, char>, std::tuple<float>> var;
+```
+C++11引入sizeof...，用于计算参数包中参数个数。
+
+语法上，编程上，使用变长模板都有复杂度，但对库的编写者，具有好呢好的实用性。
+C++11标准库中，tuple、emplace_back等都是变长模板类和变长模板函数。
+
+## 原子类型和原子操作
+C++11之前，C/C++主要使用pthread和OpenMP编译器指令做为多线程编程模型。
+OpenMP把线程化工作放在编译时，分割线程化区域工作放在编写时。
+C++11标准引入多线程支持，原子操作，原子类型。
+
+### 原子操作/原子类型
