@@ -7,16 +7,14 @@
 
 
 # 目录及文件说明
-## [book-noe]()
-摘录与记录（杂记）
+
+## [book-note](book-note/README.md)
+读书笔记
 
 ## [code-snippet](code-snippet/README.md)
 codlet代码片段
 
 一些测试操作系统、第三方库、各种编程语言等等的小程序  
-
-## [book-note](book-note/README.md)
-读书笔记
 
 ## [tech-particle](tech-particle/README.md)
 梳理并持续更新一些技术
