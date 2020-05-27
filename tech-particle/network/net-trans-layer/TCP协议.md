@@ -275,3 +275,8 @@ FTP协议正是这么做的。但问题在于如果数据正文中也含有\r\n�
 粘包问题是应用层没有处理好流，与TCP无关，现在已经有成熟的应用层协议如http、protobuff等处理TCP流（常常是包头记录长度，包尾/r/n；定长的包局限性较大）。
 
 服务端如何做到健壮，对于非法的客户端数据判断并处理，不影响正常的服务。
+
+## trouble shoot
+### errno 104:connetction reset by peer
+本端接收到对端的FIN信号，进入CLOSE_WAIT状态，read操作返回0表示连接关闭，一般地但仍可做write/send操作向对端发送数据。但如果对端已经进入CLOSED状态等，write/send操作会导致对端发送RST信号过来，本端接收并处理后下一次write/send操作返回104错误。
+

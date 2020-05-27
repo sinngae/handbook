@@ -35,20 +35,29 @@ go get -u -v xxx.com/abc/ab # 获取go library到$GOPATH
 + 显示文件函数结构体等定义gotags[github.com/jstemmer/gotags]，需要结合tagbar
 + 自动导入包goimports[github.com/bradfitz/goimports]
 
-### 包依赖管理工具godep govender
-govendor INSTALL & USAGE
+### 包依赖管理工具
 ```bash
+# Go 1.11 以前，包管理工具有 govendor/godep
+INSTALL & USAGE
 cd $GOPATH/src && mkdir project-test && cd project-test
 go get -u -v github.com/kardianos/govendor # 
 govendor init
-
-# 将GOPATH中本工程会用到的依赖包自动移动到vendor目录中
+#   将GOPATH中本工程会用到的依赖包自动移动到vendor目录中
 govendor add +external
 govendor add +e
-
-# go helper
-# go get 添加包到gopath
+#   go helper
+#   go get 添加包到gopath
 go get -u -v github.com/a/b
+
+# Go 1.11 以后官方推荐使用vgo
+go get -u golang.org/x/vgo
+vgo version
+vgo install # 读取go.mod文件，安装依赖
+vgo build   # 编译项目
+vgo run     # 运行项目
+vgo get     # github.com/gin-gonic/gin获取依赖包的最新版本
+vgo get github.com/gin-gonic/gin@v1.2 # 获取依赖包的指定版本
+vgo mod -vendor # 将依赖包直接放在项目的vendor目录里
 ```
 
 ## Windows+VSCode配置Go环境

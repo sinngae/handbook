@@ -247,5 +247,64 @@ isinstance(obj, Iterator)   #  返回True则是迭代器
 #   可迭代对象转迭代器
 iter(iterable_obj)
 #   迭代器是一个数据流，可以看作是有序序列（不知道其长度），却不是序列对象
-#   迭代器可以表达一个无限的数据流，如自然数，但序列对象list是不能存储所有自然数的
+#   迭代器可以表达一个无限的数据流，如自然数，但序列对象list是不能存储所有的自然数
+```
+
+## 二、函数式编程
+funtion programming -> funtional programming，函数式编程是一种抽象程度高的编程范式，纯粹的函数式编程的函数没有变量。
+纯函数，输入确定，输出就是确定的。使用变量的函数则不是。
+函数式编程甚至可以把函数作为参数或返回值。
+
+python认为越高级语言，越抽象，越贴近计算而不是计算机，执行效率固然低？
+### 1.高阶函数
+变量可以指向函数，函数的参数接收变量 -> 一个函数接收另一个函数做参数，即高阶函数(high-order-function)。
+```py
+# e.g.1. map/reduce
+map(f, [x1, x2, ..., xn]) = [f(x1), f(x2), ..., f(xn)]
+#   map把f作用在iterable对象上，返回一个iterator
+reduce(f, [x1, x2, x3, ..., xn]) = f(f(...f(f(x1, x2), x3)...), xn)
+#   reduce把f递归作用在iterable对象上，返回值
+reduce(lambda x, y: x * 10 + y, map(char2num, '12345'))
+#   '12345'转整数
+
+# e.g.2. filter
+filter(f, [x1, x2, ..., xn]) = [x1, x2, ..., xm]
+#   过滤序列
+#   质数生成器 -- begin
+def _odd_iter():
+    n = 1
+    while True:
+        n = n + 2
+        yield n
+
+def _not_divisible(n):
+    return labda x: x % n > 0
+
+def primes():
+    yield 2
+    it = _odd_iter()    # 初始序列
+    while True:
+        n = next(it)    # 返回下一个数
+        yield n
+        it = filter(_not_divisible(n), it) # 构造新序列，嵌套的filter
+
+for n in primes():
+    if n < 1000:
+        print(n)
+    else:
+        break
+#   质数生成器 -- end
+
+# e.g.3. sorted
+sorted([x1, x2, ..., xn], key=f) = iterable-obj-sorted-by-f
+```
+
+### 2.返回函数
+```py
+def lazy_fn(*args): # 定义返回函数
+    def fn():
+        return 1
+    return fn
+fun = lazy_fn(1, 2, 3)  # 每次调用返回一个新函数，即使入参相同
+fun()   # 执行
 ```
