@@ -22,6 +22,10 @@ git config --global color.status auto
 git config --global color.diff auto
 git config --global color.branch auto
 git config --global color.interactive auto
+
+#   https转ssh方式，用于go get/vgo 等需要使用ssh下载代码的时候
+#       cat ~/.gitconfig查看
+git config --global url.'git@github.com:'.insteadOf 'https://github.com/'
 ```
 ## 分支说明
 + develop分支为了快速开发  

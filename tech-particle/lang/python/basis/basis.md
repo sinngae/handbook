@@ -10,7 +10,7 @@
 
 布尔值：True/False；布尔运算：and/or/not ><=
 
-空值None是python的特殊值
+空值None是python的特殊值·
 
 列表/字典/自定义数据类型
 
