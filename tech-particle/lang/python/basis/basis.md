@@ -260,6 +260,8 @@ python认为越高级语言，越抽象，越贴近计算而不是计算机，�
 变量可以指向函数，函数的参数接收变量 -> 一个函数接收另一个函数做参数，即高阶函数(high-order-function)。
 ```py
 # e.g.1. map/reduce
+#   map(function, iterable, ...)
+#   reduce(function, iterable[, initializer])
 map(f, [x1, x2, ..., xn]) = [f(x1), f(x2), ..., f(xn)]
 #   map把f作用在iterable对象上，返回一个iterator
 reduce(f, [x1, x2, x3, ..., xn]) = f(f(...f(f(x1, x2), x3)...), xn)
@@ -268,6 +270,7 @@ reduce(lambda x, y: x * 10 + y, map(char2num, '12345'))
 #   '12345'转整数
 
 # e.g.2. filter
+#   filter(function, iterable)
 filter(f, [x1, x2, ..., xn]) = [x1, x2, ..., xm]
 #   过滤序列
 #   质数生成器 -- begin
@@ -296,6 +299,7 @@ for n in primes():
 #   质数生成器 -- end
 
 # e.g.3. sorted
+#   sorted(iterable, cmp=None, key=None, reverse=False)
 sorted([x1, x2, ..., xn], key=f) = iterable-obj-sorted-by-f
 ```
 
@@ -395,9 +399,13 @@ Anaconda是一个python数据处理和科学计算平台，内置了很多第三
 ```py
 # 基础
 class Student(object):  # Student类，继承自object
+    attr = 'study'      # 类属性，所有实例公用；
+    #   stu.attr会优先使用实例属性，再使用类属性；也可以Student.attr访问；应尽量避免类属性与实例属性重名；
+    #   通过Student.attr修改类属性？
     def __init__(self, name, score):    # 特殊方法__init__，定义了入参，则创建实例必须满足入参要求
-        self.__name = name  # 以__为前缀，成为一个私有变量，外部不能直接访问（可通过_Student__name访问）
-        self._score = score # 以_为前缀，约定为私有变量，但是外部可以访问
+        self.__name = name  # 实例属性，以__为前缀，成为一个私有变量，外部不能直接访问（可通过_Student__name访问）
+        self._score = score # 实例属性，以_为前缀，约定为私有变量，但是外部可以访问
+        self.attr = 'test'
     def printout(self): # 类的方法
         print('%s: %s' % (self.name, self.score))
 
@@ -417,4 +425,46 @@ def printout(obj):  # 定义了printout的函数的类的实例可以作为入�
     obj.printout()
 #   python的多态不要求继承，任何实现了函数要求的实例都可以
 #   python：看起来像鸭子，走起路像鸭子，就是鸭子
+
+# type函数，判定对象的类型（及types包，types函数需要import）
+type(123)           # class 'int'
+type('123')         # class 'str'
+type(None)          # type(None) 'NoneType'
+type(abs)           # class 'builtin_function_or_method'
+type(a)             # class '__main__.Animail'
+type(123) == type(456)  # 以下皆True
+type(123) == int
+type(fn) == types.FunctionType
+type(abs) == types.BuiltinFunctionType
+type(lambda x: x) == types.LambdaType
+type((x for x in range(10))) == types.GeneratorType
+
+# isinstance函数，Base -> Derived，以下默认返回True
+isinstance(derived, Base)
+isinstance([1, 2, 3], (list, tuple))    # 判定是list或tuple
+
+# dir函数，获得一个对象的所有属性和方法
+dir('abc')      # ['__add__', '__class__', ..., '__subclasshook__', 'capitalize', 'casefold', ..., 'zfill']
+#   len('abc')内部实际调用对象的__len__()方法，任何一个实现了__len__()的类的实例都可以用len(obj)调用
+#   str类型的普通函数这样调用：'AbC'.lower()
+
+# getattr()/setattr()/hasattr()，适用于变量和方法
+hasattr(obj, 'mbr')     # 判定obj是否有属性mbr
+setattr(obj, 'mbs', 9)  # 设置obj.mbs = 9
+getattr(obj, 'mbs')     # 返回obj.mbs的值，不存在则抛出异常AttributeError
+getattr(obj, 'mbt', 404)    # 返回obj.mbt，不存在则返回404
+
+# python设计了一系列内置函数，用于剖析对象。如果知道了对象信息，就不要去剖析了。
+#   这些函数常用于接口处理入参判定？
+
+# 属性动态绑定与__slots__（属性白名单？）
+from types import MethodTypes
+obj.mtd = MethodType(fn, obj)       # 实例动态绑定函数属性，仅当前实例可用，obj.mtd()
+Obj.mtd = fn                        # 类动态绑定函数属性，所有实例都可使用
+class Cls(object):
+    __slot__ = ('mbr', 'mtd')       # 限制类及实例的动态绑定；白名单外的属性动态绑定抛出异常；对派生的子类不起作用
+    pass
 ```
+### 1.多重继承
+### 2.定制类
+### 3.元类
