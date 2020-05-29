@@ -303,8 +303,118 @@ sorted([x1, x2, ..., xn], key=f) = iterable-obj-sorted-by-f
 ```py
 def lazy_fn(*args): # 定义返回函数
     def fn():
-        return 1
+        retval = f(args)
+        return retval
     return fn
 fun = lazy_fn(1, 2, 3)  # 每次调用返回一个新函数，即使入参相同
 fun()   # 执行
+
+def lazy_fn():
+    fns = []
+    for i in range(1, 4):
+        def f():
+            return i*i
+        fns.append(f)
+    return fns
+f1, f2, f3 = lazy_fn()
+f1()    # 9
+f2()    # 9
+f3()    # 9
+#   局部变量i被修改成3
+#   返回函数不要引用任何循环变量，会发生不符预期的情况
+```
+
+### 3.匿名函数
+```py
+lambda x: x*x
+# =
+def fn(x)
+    return x*x
+```
+
+### 4.装饰器
+```py
+def fn():
+    pass
+fn.__name__ # 'fn'
+
+# 装饰器，返回一个高阶函数（执行了更多）
+def log(text):  # 入参装饰
+    def decorator(func):   # 装饰器
+        @functools.wraps(func)  #   把原始func属性保存，执行后，修复回来（import functools）
+        def wrapper(*argc, **kw):
+            print('%s'%func.__name__)
+            return func(*argc, **kw)
+        return wrapper
+    return decorator
+@log('test')        # 装饰器调用，相当于fn = log('test')(fn)
+def fn():
+    pass
+
+```
+
+### 5.偏函数
+```py
+import functools
+int2 = functools.partial(int, base=2)   # 返回一个新函数，封装了int函数，并参数base默认为2
+max2 = functools.partial(max, 100)
+#   偏函数实际是将默认参数打包成**kw/*argc的形式 作为 原函数的参数
+```
+
+## 三、模块与包
+python里一个py文件就是一个模块。模块提高了代码的可维护性，可扩展性。
+
+编写模块不用考虑与其他模块命名冲突，但尽量避免与内置函数冲突。
+python按目录来组织模块，称为包管理。每个包都会有一个__init__.py文件（必须存在，否则就是普通目录），可以是空文件，以目录名为模块名。
+
+模块和包命名要遵守python变量命名规范，并避免和系统模块冲突。
+python交互环境中，执行import命令可以查看包是否存在。
+
+模块的搜索路径优先顺序：当前目录 > 内置模块目录 > 第三方模块。
+可以通过修改sys.path或设置环境变量PYTHONPATH修改。
+
+模块里（或者py文件里）一般以python脚本声明、utf-8编码声明为第一二行，后续第一个字符串被视为该模块的文档注释。__author__变量用于标记写者。
+
+python的作用域，python约定以'_'开头的为内部变量/函数，其他为公开的。__xxx__形式的为特殊变量，如__doc__是当前模块注释。
+### 1.系统模块
+```py
+import sys
+sys.argv    # 第一个元素是模块名，后续为调用参数
+sys.path    # 打印模块搜索路径，可以append修改
+
+if __name__ == '__main__'   # 判定当前py文件为运行模块，常用于执行测试
+```
+
+### 2.第三方模块
+python使用pip做包管理。
+python有丰富的第三方库，如图形库Pillow、mysql驱动库、web框架flask、科学计算numpy等。
+Anaconda是一个python数据处理和科学计算平台，内置了很多第三方库，且自带python环境。
+
+## 四、面向对象
+类是从实例抽象出来的模版
+```py
+# 基础
+class Student(object):  # Student类，继承自object
+    def __init__(self, name, score):    # 特殊方法__init__，定义了入参，则创建实例必须满足入参要求
+        self.__name = name  # 以__为前缀，成为一个私有变量，外部不能直接访问（可通过_Student__name访问）
+        self._score = score # 以_为前缀，约定为私有变量，但是外部可以访问
+    def printout(self): # 类的方法
+        print('%s: %s' % (self.name, self.score))
+
+sam = Student('sammy', 60)  # 实例，每个实例内存地址不同
+sam.test = 'test'   # python允许实例变量绑定任何数据，只和实例有关，和其类无关
+sam.__name = '134'  # 是额外绑定的数据，而不是类成员
+
+# 继承 -> 复用、多态
+#   达到对扩展开放，对修改封闭
+class SeniorStu(Student):
+    pass
+
+lizi = Senior('lizi', 54)   # 必须也满足基类实例化入参要求
+isinstance(lizi, Student)   # True
+
+def printout(obj):  # 定义了printout的函数的类的实例可以作为入参
+    obj.printout()
+#   python的多态不要求继承，任何实现了函数要求的实例都可以
+#   python：看起来像鸭子，走起路像鸭子，就是鸭子
 ```
