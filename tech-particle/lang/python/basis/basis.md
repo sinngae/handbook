@@ -462,9 +462,139 @@ from types import MethodTypes
 obj.mtd = MethodType(fn, obj)       # 实例动态绑定函数属性，仅当前实例可用，obj.mtd()
 Obj.mtd = fn                        # 类动态绑定函数属性，所有实例都可使用
 class Cls(object):
-    __slot__ = ('mbr', 'mtd')       # 限制类及实例的动态绑定；白名单外的属性动态绑定抛出异常；对派生的子类不起作用
+    __slots__ = ('mbr', 'mtd')
+    # 限制类及实例的动态绑定；白名单外的属性动态绑定抛出异常；
+    # 对派生的不使用__slots__的子类不起作用
+    # 对使用__slots__的子类，取并集
     pass
+
+# 方法转属性访问 @property，保证了参数检查，同时代码简洁
+class Stu(object):
+    @property
+    # python内置装饰器，使得可以stu.score形式访问_score
+    #   而且创建了另一个装饰器score.setter，使得可以stu.score = val设值
+    #   也可以不用setter，成为只读属性
+    def score(self):
+        return self._score
+    @score.setter
+    def score(self, value):
+        # check & set
+        self._score = value
 ```
 ### 1.多重继承
+多重继承，又称MinIn，给类增加功能。相比单一继承下去，多重继承更简明。
+```py
+class Bat(Mammal, FlyableMinIn):
+    pass
+```
 ### 2.定制类
-### 3.元类
++ `__slots__` 属性白名单
++ `__len__` len(obj)调用
++ `__str__` str(obj)调用，print调用
++ `__repr__` 返回对象剖析信息，一般可以`__repr__ = __str__`
++ `__iter__` 支持`for ... in`调用
+    + `__next__` 支持下一个，并在结束时返回StopIteration
++ `__getitem__(self, n)` obj[n]操作（`isinstance(n, slice)`判断是否是切片）
+    + `__setitem__` 设置
++ `__getattr__(self, attr)` obj.attr/obj.attr()操作（显式优先级更高）
++ `__call__` 支持obj()操作，把obj当作函数；也用作判断一个对象是否是Callable
+
+```py
+class Router(object):
+    def __init__(self, path=''):
+        self._path = path
+    def __getattr__(self, path):
+        return Router('%s/%s', % (self._path, path))
+    def __str__(self):
+        return self._path
+    __repr__ = __str__
+Router().api.v3.obj.func    # '/api/v3/obj/func
+```
+### 3.枚举类
+```py
+from enum import Enum, unique
+Month = Enum('Month', ('Jan', 'Feb', 'Mar', 'Apr'))
+Month.Jan   # 'Jan'
+for name, member in Month.__member__.items():
+    print name, member, member.value    # value是自动赋给成员的int常量
+
+@unique     # 保证没有重复值
+class Weekday(Enum):
+    Sun = 0
+    Mon = 1
+    Tue = 2
+```
+### 4.元类
+```py
+# type调用
+class Hiwork(object):
+    pass
+print(type(Hiwork)) # class 'type'
+Hiwork hw
+print(type(hw))     # class 'Hiwork'
+
+def fn(self, name='work'):
+    pass
+hi = type('Hi', (object,), dict(work=fn))   # 创建Hi class
+# python作为动态语言，运行时动态创建类，class定义是基于type调用实现
+#   type调用和class定义一样，一般使用class定义
+
+# metaclass
+#   metaclass惯例用Metaclass做后缀
+#   metaclass是类的模版，从type而不是object派生
+class ListMetaClass(type):
+    def __new__(cls, name, bases, attrs): 
+        # cls - 当前创建的类的对象
+        # name - 类的名字
+        # bases - 类继承的父类集合
+        # attrs - 类的方法集合
+        attrs['add'] = lambda self, value: self.append(value)
+        return type.__new__(cls, name, bases, attrs)
+#   派生类用metaclass关键字指示继承自模版，python解释器在创建派生类时通过元类的__new__创建对象
+#   可以通过修改元类的定义（添加新方法，修改旧方法），来修改派生类的定义
+#   相比直接修改派生类的属性，或修改基类的属性，动态修改丰富了继承的灵活
+class MyList(list, metaclass=ListMetaclass):
+    pass
+#   MyList就有了add()方法（普通list没有）
+#   class继承和元类的区别？object和type的区别？
+#   python哲学，一切都是对象，变量、函数、类等等。一切类都是继承自object？都是继承自type？object和type是一体的么？却别是什么
+```
+```txt
+class，metaclass，instance，subclass，base
+以下成立：
+对任意的A，A是instance（推论：任意class也是instance）
+对任意A，存在B，使得B是A的class
+A是class 定义为 从A可以创建B（直接或间接），使得B是A的instance
+A是B的metaclass 等价于 B是class，且A是B的class（也就是class的class）
+A是metaclass等价于A是class，且从A创建的instance B是class
+
+推论：
+对任意A是class，存在B使得B是A的metaclass
+type的metaclass是type自己
+
+对A和B是class，A是B的base等价于B是A的subclass（这里为了防歧义规定A不是A的subclass，可能与iasubclass不同）
+A是B的base，则B不是A的base
+A是B的instance当且仅当：B是A的class，或B是A的class的base
+
+object是所有其他class的base（推论：任意A是object的instance，包括object）
+推论：没有类是object的base
+
+type是所有其他metaclass的base
+推论：object是type的base，type是object的metclass
+type是type的class/metaclass
+type是type的instance
+object是object的instance
+type是object的instance
+object是type的instance
+注意：metaclass的base不一定是metaclass
+class与instance，base与subclass只是两种正交的关系，它们通过isinstance相互联系，在Python中并不要求它们有先后顺序
+```
+真让人头大的python继承和元类
+
+**python允许环形继承，继承是规则，运行时会无限运行。**
+
+```txt
+元类最经典的用法是数据库ORM
+ORM对象从Model基类继承了StringField/IntegerField等
+Field派生了StringField/IntegerField等
+```
