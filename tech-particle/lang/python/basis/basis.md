@@ -593,8 +593,11 @@ class与instance，base与subclass只是两种正交的关系，它们通过isin
 
 **python允许环形继承，继承是规则，运行时会无限运行。**
 
-```txt
-元类最经典的用法是数据库ORM
-ORM对象从Model基类继承了StringField/IntegerField等
-Field派生了StringField/IntegerField等
-```
+[元类最经典的用法是数据库ORM](python-orm.md)
+
+metaclass是python中非常具有魔术性的对象，可以改变类创建时的行为。功能强大，更需谨慎。
+
+## 错误、调试和测试
+功能性错误，入参合法性校验，磁盘满、网络断开之类的异常。
+为了处理他们，python有一套异常处理机制，还有pdb调试，还有测试用例编写。
+### try-except-finally机制
