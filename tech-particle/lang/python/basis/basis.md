@@ -597,7 +597,74 @@ class与instance，base与subclass只是两种正交的关系，它们通过isin
 
 metaclass是python中非常具有魔术性的对象，可以改变类创建时的行为。功能强大，更需谨慎。
 
-## 错误、调试和测试
+## 五、错误、调试和测试
 功能性错误，入参合法性校验，磁盘满、网络断开之类的异常。
 为了处理他们，python有一套异常处理机制，还有pdb调试，还有测试用例编写。
 ### try-except-finally机制
+```py
+try:                                # 捕获区
+    val = 10/vint
+except ZeroDivisionError as ex:     # 捕获指定错误
+    print ex
+except Exception as ex:             # 捕获所有的异常，除了ZeroDivisionError会在上面被捕获
+    print ex
+    raise                           # 继续上抛
+    raise ValueError('input error') # 把一种错误类型转另一种
+else:                               # 无错误执行
+    print 'no error'
+finally:                            # 最后，必然执行，即使有return语句
+    print 'final'
+
+class FooError(ValueError):         # 自定义类型
+    pass
+# 只有在必要时才自定义错误，尽量使用python内置错误类型
+
+raise FooError('invalid valid')     # 抛出错误
+```
+
+所有的错误都是从BaseException继承，UnicodeError是ValueError的子类。
+
+在适当的位置捕获错误，靠近错误发生的地方捕获处理。
+
+### 调试
+```py
+# 断言
+assert(expr)    # expr=false 会抛出AssertError。
+#   `python -O test.py`关闭断言（不是0）。
+
+# logging
+import logging
+logging.basicConfig(level=logging.INFO, filename='demo.log')
+logging.info('hi, log')
+
+# pdb
+#   `python -m pdb test.py`，部分操作同gdb，l查看代码，p打印变量
+import pdb
+pdb.set_trace() # 设置断点
+#   pycharm/vscode支持python单步调试，设置断点
+```
+### 单元测试
+mylib_test.py
+```py
+import unittest
+from mylib import lib
+class TestLib(unittest.TestCase):
+    def test_init(self):        # 以test开头的测试方法，测试的时候被执行
+        assertEqual(lib.var, 0) # 常用断言
+        assertTrue('')
+        with self.assertRaises(KeyError):       # 期待被测试代码抛出指定Error
+            val = dict['test']
+        pass
+    def test_attr1(self):
+        pass
+# `python -m unittest mylib_test.py`（可批量运行多个单元测试）或
+if __name__ == '__main__':  # 正常python脚本
+    unittest.main()
+# python mylib_test.py
+
+# setUp & tearDown
+#   unittest.main()先调用setUp，再执行test_前缀函数，再执行tearDown函数。
+#   常用于数据库连接
+
+# doctest也非常有用，略
+```
