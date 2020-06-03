@@ -668,3 +668,46 @@ if __name__ == '__main__':  # 正常python脚本
 
 # doctest也非常有用，略
 ```
+
+## IO 编程
+```py
+# 文件读写
+#   open函数打开file-like object，如文件、内存字节流、网络流、自定义流等，只要有read函数即可
+with open('test.txt', 'b') as f:    # 同try-except-finally一样，'w' - 写；'r' - 读； 'a' - 追加；
+    print f.read()
+
+f.read()              # 读取所有
+f.readlines()         # 读取所有，返回list，常用于读取配置文件
+f.read(size)          # 每次读取最多size字节
+f.readline()          # 每次读取一行
+
+open('test.jpg', 'rb')              # 打开二进制文件
+open('test.txt', 'r', encoding='gbk')   # 指定编码
+
+f.write('abc')
+
+# StringIO/BytesIO
+from io import StringIO, BytesIO
+f = StringIO()  # 可像文件一样读写的内存对象，操作str
+f.getvalue()    # 获得写入后的内容
+f = BytesIO()   # 可像文件一样读写的二进制内存对象，操作bytes
+f.write('中文'.encode('utf-8'))
+
+# 文件和目录操作
+import os
+os.name         # 操作系统类型：posix - unix/macos/linux； nt - windows；
+os.uname        # 系统信息
+os.environ      # 环境变量
+os.environ.get('PATH', 'default info')
+os.path.abspath('.')
+os.mkdir(apath)
+os.rmdir(apath)
+ndpath = os.path.join('/users/au', 'work')  # 拼接路径，不要只用str拼接，使用join拼接，可以正确处理不同操作系统的路径分隔符
+res = os.path.split('/dir/path/test.txt')   # 获取目录路径和文件名('/dir/path', 'test.txt')
+res = os.path.splitext('/dir/path/test.txt')# 获取前缀和后缀('/dir/path/test', '.txt')
+os.rename('abc', 'def')
+os.remove('abc')
+# shutil提供了copyfile函数，可以当作os模块的补充
+[x for x in os.listdir('.') if os.path.isdir(x)]    # 当前目录所有文件夹
+[x for x in os.listdir('.') if os.path.isfile(x) and os.path.spliext(x)[1]=='.py']  # 当前目录所有.py文件
+```
