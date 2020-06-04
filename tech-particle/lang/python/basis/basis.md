@@ -669,7 +669,7 @@ if __name__ == '__main__':  # 正常python脚本
 # doctest也非常有用，略
 ```
 
-## IO 编程
+## 六、IO 编程
 ```py
 # 文件读写
 #   open函数打开file-like object，如文件、内存字节流、网络流、自定义流等，只要有read函数即可
@@ -710,4 +710,41 @@ os.remove('abc')
 # shutil提供了copyfile函数，可以当作os模块的补充
 [x for x in os.listdir('.') if os.path.isdir(x)]    # 当前目录所有文件夹
 [x for x in os.listdir('.') if os.path.isfile(x) and os.path.spliext(x)[1]=='.py']  # 当前目录所有.py文件
+
+# 序列化 反序列化
+#   python中成为pickling/unpickling，其他语言中称为serialization/marshalling/flattening等
+#   内存中的数据是散开的，序列化后（集合起来），可以存储到磁盘或传输到网络（走IO）
+import pickle   # 只能用于python，其他语言并不支持的格式
+d = dict(name='sam', age=12, score=20)
+bstr = pickle.dumps(d)     # b'a string of binary bits'，把任意对象序列化为一个bytes
+with open('dump.txt', 'wb') as f:
+    pickle.dump(d, f)       # 把对象序列化写入文件
+#   反序列化
+dictobj = pickle.loads(bstr)
+with open('dump.txt', 'rb') as f:
+    dictobj = pickle.load(f)
+import json # 操作同pickle，但不是所有对象都可以json序列化，比如自定义类型会报错TypeError
+class Stu(object):
+    pass
+def stu2dict(stu):
+    return {
+        'name': stu.name,
+        'age': stu.age,
+        'score': stu.score
+    }
+dictobj = json.dumps(s, default=stu2dict)
+dictobj = json.dumps(s, default=lambda obj: obj.__dict__)    # 使用class.__dict__
+def dict2stu(d):
+    return Stu(d['name'], d['age'], d['score'])
+stuobj = json.loads(json_str, object_hook=dict2stu)
 ```
+
+## 七、常用的内置模块和第三方模块
+### 常用的内置模块
+datetime/collections/base64/struct/hashlib/hmac/itertools/contextlib/urllib/XML/HTMLParser
+### 常用的第三方模块
+Pillow/requests/chardet/psutil
+
+## 八、其他主题
+进程线程/协程/异步IO/正则表达式
+图形界面/网络编程/电子邮件/访问数据库/web开发/嵌入式？
