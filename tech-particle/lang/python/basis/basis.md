@@ -748,3 +748,57 @@ Pillow/requests/chardet/psutil
 ## 八、其他主题
 进程线程/协程/异步IO/正则表达式
 图形界面/网络编程/电子邮件/访问数据库/web开发/嵌入式？
+### 进程线程
+```py
+import os
+pid = os.fork() # 创建子进程，仅unix like
+pid = os.getpid()   # 获取pid
+
+from multiprocessing import Process, Pool
+p = Process(target=func, args=('test')) # 1.
+p.start()
+p.join()
+
+pool = Pool(4)  # 默认大小是CPU核数
+for i in range(5):
+    pool.apply_async(long_time_func, args=(i,))
+pool.close()
+pool.join()
+
+import subprocess
+r = subprocess.call(['nslookup', 'www.python.org'])
+
+import subprocess
+print('$ nslookup')
+p = subprocess.Popen(['nslookup'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+output, err = p.communicate(b'set q=mx\npython.org\nexit\n')
+print(output.decode('utf-8'))
+print('Exit code:', p.returncode)
+# 相当于
+# nslookup
+#   set q=mx
+#   python.org
+#   exit
+
+import threading
+threading.current_thread().name #   当前线程名，main默认为MainThread
+t = threading.Thread(target=func, name='func')
+t.start()
+t.join()
+
+lock = threading.Lock()
+lock.acquire()
+try:
+    change(n)
+finally:
+    lock.release
+
+local_var = threading.local()   # thread局域的全局
+```
+python启动与CPU核心数量相同的N个线程，在4核CPU上可以监控到CPU占用率仅有102%，即仅使用了一核。用C/C++写相同的死循环，直接可以把全部核心跑满，4核就跑到400%，8核就跑到800%，为什么Python不行呢？
+
+因为Python的线程虽然是真正的线程，但解释器执行代码时，有一个GIL锁：Global Interpreter Lock，任何Python线程执行前，必须先获得GIL锁，然后，每执行100条字节码，解释器就自动释放GIL锁，让别的线程有机会执行。这个GIL全局锁实际上把所有线程的执行代码都给上了锁，所以，多线程在Python中只能交替执行，即使100个线程跑在100核CPU上，也只能用到1个核。
+
+GIL是Python解释器设计的历史遗留问题，通常我们用的解释器是官方实现的CPython，要真正利用多核，除非重写一个不带GIL的解释器。
+所以，在Python中，可以使用多线程，但不要指望能有效利用多核。如果一定要通过多线程利用多核，那只能通过C扩展来实现，不过这样就失去了Python简单易用的特点。
+Python虽然不能利用多线程实现多核任务，但可以通过多进程实现多核任务。多个Python进程有各自独立的GIL锁，互不影响。
