@@ -498,6 +498,7 @@ class Bat(Mammal, FlyableMinIn):
     + `__setitem__` 设置
 + `__getattr__(self, attr)` obj.attr/obj.attr()操作（显式优先级更高）
 + `__call__` 支持obj()操作，把obj当作函数；也用作判断一个对象是否是Callable
++ `__enter__` & `__exit__` with操作的对象需要支持的函数
 
 ```py
 class Router(object):
