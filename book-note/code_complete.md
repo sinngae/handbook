@@ -1,13 +1,13 @@
-Code Complete 代码大全
-chapter1.软件创建
+# Code Complete 代码大全
+## chapter1.软件创建
 软件创建是开发软件的重要组成，是核心工作，是需要投入主要精力的
 创建的产品、源代码是软件的唯一的精确描述
 创建是软件唯一一项必不可少的活动
 
-chapter2.metaPhors 隐喻
+## chapter2.metaPhors 隐喻
 隐喻仅是启发，不是公式，随意无拘束，不能硬套，有助于理解
 
-chapter3. prepare 准备工作
+## chapter3. prepare 准备工作
 
 
 
