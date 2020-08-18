@@ -57,6 +57,9 @@ git rebase origin/develop
 git push origin fix_demo:fix_demo
 # git网页提交merge request，并通知到同事审查代码
 
+# 把本地分支推送到远程仓库的同名分支（git的current模式（对比git push的其他default行为：nothing, current, upstream, simple, matching））
+git push origin HEAD
+
 ### 3.查看日志
 # 查看多次commit历史
 git log
