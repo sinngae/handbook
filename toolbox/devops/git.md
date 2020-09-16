@@ -36,6 +36,13 @@ git config --global url.'git@github.com:'.insteadOf 'https://github.com/'
 
 **gitflow**
 
+## git fork
+```sh
+# 在github网页上需要提交代码的项目上，点击fork，就会在自己的github仓库有个该项目的分裂分支。
+# 在本地拉取自己的代码，做修改或创建，提交并推送到自己的仓库
+# 在自己的分裂分支上，点击push request，就会在原项目提交一个变动的类似merge request的push request 
+```
+
 ## git command
 ```sh
 # 查看Git仓库地址
