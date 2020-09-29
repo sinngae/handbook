@@ -26,6 +26,7 @@ windows最新自带Hyper-V管理工具，之前vmware和vbox基于Hyper-V提供�
 + 管理员启动cmd，执行`bcdedit /set hypervisorlaunchtype auto`;
 
 **bcdedit**
+`bcdedit /? hypervisorlaunchtype`
 
 ## 容器
 容器的核心技术：Cgroup + Namespace
