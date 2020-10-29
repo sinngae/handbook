@@ -69,7 +69,7 @@ leader假死时，达到（n-1）/2的followers选举出新leader并生成新epo
 + 设置仲裁机制，比如顺延下一个节点作为leader
 
 ## 命令速记
-```
+```sh
 bin/zkServer.sh start
 
 bin/zkCli.sh -server 127.0.0.1:2181
