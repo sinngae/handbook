@@ -27,6 +27,53 @@ git config --global color.interactive auto
 #       cat ~/.gitconfig查看
 git config --global url.'git@github.com:'.insteadOf 'https://github.com/'
 ```
+## gitconfig
+`vim ~/.gitconfig`
+```txt
+[user]
+        email = songam@xxxx.com
+        name = songam
+[filter "lfs"]
+        clean = git-lfs clean -- %f
+        smudge = git-lfs smudge -- %f
+        process = git-lfs filter-process
+        required = true
+ 
+[merge]
+    summary = true
+    tool = vimdiff
+[diff]
+    renames = copy
+[color]
+    diff = auto
+    status = true
+    branch = auto
+    interactive = auto
+    ui = auto
+    log = true
+[status]
+    submodulesummary = -1
+[mergetool "vimdiff"]
+    cmd = "vim --noplugin \"$PWD/$MERGED\" \
+        +\":split $PWD/$REMOTE\" +\":set buftype=nowrite\" \
+        +\":vertical diffsplit $PWD/$LOCAL\" +\":set buftype=nowrite\" \
+        +\":vertical diffsplit $PWD/$BASE\" +\":set buftype=nowrite\" \
+        +\":wincmd l\""
+[format]
+    numbered = auto
+[alias]
+    co = checkout
+    ci = commit
+    st = status
+    pl = pull
+    ps = push
+    dt = difftool
+    l = log --stat
+    cp = cherry-pick
+    ca = commit -a
+    b = branch
+```
+
 ## 分支说明
 + develop分支为了快速开发  
 只要是单元测试、联调测试通过的就可以合入develop分支
@@ -152,6 +199,8 @@ cd ..
 rm -rf demo
 git clone xxx
 ```
+
+
 
 
 ## git自动化部署
