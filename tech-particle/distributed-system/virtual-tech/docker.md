@@ -51,13 +51,18 @@ docker inspect -f '{{.ID}}' [容器id|容器名称]
 docker ps [local path] [上一命令的结果]:[container path]
 # 从本地拷贝文件到容器
 docker cp src dest
+
+
+# 由image获取镜像制作的一些信息
+docker history [image url]
+docker history [image url]  --no-trunc
 ```
 
 ### 2.使用镜像
 运行容器时，如果本地不存在，则从仓库中下载，默认从Docker Hub下载
 
 2.1 管理和使用本地Docker主机镜像  
-```
+```sh
 docker images                       # 列出本地主机上的镜像 TAG列，代表这个仓库的不同的版本
 docker pull [镜像名]:[版本号]        # 拉取镜像
 docker search [镜像名]              # 搜索镜像
@@ -67,7 +72,7 @@ docker search [镜像名]              # 搜索镜像
 两种方式：  
 + 1.从已创建的容器中更新镜像，并且提交这个镜像
 + 2.使用Dockerfile指令创建一个新的镜像
-```
+```sh
 # docker commit -m="commit log" -a="runoob" [容器id|容器名] runoob/[镜像名]:[版本号]
 # -m 提交描述<
 # -a 指定镜像作者
@@ -86,4 +91,3 @@ docker run --name some-redis -d redis
 
 redis 持久化 实例  
 docker run --name some-redis -d redis redis-server --appendonly yes
-
