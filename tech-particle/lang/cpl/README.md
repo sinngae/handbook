@@ -44,6 +44,6 @@ Windows NT部分实现了POSIX标准。
 + socket
 
 ## Linux api
-fork
-clone
-alarm
++ fork
++ clone
++ alarm
