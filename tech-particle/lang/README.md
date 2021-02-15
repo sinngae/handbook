@@ -30,7 +30,8 @@ CPP语言复杂，刀枪剑棍斧钺钩叉，十八般兵器样样俱全，是�
 ### GO
 GO的目标是要做更好的C/C++语言，目前看来确实很出众。
 对比GO语言和C/C++，对编程思想的理解会更加深入。
-已迁移到[go-handbook](https://github.com/sinngae/go-handbook)
+
+[gopl](gopl/README.md)
 
 ### Lua
 Lua小巧灵活，是个很好的辅助工具。
