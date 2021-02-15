@@ -1,10 +1,7 @@
 # code snippet
 代码片段
 
-## autobuild
-自动化编译、构建
-
-## lang-practice
+## lang
 编程语言实践
 
 ## libs
