@@ -71,7 +71,7 @@ git config --global url.'git@github.com:'.insteadOf 'https://github.com/'
     l = log --stat
     cp = cherry-pick
     ca = commit -a
-    b = branch
+    br = branch
 ```
 
 ## 分支说明
@@ -111,6 +111,9 @@ git rebase origin/develop
 git push origin fix_demo:fix_demo
 # git网页提交merge request，并通知到同事审查代码
 
+# 提交到一个已解决冲突的分支上，然后再提merge request给同事
+git push origin fix_demo:fix_demo_MC_fixed
+
 # 把本地分支推送到远程仓库的同名分支（git的current模式（对比git push的其他default行为：nothing, current, upstream, simple, matching））
 git push origin HEAD
 
@@ -124,9 +127,19 @@ git show --stat [commit-hash-id]
 # 查看多次commit日志及文件改动列表
 git log --name-status 
 
-### 4.其他
+### 4.commit
 # 未push的commit备注修改：
 git commit --amend //进入修改vim界面，修改备注
+
+### 5.tag
+# 创建tag 
+git tag v0.1.1 [commit id]
+# 删除tag
+git tag -d v0.1.1
+# 查询tag
+git tag
+# 推送远程到远程仓库
+git push origin --tags
 
 # 拉取远程文件
 #   同步远程文件，覆盖本地改动：
@@ -200,11 +213,12 @@ rm -rf demo
 git clone xxx
 ```
 
-
-
-
 ## git自动化部署
 1. develop分支提交自动测试、自动部署到测试环境
 2. master分支tag自动部署到生产环境？不，测试环境（或者生产环境的测试节点）
 3. release分支？
 3. feature分支无自动化任务，鼓励提交代码到仓库，即使代码还未开发完整。
+
+## mindmap
+[mindmap](git.png)
+(来源于网络)
