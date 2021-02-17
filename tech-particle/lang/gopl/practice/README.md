@@ -1,13 +1,30 @@
 # Golang 实践
 Go语言具备良好的特性、丰富的library库、便捷的工具集，非常适合服务器端开发。
-+ GOROOT Go的安装目录;$GOROOT/bin需要配置到$PATH中；
-+ GOPATH 指定开发工作区，存放源代码、测试文件、库文件、二进制文件等。换开发工作区，需要重新修改该变量。
-+ GOBIN 开发程序编译后二进制命令的安装目录（go install的目标路径）
-+ GOOS
-+ GOARCH
+
+**GOROOT**
+
+Go的标准库、编译工具链、标准工具的安装目录；
+
+$GOROOT/bin需要配置到$PATH中；
+
+**GOPATH**
+
+Go的工作目录，可以是多个路径；指定Go编译工具链等工具寻找Go的包、可执行程序的路径；
+
+**GOBIN**
+
+开发程序编译后二进制命令的安装目录（go install的目标路径）
+
+**GOOS**
+
+当前操作系统类型
+
+**GOARCH**
+
+当前操作系统架构
 
 ## [第一章 包管理](cpt1-pkgmgr.md)
-1. Go Module
+1. [Go Module](cpt1-pkgmgr.md)
 2. 其他
 
 
