@@ -186,6 +186,12 @@ git reset HEAD -filename    # 撤销指定文件
 ## 撤销未push的commit
 #git reflog?
 
+## 撤销未push的merge conflict
+git reset --hard
+git clean -n # 提示哪些将被删除
+git clean -f # 删除
+git clean -f . # 指定删除目录为.
+
 ## svn cleanup 本地全clear，与remote同步
 git reset --hard
 git clean -df
@@ -211,6 +217,9 @@ git push --mirror git@gitlab.sinngae.cn:s_projectx/demo.git
 cd ..
 rm -rf demo
 git clone xxx
+
+# 查看commit id所在branch
+git branch -r --contains COMMIT_ID
 ```
 
 ## git自动化部署
@@ -219,6 +228,6 @@ git clone xxx
 3. release分支？
 3. feature分支无自动化任务，鼓励提交代码到仓库，即使代码还未开发完整。
 
-## mindmap
-[mindmap](git.png)
+## mind-map
+[mind-map](git.png)
 (来源于网络)

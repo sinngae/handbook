@@ -12,3 +12,5 @@
 + 2.是否有功能增强.
 + 3.是否有缺陷、漏洞修复  
 局部修改或bug修正
+
+参见：[版本号语义化](https://semver.org/lang/zh-CN/spec/v2.0.0.html)
