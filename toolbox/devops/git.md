@@ -220,6 +220,12 @@ git clone xxx
 
 # 查看commit id所在branch
 git branch -r --contains COMMIT_ID
+
+# 本地merge (当前分支：branch/merge/to)
+git merge --no-ff "branch/merge/from"
+
+# 查看
+git reflog show --date=iso "branch/to/investigate"
 ```
 
 ## git自动化部署

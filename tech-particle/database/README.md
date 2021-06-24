@@ -8,7 +8,8 @@
 
 
 数据处理大致可分为两类：
-OLAP，Online Analytical Processing，在线分析处理，比如数据仓库的场景。OLTL，Online Transaction Processing，在线事务处理，比如银行交易数据增删查改的场景。
+OLAP，Online Analytical Processing，在线分析处理，比如数据仓库的场景。
+OLTL，Online Transaction Processing，在线事务处理，比如银行交易数据增删查改的场景。
 
 非结构化数据存储与分析，如nosql、Hadoop等
 
