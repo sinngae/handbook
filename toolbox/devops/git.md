@@ -176,8 +176,18 @@ git pull
 git stash pop  
 #   注：此命令是从git栈中读取命令1保存的内容，恢复工作区。
 
+## 查看所有的stash保存点
+git stash list
+## 清除所有的保存点
+git stash clear 
+## 添加保存点，标记为message
+git stash save "message"
+## 使用保存点
+git stash apply --index
+
 ## 查看代码变动者
 git blame -L 160,+10 sha1_file.c 
+git log -c -S"code to find" /path/to/file ## 被删除的代码也能找到相关的commit id
 
 ## 撤销未commit的add
 git reset HEAD .            # 撤销所有
