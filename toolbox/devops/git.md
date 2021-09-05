@@ -194,7 +194,8 @@ git reset HEAD .            # 撤销所有
 git reset HEAD -filename    # 撤销指定文件
 
 ## 撤销未push的commit
-#git reflog?
+###git reflog 查看日志
+git reset HEAD@{1} 
 
 ## 撤销未push的merge conflict
 git reset --hard
