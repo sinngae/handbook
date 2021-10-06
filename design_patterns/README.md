@@ -2,47 +2,20 @@
 对接口编程，而不是对实现编程;
 优先使用对象组合而不是继承;
 
+设计模式是为了快速构建稳定的框架、代码复用；同时，也要考虑代码的易读性。
+
 ## 设计模式类型
-+ 创建型模式
-    + Factory
-    + Abstract Factory
-    + Singleton
-    + Builder
-    + Prototype
+[创建型模式](creator.md)
+抽象以使调用者不用关心实现者的具体逻辑。
 
-+ 结构型模式
-    + Adapter
-    + Bridge
-    + Filter/Criteria
-    + Composite
-    + Decorator
-    + Facade
-    + Flyweight
-    + Proxy
+[结构型模式](composition.md)
+结构的与结构的组合，接口和接口的组合，以获取更丰富的功能。
 
-+ 行为型模式 对象和对象的作用
-    + Chain of Responsibility
-    + Command
-    + Interpreter
-    + Iterator
-    + Mediator
-    + Mememto
-    + Observer
-    + State
-    + Null Object
-    + Strategy
-    + Template
-    + Visitor
+[行为型模式](handle.md) 
+对象之间的通信
 
-+ J2EE模式
-    + MVC模式
-    + Bussiness Delegate
-    + Composite Entity
-    + Data Access Object 
-    + Front Controller
-    + Intercepting Filter
-    + Service Locator
-    + Transfer Object
+[J2EE模式](J2EE.md)
+
 
 ## 六大原则
 1. 开闭原则，反对switch/if-else
@@ -76,14 +49,16 @@
 日切事件发生时，通知所有的订阅了的事务。
 
 GUI 与 组合模式
+
 链表中的node中指向下一个node的next
 xml解析的element结点包含很多子节点。
 图形化用户界面的面板中有多个面板
 部分整体的关系。部分和整体是同一对象，拥有统一接口。
 
 数据结构遍历 与 迭代器模式
-map、list、vector 都使用了迭代器模式
-为了遍历一个聚合对象，设计的对象
+
+map、list、vector 都使用了迭代器模式；
+为了遍历一个聚合对象，设计的对象；
 
 资源管理 与 单例模式
 数据库访问 数据库单例
