@@ -33,7 +33,7 @@ git config --global url.'git@github.com:'.insteadOf 'https://github.com/'
 [user]
         email = songam@xxxx.com
         name = songam
-[filter "lfs"]
+[filter "lfs"] # large file storage
         clean = git-lfs clean -- %f
         smudge = git-lfs smudge -- %f
         process = git-lfs filter-process

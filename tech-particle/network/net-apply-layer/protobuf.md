@@ -37,3 +37,6 @@ Avro hadoop持久化首选？静态类型语言vs动态类型语言
 ### json
 易于调试，可读。
 非常适用于浏览器的Ajax或手机APP端与服务器之间的通讯。
+
+## proto 发版问题
+从test分支会有“proto协议比release分支先行”这个问题，gitlab/protocenter这种方式有同样的问题，除非我们用test/uat/release/feature 这套gitflow来维护proto协议发版。但是用这套gitflow，会导致proto协议更容易发生冲突（proto字段下标冲突），而且不同环境需要各维护一套proto版本，更容易出问题。所以，一般还是选择一个分支来打tag这种方式。至于如果对test分支有疑问，我们做个专用的proto分支也是一样的，feature分支里修改go.mod来选择不同的tag就行。关键的问题还是做到proto协议兼容，新增字段的下标单调增长且唯一，修改字段仅限于校验部分。
