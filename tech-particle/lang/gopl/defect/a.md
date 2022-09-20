@@ -1,6 +1,6 @@
 ```sh
 git tag v0.1.0
-git push orign --tags
+git push origin --tags
 go get /github/path/to/project@v0.1.0
 ```
 

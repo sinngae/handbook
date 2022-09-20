@@ -164,6 +164,7 @@ git branch -d fix_demo
 git branch --set-upstream-to origin/develop feature/demo
 # 拉取指定分支
 git pull origin feature/test:feature/test
+git pull origin feature/test # 同名省略
 
 ## can not merge问题
 #   当git提交多次时，后提交的代码先合入，先提交的代码会出现can not merge问题，下面是解决方法。
