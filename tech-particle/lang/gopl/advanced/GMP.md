@@ -78,10 +78,21 @@ hand off机制
 
 
 P的状态  
-+ 当程序刚开始运行进行初始化时，所有的P都处于_Pgcstop状态，随着的P的初始化（runtime.procresize），会被设置为_Pidle状态。
-+ 当M需要运行时会调用runtime.acquirep来使P变为_Prunning状态，并通过runtime.releasep来释放，重新变为_Pidele。
-+ 当G执行时需要进入系统调用，P会被设置为_Psyscall，如果这个时候被系统监控抢夺（runtime.retake），则P会被重新修改为_Pidle。
-+ 如果在程序中发生GC，则P会被设置为_Pgcstop，并在runtime.startTheWorld时重新调整为_Prunning。
++ _Pidle: 当程序刚开始运行进行初始化时，所有的P都处于_Pgcstop状态，随着的P的初始化（runtime.procresize），会被设置为_Pidle状态。
++ _Prunning: 当M需要运行时会调用runtime.acquirep来使P变为_Prunning状态，并通过runtime.releasep来释放，重新变为_Pidele。
++ _Psyscall: 当G执行时需要进入系统调用，P会被设置为_Psyscall，如果这个时候被系统监控抢夺（runtime.retake），则P会被重新修改为_Pidle。
++ _Pgcstop: 如果在程序中发生GC，则P会被设置为_Pgcstop，并在runtime.startTheWorld时重新调整为_Prunning。
+
+
+G的状态：
++ _Gidle：刚刚被分配并且还没有被初始化，值为0，为创建goroutine后的默认值
++ _Grunnable： 没有执行代码，没有栈的所有权，存储在运行队列中，可能在某个P的本地队列或全局队列中(如上图)。
++ _Grunning： 正在执行代码的goroutine，拥有栈的所有权(如上图)。
++ _Gsyscall：正在执行系统调用，拥有栈的所有权，与P脱离，但是与某个M绑定，会在调用结束后被分配到运行队列(如上图)。
++ _Gwaiting：被阻塞的goroutine，阻塞在某个channel的发送或者接收队列(如上图)。
++ _Gdead： 当前goroutine未被使用，没有执行代码，可能有分配的栈，分布在空闲列表gFree，可能是一个刚刚初始化的goroutine，也可能是执行了goexit退出的goroutine(如上图)。
++ _Gcopystac：栈正在被拷贝，没有执行代码，不在运行队列上，执行权在
++ _Gscan ： GC 正在扫描栈空间，没有执行代码，可以与其他状态同时存在。
 
 # 分析
 ## 协程的特点：栈大小 上下文切换

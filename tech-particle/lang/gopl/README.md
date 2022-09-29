@@ -28,11 +28,19 @@ Go内嵌了关联数组（也称为哈希表（Hashes）或字典（Dictionaries
 1. []()
 2. []()
 
+PS:
++ channel底层实现 => src/runtime/chan.go
++ GMP实现 =》 src/runtime/runtime2.go
+    + 调度 =》 src/runtime/proc.go
++ GC实现 =》 src/runtime/mgc.go
++ netpoll => src/runtime/netpoll.go
++ map => src/runtime/map.go
+
 ### [第三篇 进阶](advanced/README.md)
 1. []()
 2. []()
 
-## [第四篇 实战](practice/README.md)
+### [第四篇 实战](practice/README.md)
 1. []()
 2. []()
 
