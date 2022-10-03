@@ -1,6 +1,24 @@
 # C++
 cpp-map C++知识图谱
 
++ C++98
+    + STL including
+    + containers and algorithms
+    + strings
+    + I/O streams
+    + Templates
++ C++11
+    + move semantic
+    + unified initialization
+    + Auto and decltype
+    + Lambda fuctions
+    + Multi-Threading
+    + Regular expressions
+    + Smart pointers
+    + Hash Tables
+    + std::array
+    + memory model
+
 ## basis
 [基础知识](basis/README.md)
 

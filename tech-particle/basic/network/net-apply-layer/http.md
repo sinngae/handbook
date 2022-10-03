@@ -66,5 +66,7 @@ HTTP是个无状态的面向连接的协议。什么是有状态的呢？无状�
 ## websocket与http 2.0
 
 ## trouble shoot
-### 504
-### 404
++ 504 - service error
++ 404 - not found
++ 401 - bad request
++ 404 - user not autherized
