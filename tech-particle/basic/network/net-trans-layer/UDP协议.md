@@ -15,6 +15,20 @@ UDP更适合于消息的多播发布可以向多个点传送消息（因为没�
 基于TCP的应用层协议有：SMTP、TELNET、HTTP、FTP
 
 基于UDP的应用层协议：DNS、TFTP（简单文件传输协议）、RIP（路由选择协议）、DHCP、BOOTP（是DHCP的前身）、IGMP（Internet组管理协议）
++ RUDP Reliable User Data Protocol
+    + 实现类似于TCP的重发机制、序号、拥塞控制算法
++ RTP Real Time Protocol
+    + 实时协议，用于音频视频的端到端的网络传输，或线上会议
+    + 支持多点传送 或单点传送
+    + 姐妹协议 =》 RTCP，用于监视和控制
+    + 不保证投递和无序投递
++ UDT UDP-based Data Transfer Protocol
+    + 高速广域网上的海量数据传输，而互联网上的标准数据传输协议TCP在高带宽长距离网络上性能很差
+
+**使用UDP来构建可靠的面向连接的数据传输**
+
+需要实现类似于TCP协议的超时重传、有序接受、应答确认、滑动窗口流量控制等机制。
+相当于在应用层实现TCP协议的可靠数据传输机制，比如使用UDP数据包+序列号、UDP数据包+时间戳等方法、在服务器端进行应答确认机制，这样就会保证不可靠的UDP协议进行可靠的数据传输
 
 ## UDP 报文
 ![udp-head](udp-head.png)
