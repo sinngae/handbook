@@ -5,4 +5,10 @@ Go 中解析的 tag 是通过反射实现的，反射是指计算机程序在运
 
 gorm json yaml gRPC protobuf gin.Bind()都是通过反射来实现的
 
-ValueOf 和 TypeOf
+
+三大法则
++ 反射从接口映射到反射对象
+    + reflect.ValueOf 和 reflect.TypeOf
++ 反射从反射对象映射到接口值
+    + .interface().(*)
++ 只有值可以修改(settable)，才可以修改反射对象
