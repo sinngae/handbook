@@ -44,5 +44,11 @@ PS:
 1. []()
 2. []()
 
+### [其他]
+1. Go汇编 
+
+https://lrita.github.io/2017/12/12/golang-asm/
+
+https://golang.org/doc/asm
 ## 附录
 golang wiki：https://github.com/golang/go/wiki/Projects
