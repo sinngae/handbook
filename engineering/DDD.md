@@ -1,3 +1,6 @@
+DDD
+---
+
 # 领域驱动设计 Domain Drive Design
 MVC（Modle - View - Controller）架构里，业务逻辑写在C中会重复、混乱，业务逻辑大都跨M处理，写不到M中，所以要多一层S（Service，MVCS），这是当前主流架构。
 M（领域对象）不仅承载数据，也承载一些行为，称作充血模型；仅承载数据和一些getter/setter方法，称为贫血模型。
