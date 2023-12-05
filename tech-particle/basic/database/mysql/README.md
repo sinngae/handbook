@@ -84,3 +84,34 @@ where tbl0.y=y0 and tbl1.y=y1;
 -- 重置自增ID
 alter table tablename auto_increment=[new start];
 ```
+
+## 库表统计数据
+```sql
+SELECT
+    TABLE_SCHEMA AS "数据库",
+    sum( table_rows ) AS "记录数",
+    concat( TRUNCATE ( sum( data_length ) / 1024 / 1024, 2 ), ' MB' ) / 1024 AS "数据容量（GB）",
+    concat( TRUNCATE ( sum( index_length ) / 1024 / 1024, 2 ), 'MB' ) / 1024 AS "索引容量（GB）" 
+FROM
+    information_schema.TABLES 
+WHERE
+    table_schema = 'console';
+    
+   
+SELECT
+    table_schema AS "数据库",
+    table_name AS "表名",
+    table_rows AS "记录数",
+    TRUNCATE ( data_length / 1024 / 1024, 2 ) / 1024 AS "数据容量（GB）",
+    TRUNCATE ( index_length / 1024 / 1024, 2 ) / 1024 AS "索引容量（GB）" 
+FROM
+    information_schema.TABLES 
+WHERE
+    table_schema = 'console' 
+order by 
+	TABLE_ROWS desc;
+
+ORDER BY
+    data_length DESC,
+    index_length DESC;
+```
