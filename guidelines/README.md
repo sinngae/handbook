@@ -24,3 +24,8 @@ GuideLines
 对策        solutions，policy，tactics，strategy
 ## 对策 = 战术 + 战略
 ```
+
+
+# 什么是软件工程
+软件工程，先软件、后工程。
+起于信息技术，终究是人事。
