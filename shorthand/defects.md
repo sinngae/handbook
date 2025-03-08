@@ -1,14 +1,17 @@
-一、SIGABRT崩溃
+Defect
+---
+
+# 一、SIGABRT崩溃
 堆越界
 	double free/free 没有初始化的地址或者错误的地址
 	strcpy sprintf strcmp memcpy等越界访问读写
 assert abort函数
 
-二、SIGFPE崩溃
+# 二、SIGFPE崩溃
 (上/下)溢出
 除零
 
-三、SIGSEGV
+# 三、SIGSEGV
 1.试图对只读映射区域进行写操作 。
 2.访问的内存已经被释放，也就是已经不存在或者越界。
 Segment Fault. The possible cases of your encountering this error are:
@@ -16,7 +19,7 @@ Segment Fault. The possible cases of your encountering this error are:
 （2）stack overflow --- please keep in mind that the default stack size is 8192K.
 （3）illegal file access --- file operations are forbidden on our judge system.
 
-四、SIGBUS
+# 四、SIGBUS
 1.硬件故障，不用说，程序员最常碰上的肯定不是这种情形。
 2.Linux平台上执行malloc()，如果没有足够的RAM，Linux不是让malloc()失败返回， 而是向当前进程分发SIGBUS信号。
 3.某些架构上访问数据时有对齐的要求，比如只能从4字节边界上读取一个4字节的 数据类型。IA-32架构没有硬性要求对齐，尽管未对齐的访问降低执行效率。另外一些架构，比如SPARC、m68k，要求对齐访问，否则向当前进程分发SIGBUS信号。
@@ -27,7 +30,7 @@ SIGBUS与SIGSEGV信号的一般区别如下:
 1.SIGBUS(Bus error)意味着指针所对应的地址是有效地址，但总线不能正常使用该指针。通常是未对齐的数据访问所致。
 2.SIGSEGV(Segment fault)意味着指针所对应的地址是无效地址，没有物理内存对应该地址。
 
-五、栈里显示函数为问号
+# 五、栈里显示函数为问号
 1.源代码和可执行程序版本不一致；
 2.没有符号表；
 3.gdb版本比gcc版本老，有些内容无法解析；
@@ -36,7 +39,7 @@ SIGBUS与SIGSEGV信号的一般区别如下:
 	snprintf strncpy虽然提供了安全拷贝，但是使用不当仍然会造成栈破坏
 
 
-六、glib 程序报错到终端
+# 六、glib 程序报错到终端
 1.*** Error in `/onecloud_app/thunder/bin/fdrawer': double free or corruption (out): 0xb6646800 ***
 	两次free
 2.*** Error in `/onecloud_app/thunder/bin/fdrawer': malloc(): smallbin double linked list corrupted: 0xb5c1f070 ***

@@ -9,10 +9,22 @@ kafka是分布式的分区的/复制的/提交的日志服务。kafka的设计�
 6. offset信息曾保存在zk中，后来保存在kafka指定topic中。
 7. producer与consumer是轻量级的，可随意离开，不会影响集群。
 8. partition的设计目的：根本原因是kafka是基于文件存储的，用partition把日志分散在多个server上，避免单文件尺寸达到磁盘上限。每个partition被当前kafka实例保存；一个topic被分片到不同的partition上，提高消息保存和消费的效率，也容纳更多的consumer，提升并发消费的能力。
-9. distribution：kafka按配置产生partition的备份个数（replicas）。每个partition将备份到多台机器以提高可用性。replicated方案调度多个备份：a.每个partition都有一个server为leader；leader负责所有的读写操作；作为leader的server承载了其所有的读写压力；b.如果leader失效，会有其他follower来接管并成为leader；c.follower只单调地和leader跟进，同步消息即可；d.有多少个partition就有多少个leader；kafka会将leader均衡地分散在每个实例上，保证负载均衡。
+9. distribution：kafka按配置产生partition的备份个数（replicas）。每个partition将备份到多台机器以提高可用性。replicated方案调度多个备份：
+   + a.每个partition都有一个server为leader；leader负责所有的读写操作；作为leader的server承载了其所有的读写压力；
+   + b.如果leader失效，会有其他follower来接管并成为leader；
+   + c.follower只单调地和leader跟进，同步消息即可；
+   + d.有多少个partition就有多少个leader；kafka会将leader均衡地分散在每个实例上，保证负载均衡。
 10. producer将消息发布到指定的topic中，也指定归属于哪个partition（比如基于round-robin方式（一种以轮询方式依次将一个域名解析到多个ip地址的调度不同服务器的算法round-robin DNS））
-11. consumer kafka只支持topic：a.每个consumer只属于一个consumer group；每个group有多个consumer；发送到topic的消息只会被订阅此topic的每个group的一个consumer消费；b.如果所有的consumer都在同一group，则kafka起到queue的作用，消息会在consumer之间负载均衡；c.如果所有的consumer都在不同的group，那就是发布订阅模式，消息将会广播给所有consumer；d.可以认为一个group是一个订阅者，kafka只能保证一个partition中的消息被某个consumer消费时是顺序的，从topic角度，消息不是有序的，只能是整体有序；e.按kafka的设计，同一group不能有多于partition
-12. kafka的保证：guarantees  a.发送到partition中的消息将会按照接收的顺序追加到日志中。b.对消费者，消费的顺序和日志中消息顺序一致。c.如果topic的replication factor为n，允许n-1个kafka实例失效。
+11. consumer kafka只支持topic：
+   + a.每个consumer只属于一个consumer group；每个group有多个consumer；发送到topic的消息只会被订阅此topic的每个group的一个consumer消费；
+   + b.如果所有的consumer都在同一group，则kafka起到queue的作用，消息会在consumer之间负载均衡；
+   + c.如果所有的consumer都在不同的group，那就是发布订阅模式，消息将会广播给所有consumer；
+   + d.可以认为一个group是一个订阅者，kafka只能保证一个partition中的消息被某个consumer消费时是顺序的，从topic角度，消息不是有序的，只能是整体有序；
+   + e.按kafka的设计，同一group不能有多于partition
+12. kafka的保证：guarantees 
+   + a.发送到partition中的消息将会按照接收的顺序追加到日志中。
+   + b.对消费者，消费的顺序和日志中消息顺序一致。
+   + c.如果topic的replication factor为n，允许n-1个kafka实例失效。
 
 ## 使用场景
 1. messaging 常规消息系统  
