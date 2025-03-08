@@ -9,9 +9,6 @@ C++相关，std，C++11，boost，lua等
 ## database
 数据库系统相关
 
-## distributed-system
-服务网格？服务齿轮？服务咬合？服务档闸？如docker/k8s/云原生 etc
-
 ## faq
 答疑，及各类专题
 
