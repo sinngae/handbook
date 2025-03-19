@@ -41,7 +41,7 @@ faq
     + 一般操作系统都有死锁检测
 + 获得锁之后，线程崩溃了，锁会释放掉么
     + 会造成未定义的行为
-+ spinlock 基于硬件的CAS（compare and swap)?
++ spinlock 基于硬件的CAS（compare and swap）?
     + rwlock是基于spinlock实现的
     + mutex的实现也依赖spinlock
 
