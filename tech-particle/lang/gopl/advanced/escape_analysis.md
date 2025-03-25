@@ -22,6 +22,8 @@
 
 > 栈是线程或协程私有的一块内存区域，用来存自己的局部变量（尽量占用少的内存）、跳转地址、返回值等数据。栈大小在编译时已经确定，其结构解析和寻址方式运行时决定，寻址比堆快。栈上数据增长太大就会发生"stack overflow"。
 >> C/C++程序栈上的空间被释放后仍能访问，常常引发不可预测的行为(C++程序员称为飞了的现象)（已经释放的栈内存可能被覆盖为函数返回地址等变量，对其的读写常常不是期望且事后很难判断影响的行为）；有GC的Go语言程序编译时，会做逃逸分析，把逃逸的变量放到堆上，避免这种问题。
+>> Go 协程栈初始化大小时8KB，可以动态（不足时）翻倍扩展或（四分之一时）折半收缩。这样协程栈不会轻易溢出，但深度递归调用、局部变量占用过大、超出系统可用资源限制 还是会导致栈溢出。
+>> Go 1.3之前采用分段栈机制，物理内存中不连续；之后改用连续栈机制，物理内存连续，解决了热分裂问题（在一个循环中调用函数 恰逢出发栈扩展，就会反复扩展、收缩 造成巨大开销，称为热分裂问题）。
 
 ## 如何进行逃逸分析
 可以使用go build来进行逃逸分析.
@@ -71,7 +73,7 @@ func main() {
 ```
 使用逃逸分析来进行内存分析
 ```shell
-go build -gcflags '-m -m  -l' taoyi.go
+go build -gcflags '-m -l' taoyi.go
 # ./taoyi.go:21:18: leaking param: u to result ~r1 level=0
 # ./taoyi.go:25:14: leaking param: u to result ~r1 level=1
 # ./taoyi.go:31:31: main &user literal does not escape
@@ -123,7 +125,7 @@ func main() {
 ```
 逃逸分析:
 ```shell script
-go build -gcflags '-m -m  -l' taoyi.go
+go build -gcflags '-m -l' taoyi.go
 # ./taoyi.go:21:18: moved to heap: u
 
 # 查看汇编代码(可以看到有个CALL	runtime.newobject(SB)的系统调用)
@@ -185,7 +187,7 @@ func main() {
 }
 ```
 ``` shell
-$ go build -gcflags '-m -m  -l' taoyi-2.go
+$ go build -gcflags '-m -l' taoyi-2.go
 #./taoyi-demo.go:13:16: main new(string) does not escape
 ```
 上面的示例告诉我们虽然*name是一个指针类型，但是并未发生逃逸，这是因为该引用类型未被外部使用.
@@ -229,7 +231,7 @@ $ go build -gcflags '-m -m  -l' taoyi-demo.go
 
 
 ## 实际使用过程中要注意:
-静态分配到栈上，寻址比分配到堆上的要快，但一般不需过度考虑；分配到堆还是栈对顶层应用应是透明的，不需过度考虑；
+静态分配到栈上，寻址比分配到堆上的要快，但一般不需过度考虑；*分配到堆还是栈对顶层应用应是透明的，不需过度考虑；*
 每个 Go 版本的逃逸分析都会有所优化；
 直接通过go build -gcflags '-m -l' 就可以看到逃逸分析的过程和结果；
 一般，基本简单类型只做读取时，使用值传递比指针传递更合适；
