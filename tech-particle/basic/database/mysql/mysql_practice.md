@@ -6,6 +6,13 @@
 
 > 对原创有所改动
 
+
+数据页大小16KB，假设一行数据长1KB，一页可存储16行记录；
+一个索引 key长8B，指针长6B，一页可存储1170个索引；（索引页内顺序存储，可支持二分查找）
+如此，二层索引页可索引 1170*16=18720行记录；三层索引页可索引 2.19kw条记录；
+
+如果每行数据长 2KB，则三层索引页可存储1.09kw条记录；4KB 500w记录。
+
 当MySQL单表记录数过大时，增删改查性能都会急剧下降，可以参考以下步骤来优化：
 
 # 单表优化
@@ -15,9 +22,9 @@
 
 ## 字段
 + 尽量使用TINYINT、SMALLINT、MEDIUM_INT作为整数类型而非INT，如果非负则加上UNSIGNED
-+ VARCHAR的长度只分配真正需要的空间
++ VARCHAR的长度只分配真正需要的空间（实际长度超过设计长度，MySQL严格模式会报错、非严格模式会自动截断字符串）
 + 使用枚举或整数代替字符串类型
-+ 尽量使用TIMESTAMP而非DATETIME，
++ 尽量使用TIMESTAMP而非DATETIME（？看具体场景，后者适用时区信息无关的）
 + 单表不要有太多字段，建议在20以内
 + 避免使用NULL字段，增加查询复杂（如果是作为查询条件的话）且占用额外索引空间
 + 用整型来存IP
@@ -27,7 +34,7 @@
 + 应尽量避免在WHERE子句中对字段进行NULL值判断，否则将导致引擎放弃使用索引而进行全表扫描
 + 值分布很稀少的字段不适合建索引，例如"性别"这种只有两三个值的字段。（如果场景需要，总是查询这一类数据，也可以单独做成索引，以避免全表扫描）
 + 字符字段只建前缀索引
-+ 字符字段最好不要做主键
++ 字符字段最好不要做主键（MySQL 单列索引 767B 约255个utf8字符，联合索引3KB）
 + 不用外键，由程序保证约束
 + 尽量不用UNIQUE，由程序保证约束？ 程序很难保证不重入，是要允许少量的重复么？
 
@@ -91,7 +98,7 @@ InnoDB在MySQL 5.5后成为默认索引，它的特点是：
 + innodb_buffer_pool_size：缓存数据块和索引块，对InnoDB表性能影响最大。通过查询show status like 'Innodb_buffer_pool_read%'，保证 (Innodb_buffer_pool_read_requests – Innodb_buffer_pool_reads) / Innodb_buffer_pool_read_requests越高越好
 + innodb_additional_mem_pool_size：InnoDB存储引擎用来存放数据字典信息以及一些内部数据结构的内存空间大小，当数据库对象非常多的时候，适当调整该参数的大小以确保所有数据都能存放在内存中提高访问效率，当过小的时候，MySQL会记录Warning信息到数据库的错误日志中，这时就需要该调整这个参数大小
 + innodb_log_buffer_size：InnoDB存储引擎的事务日志所使用的缓冲区，一般来说不建议超过32MB
-+ query_cache_size：缓存MySQL中的ResultSet，也就是一条SQL语句执行的结果集，所以仅仅只能针对select语句。当某个表的数据有任何任何变化，都会导致所有引用了该表的select语句在Query Cache中的缓存数据失效。所以，当我们的数据变化非常频繁的情况下，使用Query Cache可能会得不偿失。根据命中率(Qcache_hits/(Qcache_hits+Qcache_inserts)*100))进行调整，一般不建议太大，256MB可能已经差不多了，大型的配置型静态数据可适当调大.
++ query_cache_size：缓存MySQL中的ResultSet，也就是一条SQL语句执行的结果集，所以仅仅只能针对select语句。当某个表的数据有任何任何变化，都会导致所有引用了该表的select语句在Query Cache中的缓存数据失效。所以，当我们的数据变化非常频繁的情况下，使用Query Cache可能会得不偿失。根据命中率(Qcache_hits/(Qcache_hits+Qcache_inserts)*100)进行调整，一般不建议太大，256MB可能已经差不多了，大型的配置型静态数据可适当调大.
     + 可以通过命令show status like 'Qcache_%'查看目前系统Query catch使用大小
 + read_buffer_size：MySql读入缓冲区大小。对表进行顺序扫描的请求将分配一个读入缓冲区，MySql会为它分配一段内存缓冲区。如果对表的顺序扫描请求非常频繁，可以通过增加该变量值以及内存缓冲区大小提高其性能
 + sort_buffer_size：MySql执行排序使用的缓冲大小。如果想要增加ORDER BY的速度，首先看是否可以让MySQL使用索引而不是额外的排序阶段。如果不能，可以尝试增加sort_buffer_size变量的大小
