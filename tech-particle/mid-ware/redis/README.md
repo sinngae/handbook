@@ -26,15 +26,36 @@ redis做缓存，却因为大量的key同时失效（可能是启动时批量加
 缓存击穿，有些热点数据的访问量很大，其失效的瞬间，请求量落到了数据库。
 
 ## 持久化
+AOF（Append-Only File） 
+RDB（Redis Database）
+混合持久化
+
 ### RDB
 dump.rdb，快照形式，默认配置。
+命令触发或根据配置触发。
 
-需要持久化时，fork子进程将数据写到磁盘上的临时rdb文件，写完后替换原来的rdb，实现copy-on-write。可以用于做定期备份，适用于灾备，不适用服务异常重启。
+需要持久化时，fork子进程将数据写到磁盘上的临时rdb文件，写完后替换原来的rdb，实现copy-on-write。
+与内存数据存在一些差距，按配置的时间或更新量。
+可以用于做定期备份，适用于灾备恢复，可能丢失部分数据。
 
 ### AOF
-appendonly.aof，类似mysql binlog，默认重启后优先读取数据，默认每秒同步一次，异常时该一秒的数据会丢失。
+appendonly.aof，类似mysql binlog，默认重启后优先读取数据
++ always，每次写后立即同步
++ everysec，每秒同步一次
++ no，有操作系统决定同步时机？
+
+默认每秒同步一次，异常时该一秒的数据会丢失。
+
 需要持久化时，调用write函数追加到aof文件。
-支持每条命令都写aof文件，appendonly yes。
+
+数据安全性更高，可只丢失最后一次的写操作；
+文件比RDB文件大，恢复慢；写入性能稍差；
+
+### 混合持久化
+AOF文件中保存一个RDB、追加后续的写操作。
+平衡了文件大小和恢复操作。
+
+
 ### 淘汰策略
 可配置6种淘汰策略
 
@@ -66,8 +87,6 @@ string/list/set/sortedset/map
 
 ## 渐进式rehash
 
-## 持久化
-
 ## 单点性能/集群性能
 变量：机器性能/不同操作系统/value长度/redis不同配置
 
@@ -86,7 +105,7 @@ Redis Cluster集群中一般只使用一个数据库空间，即默认db0。
 批量操作直接提交给一个单点？
 一个key（即使有多个value或subkey-value）只能存到一个节点上，不能存到多个节点上。
 
-4.  **Redis的批量操作**  
+4. **Redis的批量操作**  
 mset、mget操作
 Redis Cluster集群，key划分到不同的slot中，直接使用mset或者mget等操作不行
 
