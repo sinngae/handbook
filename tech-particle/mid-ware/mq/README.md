@@ -3,10 +3,8 @@ Message Queue 消息队列
 > 必知必会，Kafka RocketMQ
 >> 可选，rabbitMQ、nsq
 
-
 # 消息队列
 削峰限流
-
 
 ## Kafka
 + 消息分类，Topic
@@ -94,3 +92,7 @@ rocketMQ
 + 其他尽量使用RocketMQ，如业务数据
 
 
+## 如何保证消息中间件全链路数据完全不丢失
+除去消息队列用于消息通知的情况，队列中的消息用于插入、更新、删除之类 或更加复杂的业务，全局需要保障幂等性
++ 消费者业务处理失败或异常风险，消费者异步自动ACK 改为（业务处理完成后）手动ACK，在业务处理完之后 手动ACK
++ MQ宕机风险，RocketMQ的事务机制（try-confirm-rollback）

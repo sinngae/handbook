@@ -1,7 +1,7 @@
 Data Sync
 ---
 
-## mysql主从同步机制：
+# mysql主从同步机制：
 
 + master服务器将数据的改变记录二进制binlog日志，当master上的数据发生改变时，则将其改变写入二进制日志中；
 + slave服务器会在一定时间间隔内对master二进制日志进行探测其是否发生改变，如果发生改变，则开始一个I/O Thread请求master二进制事件，并写入本地relay-log(中继日志)文件中；

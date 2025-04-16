@@ -20,7 +20,7 @@ kafka是分布式的分区的/复制的/提交的日志服务。kafka的设计�
    + b.如果所有的consumer都在同一group，则kafka起到queue的作用，消息会在consumer之间负载均衡；
    + c.如果所有的consumer都在不同的group，那就是发布订阅模式，消息将会广播给所有consumer；
    + d.可以认为一个group是一个订阅者，kafka只能保证一个partition中的消息被某个consumer消费时是顺序的，从topic角度，消息不是有序的，只能是整体有序；
-   + e.按kafka的设计，同一group不能有多于partition
+   + e.按kafka的设计，同一group不能有多于partition的consumer
 12. kafka的保证：guarantees 
    + a.发送到partition中的消息将会按照接收的顺序追加到日志中。
    + b.对消费者，消费的顺序和日志中消息顺序一致。
