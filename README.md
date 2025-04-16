@@ -42,7 +42,7 @@
 
 # 本人简历
 
-Name：  Aren
+Name：  Areno
 
 Email： zqren@foxmail.com
 
