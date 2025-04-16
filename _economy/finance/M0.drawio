@@ -1,0 +1,71 @@
+<mxfile host="65bd71144e">
+    <diagram id="qT-UaeJGy7i3wqgIebGw" name="货币">
+        <mxGraphModel dx="1253" dy="741" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="gLHrM1nDrbWaSBOJnFnS-4" value="M0，流通中的现金&lt;div&gt;个人现金、组织现金&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fillWeight=4;hachureGap=8;hachureAngle=45;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="80" width="170" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="gLHrM1nDrbWaSBOJnFnS-5" value="M1，账上高流通的现金&lt;div&gt;个人活期、组织活期&lt;/div&gt;&lt;div&gt;包括M0&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fillWeight=4;hachureGap=8;hachureAngle=45;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="210" width="170" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="gLHrM1nDrbWaSBOJnFnS-6" value="M2，账上低流通的现金&lt;div&gt;个人定期、组织定期、各类金融市场保证金和资金（包括外币）&lt;/div&gt;&lt;div&gt;包括M1&lt;/div&gt;&lt;div&gt;不包括政府财政存款&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fillWeight=4;hachureGap=8;hachureAngle=45;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="340" width="170" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="gLHrM1nDrbWaSBOJnFnS-7" value="银行" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="160" y="580" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="gLHrM1nDrbWaSBOJnFnS-8" value="政府" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="360" y="580" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="gLHrM1nDrbWaSBOJnFnS-9" value="企业" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="280" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="gLHrM1nDrbWaSBOJnFnS-10" value="个人" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="80" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="gLHrM1nDrbWaSBOJnFnS-12" value="&lt;div&gt;零售市场，现金交易活跃&lt;/div&gt;1. 春节前后，M0升降&lt;div&gt;2. 消费、零售繁荣，M0上升&lt;/div&gt;&lt;div&gt;3. 电子支付普及，M0下降&lt;/div&gt;&lt;div&gt;4. 政策减息加息，M0升降&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="70" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="gLHrM1nDrbWaSBOJnFnS-13" value="&lt;div&gt;贸易市场，大额交易活跃&lt;/div&gt;&lt;div&gt;1. 企业生产制造活跃，比如外贸活跃、内需活跃&lt;/div&gt;&lt;div&gt;2. 特别的，房地产活跃（内需活跃）&lt;/div&gt;&lt;div&gt;3. 金融市场活跃，吸取M1资金&lt;/div&gt;&lt;div&gt;4. 政策财政支出，如大型基建&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="185" width="160" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="gLHrM1nDrbWaSBOJnFnS-14" value="&lt;div&gt;货币市场、金融市场活跃&lt;/div&gt;&lt;div&gt;1. 信贷规模，银行扩张信贷会创造更多存款&lt;/div&gt;&lt;div&gt;2. 债券市场，债券活跃会短期吸收M2（资金流动到财政账户）&lt;/div&gt;&lt;div&gt;3.政策财政支出增加M2，国债、地方债吸收M2&lt;/div&gt;&lt;div&gt;4. 金融脱媒，M2减少&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="340" width="160" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="gLHrM1nDrbWaSBOJnFnS-15" value="政府财政存款" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fillWeight=4;hachureGap=8;hachureAngle=45;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="480" width="170" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="gLHrM1nDrbWaSBOJnFnS-16" value="&lt;div&gt;利率变化，M1、M2短期不变，但是银行扩张或收缩的工具。&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;金融市场活跃，M2增长？&lt;/div&gt;&lt;div&gt;如果资金流转到财政，则M2减少；从财政或央行流出，则M2增加。&lt;/div&gt;&lt;div&gt;如央行回购、逆回购，政府发行债券等&lt;/div&gt;&lt;div&gt;金融市场活跃，很可能导致资金空转。&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;消费活跃会触发通胀么？&lt;/div&gt;&lt;div&gt;消费活跃和通胀常常伴生，消费活跃可以从通缩走向通胀进而消费乏力进而反作用于通胀。&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;居民储蓄倾向，M2增长？&lt;/div&gt;&lt;div&gt;M0增长乏力，消费抑制。&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;个人来说，收支平衡，既不过度消费，也不过度节俭。&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="680" y="40" width="800" height="510" as="geometry"/>
+                </mxCell>
+                <mxCell id="gLHrM1nDrbWaSBOJnFnS-17" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;金融脱媒&lt;/h1&gt;&lt;p&gt;L&lt;span style=&quot;background-color: transparent;&quot;&gt;金融脱媒&lt;/span&gt;&lt;/p&gt;&lt;div&gt;脱离银行体系的直接融资增加，如企业债券、股票发行、资产证券化（债务、房贷打包成证券）&lt;/div&gt;&lt;div&gt;非银金融崛起，如金融租赁公司、消费贷、互联网金融、小额贷&lt;/div&gt;&lt;div&gt;企业内部融资，留存收益、内部资金调配（企业更不倾向银行借贷）&lt;/div&gt;&lt;div&gt;总体，银行信贷被动收缩，进而M2减少。&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;本质是进入了资金买方市场场景，市场上资金多、好项目少&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;1. 利率市场化，企业和居民都在寻找更好的投入产出的产业或金融产品。资金利率市场化（也即资金买方定价），而不是由资金卖方定价。&lt;/div&gt;&lt;div&gt;2. 金融创新（资金产品互相竞争），资产证券化、互联网金融、资金买方更多选择；金融加科技降低交易成本，提高效率&lt;/div&gt;&lt;div&gt;3. 监管变化，非银金融活跃，政策支持直接融资 但也会监控其风险&lt;/div&gt;&lt;div&gt;4. 经济结构调整，新兴产业和中小企业（高风险项目）更倾向低成本融资的项目，更倾向直接融资和非银金融&lt;/div&gt;&lt;div&gt;5. 银行资金来源减少，贷款业务萎缩，需要发展多元业务（中间业务、投行业务、财富管理业务），减少对传统存贷款业务的依赖&lt;/div&gt;&lt;div&gt;6. 直接融资市场发展（债券、股票市场发展），提高金融市场的效率和资源配置能力；金融体系多元化（非银金融、新兴金融），更稳定&lt;/div&gt;&lt;div&gt;7. 宏观经济，资源配置优化（资金直接流入实体经济，通过市场的手，有利于经济结构调整和转型升级）；系统风险变化，直接融资市场波动、非银金融风险。&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;银行增加信贷扩张，进一步降低利率？&lt;/div&gt;&lt;div&gt;央行货币宽松，进一步降低利率？&lt;/div&gt;&lt;div&gt;市场波动 和 金融避险，资金更多流动到银行存款？&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="680" y="600" width="720" height="510" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="Drkj-uZ07yEjIr4Up3NS" name="高精尖产业">
+        <mxGraphModel dx="1002" dy="593" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="Bi9MNRP7kQyHslWd2Tbz" name="组合证券">
+        <mxGraphModel dx="1002" dy="593" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="-xQCKS5wKXTnV-cFWizW-1" value="证券公司" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="190" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="-xQCKS5wKXTnV-cFWizW-2" value="科技ETF？" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="190" y="180" width="120" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

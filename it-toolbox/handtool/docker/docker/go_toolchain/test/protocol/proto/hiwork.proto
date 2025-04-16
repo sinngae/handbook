@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+
+package protocol;
+
+//import "header.proto";
+import "github.com/mwitkow/go-proto-validators/validator.proto";
+
+service HeartBeat {
+    rpc Ping(PingBody) returns (PingBody) {}
+}
+
+message PingBody {
+    required string message = 1 [(validator.field) = {length_gt: 2, length_lt: 10}];
+}

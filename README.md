@@ -8,15 +8,9 @@
 
 # 目录及文件说明
 
-## [handnote](handnote/README.md)
-笔记，读书笔记、摘录笔记 
-
-## [tech-particle](tech-particle/README.md)
-梳理并持续更新一些技术
-
-
-## [toolbox](toolbox/README.md)
-常用工具、自己开发的工具等
++ 笔记，读书笔记、摘录笔记 
++ 梳理并持续更新一些技术
++ 常用工具、自己开发的工具等
 
 # 一点思考
 学习网络访问，可以从curl、nginx、nmap、ping等源码入手  
@@ -39,6 +33,8 @@
 + 适当跨界吸收灵感
 + 阅读他人优秀分享；阅读英文分享
 + 有选择地参与分享
+
+
 
 # 本人简历
 

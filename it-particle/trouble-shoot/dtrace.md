@@ -9,7 +9,7 @@ DTrace，Dynamical tracing，动态跟踪技术。Sun开发的DTrace是动态跟
 ## perf
 perf，linux的性能分析工具，基于linux内核子系统linux性能计数器(2.6.31首次加入，称为Performace counter，仅仅作为PMU的抽象；2.6.32中正式改名为Performance Event，可以处理所有性能相关的事件)。
 
-perf提供性能分析框架，比如硬件（CPU/PMU(Performance Monitoring Unit))/功能/软件（软件计数器/tracepoint）统计功能。
+perf提供性能分析框架，比如硬件(CPU/PMU(Performance Monitoring Unit))/功能/软件（软件计数器/tracepoint）统计功能。
 
 三个事件：
 + 硬件事件，PMU产生，特定条件下探测性能事件是否发生以及发生的次数，比如cache命中

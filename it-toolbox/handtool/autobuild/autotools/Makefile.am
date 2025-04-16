@@ -1,0 +1,3 @@
+AUTOMAKE_OPTIONS=foreign
+bin_PROGRAMS=auto_test
+auto_test_SOURCES=auto_test.c
