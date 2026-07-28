@@ -240,6 +240,46 @@ git merge --no-ff "branch/merge/from"
 git reflog show --date=iso "branch/to/investigate"
 ```
 
+## git clone 加速
+```sh
+#解决 Git Clone 超时问题
+#在使用 git clone 时，超时问题通常由网络不稳定、仓库过大或服务器响应慢等原因引起。以下是一些有效的解决方案。
+
+#示例：设置超时时间
+#如果网络较慢导致超时，可以通过增加 Git 的超时时间来解决：
+git config --global http.lowSpeedLimit 0
+git config --global http.lowSpeedTime 999999
+#此设置将允许更长时间的低速传输，避免因网络问题中断克隆。
+
+#使用 SSH 协议代替 HTTPS
+#HTTPS 连接可能因证书验证或代理配置导致问题。改用 SSH 协议可以提高稳定性：
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+git clone git@github.com:your/repository.git
+#确保将生成的公钥添加到远程仓库的 SSH 密钥中。
+
+#使用浅克隆减少数据量
+#对于大型仓库，可以只克隆最新的提交记录以加快速度：
+
+git clone --depth=1 https://github.com/your/repository.git
+#如需完整历史记录，可后续运行：
+git fetch --unshallow
+
+
+#使用国内镜像加速
+#如果访问 GitHub 较慢，可使用国内镜像服务：
+git clone https://github.com.cnpmjs.org/your/repository.git
+#或使用其他代理服务如 ghproxy：
+git clone https://ghproxy.com/https://github.com/your/repository.git
+
+
+#临时关闭 SSL 验证
+#若遇到 TLS 错误，可尝试关闭 SSL 验证（克隆后建议恢复）：
+git config --global http.sslVerify false
+git clone https://github.com/your/repository.git
+git config --global http.sslVerify true
+#通过以上方法，可以有效解决 git clone 的超时问题，提高克隆效率。
+```
+
 ## git自动化部署
 1. develop分支提交自动测试、自动部署到测试环境
 2. master分支tag自动部署到生产环境？不，测试环境（或者生产环境的测试节点）
