@@ -43,7 +43,8 @@ std::numeric_limits<double>::max_digits10是17
 ### float64
 1位正负位，指数11位，有效数52位
 
-## 二、Mysql中的Decimal类型
+## 二、Mysql中的Decimal类型(定点型)
+
 
 
 ## 思考
