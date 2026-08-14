@@ -11,13 +11,14 @@ American Standard Code for Information Interchange,所有计算机都统一支�
 ASCII
 
 ### Unicode
-统一字符编码，记录了一个字符集合和其编码，如U+0031表示。
+统一字符编码，记录了一个字符集合和其编码，如U+0031表示 “emoji表情符号1”。
 
 ### UTF-8
 unicode的编码方案之一，用1～4字节表达。
 
 ### GB2312 & GBK & BIG5
 GB2312是面向简体中文，BIG5是面向繁体中文。
+
 ## Unicode
 Unicode还在其发展期，Unicode、GB2312以及BIG5等多种编码共存的状况可能在以后较长的时间内都会持续下去。
 ### 
@@ -26,6 +27,7 @@ UTF, Universal Character Set/Unicode Transformation Format。
 UTF-8是针对Unicode的一种可变长度编码，兼容ASCII，逐渐成为电子邮件、网页、数据库、编程语言中，优先采用的编码。
 
 ## mysql.VARCHAR
+
 
 ## emoji符号
 emoji是一批较特殊的符号

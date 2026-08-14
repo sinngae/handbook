@@ -5,9 +5,10 @@ SQL
 ## mysql 命令行
 ```sql
 -- 三种注释
-'''dfadf'''
--- ...
-/*...*/
+'''第一种'''
+-- 第二种
+/*第三种*/
+
 -- 登录shell
 -- mysql -h 127.0.0.1 -u root -p testdb;
 
@@ -35,12 +36,12 @@ source /opt/openfire/resources/database/openfire_mysql.sql;
 ```sql
 -- 非插即更
 insert into tbl0 values(x, y)
-on duplicate key 
-update set x=x;
+    on duplicate key 
+        update set x=x;
 
 -- 交换列值
 update tbl0, tbl1
-set tbl0.x = tbl1.x, tbl1.x = tbl0.x
+    set tbl0.x = tbl1.x, tbl1.x = tbl0.x
 where tbl0.y=y0 and tbl1.y=y1;
 
 -- 重置自增ID

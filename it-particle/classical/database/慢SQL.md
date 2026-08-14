@@ -1,11 +1,7 @@
-慢查询SQL
----
-
-
-## 慢SQL定位
+# 慢SQL定位
 
 + 使用数据库自带的慢查询日志 slowlog
-+ explain 语句分析sql
++ explain 语句分析sql（来自slowlog）
 + 第三方监控工具？datadog
 + 人工分析SQL
     + 缺乏索引
@@ -34,4 +30,6 @@
 set global slow_query_log = 'ON';
 set global slow_query_time = 1; -- 阈值1秒
 set global slow_query_log_file = '/path/to/slowquery.log';
+
+select slow_query_log_file;
 ```
