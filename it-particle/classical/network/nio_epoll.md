@@ -84,6 +84,7 @@ epoll只有活跃的socket才会主动调用callback，效率提升。epool的ET
 errno=EINTR，表示操作被系统中断唤醒，需要重新读/写。（EAGAIN可以模拟，EINTR如何模拟？是被操作系统别的信号中断了？）
 
 recv/send/write/read返回值，一般>0 - 收/发/写/读到数据；=0 - 连接断开；<0 - 如果errno in (EAGAIN/EWOULDBLOCK/EINTR)则（过段时间）重试，否则连接异常。
+
 ### 阻塞机制
 四个事件
  + 缓冲区非空  

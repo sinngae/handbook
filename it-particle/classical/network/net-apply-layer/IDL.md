@@ -52,12 +52,13 @@ RPC协议性能要高的多，例如Protobuf、Thrift、Kyro等，（如果算�
 使用场景：
 |type|content|
 |-|-|
-|http|对外提供的服务，更加规范、通用、易扩展、已维护，具有较高的安全性(https)。
+|http|对外提供的服务，更加规范、通用、易扩展、易维护，具有较高的安全性(https)。
 |rpc|对内提供的服务，尤其适用于需要进行大量数据交互的服务(thrift提供高效的压缩协议，交互更加简洁，吞吐量更大)、 高频率交互的服务(可以考虑建立TCP长连接，比如即将开工的大权限系统)
 
 
 性能对比:
 http://blog.csdn.net/code52/article/details/21015361
 http://www.eit.name/blog/read.php?566
+
 还可以参考这篇文章：
 https://www.zhihu.com/question/25536695
