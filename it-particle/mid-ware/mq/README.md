@@ -45,8 +45,7 @@ RocketMQ使用mmap映射，省却一次（读取到内核的文件缓冲直接�
 + sendfile CPU不参与，不可读取发送的数据，只知道发送的字节数；mmap返回的是具体的数据
 + RocketMQ需要具体的数据，判断是否失败重新投递
 + Kafka追求极致性能
-
-是性能和功能的折中。
++ rocketmq 是性能和功能的折中。
 
 ### RocketMQ有的功能而Kafka没有的
 

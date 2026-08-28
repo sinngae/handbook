@@ -2,7 +2,7 @@
 
 ## hadoop
 
-Hadoop distributed file system
+HDFS, Hadoop distributed file system
 hadoop分布式文件系统
 适合运行在通用硬件上的分布式文件系统。
 是个高容错的系统，适合部署在廉价的机器上。
