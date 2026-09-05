@@ -60,7 +60,7 @@ DB+ELK检索服务层，ELK日志检索服务，数据分析、可视化展示;
 # 基础数据结构
 
 + inverted index, 倒排索引，使用文档的内容索引文档本身
-    + 非正排索引（文档ID索引文档）
+    + 非正排索引（文档ID索引文档），而是 “文档的（指定部分的）分词” 索引 “文档ID”，查询返回时，再查询文档的内容
     + 文档拆词为词项，词项索引文档ID
         + 分词，分词器，IK中文分词器，结巴分词器
     + 将词项按字典序排序，构成词典库
@@ -77,7 +77,7 @@ DB+ELK检索服务层，ELK日志检索服务，数据分析、可视化展示;
     + 正排索引、使用磁盘，可禁用以节省磁盘空间
     + text类型 使用时，可临时创建 fielddata，内存中、开销大，
 
-segment，复合文档，完整搜索功能的最小单元，包括上述四种结构。
+segment，复合文档，```完整搜索功能的最小单元```，包括上述四种结构。
 
 ## lucene，ES的基础
 + 如果新增文档写入同一个segment，需要更新segment内部的多个数据结构
@@ -86,14 +86,14 @@ segment，复合文档，完整搜索功能的最小单元，包括上述四种�
     + 新旧分别负责写读；搜索时，并发搜索多个segment即可
 + segment增长一定数量后，句柄将会耗尽；segment过多，读并发越多，影响检索性能
     + 不定期合并多个小的segment，以控制句柄数。这就是Segment Merging
-+ 多个segment 组成一个单机的检索库，这就是lucene
++ 多个segment 组成```一个单机的检索库```，这就是lucene
 
 lucene 不支持高性能、高扩展性、高可用
 
 ## shard & replica
 分布式-弹性：
 + 不同的主题，分为不同 index name，写入不同的lucene
-+ 同一个index name可以分为多个Shard，每个Shard本质就是一个独立的Lucene库
++ 同一个index name可以分为多个Shard，**每个Shard本质就是一个独立的Lucene库**
     + 读写操作被均衡到多个分片
 + 分片被部署在不同的机器上，提供更高性能，每个机器就是一个节点
     + 增加节点可以缓解机器CPU占用过高的问题
@@ -123,7 +123,7 @@ routing 通过 hash 函数生成一个数字，然后这个数字再除以 numbe
 Elasticsearch 7.9之前的版本中的节点类型：
 数据节点、协调节点、候选主节点、ingest节点
 
-7.9及之后，节点类型升级为节点角色 Node roles（单节点ES集群，配置为 cdfhilmrstw）。
+7.9及之后，```节点类型```升级为```节点角色``` Node roles（单节点ES集群，配置为 cdfhilmrstw）。
 
 + 主从
     + 主节点 master-eligible node
@@ -192,18 +192,18 @@ mapping动态类型推导
   - 合并操作是后台进行的，不会阻塞索引和查询操作。
 
 ## segment merge
-Index写入
-  新增segment，占用文件句柄、存储
-  每次查询都会并发查每个segment，segment越多，查询越慢
-后台运行Segment Merging
-  选取一些大小近似的segment合并成更大的segment
-    合并和Index写入、删除、检索同时发生，不会打断他们的执行
-  新的segment写入磁盘，提交一个commit
-    commit包含新的segment、排除掉旧的
-  新segment提供查询服务
-  删除旧segment
-大segment的merge占用很多IO和CPU，能够影响检索性能
-  ES会限制大segment合并，为检索保留足够的资源
++ Index写入
+  - 新增segment，占用文件句柄、存储
+  - 每次查询都会并发查每个segment，segment越多，查询越慢
++ 后台运行Segment Merging
+  - 选取一些大小近似的segment合并成更大的segment
+    - 合并和Index写入、删除、检索同时发生，不会打断他们的执行
+  - 新的segment写入磁盘，提交一个commit
+    - commit包含新的segment、排除掉旧的
+  - 新segment提供查询服务
+  - 删除旧segment
++ 大segment的merge占用很多IO和CPU，能够影响检索性能
+  - ES会限制大segment合并，为检索保留足够的资源
 
 ## 删除
 数据标记 deleted，逻辑删除；段合并时，逻辑删除变成物理删除

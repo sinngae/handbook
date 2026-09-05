@@ -13,7 +13,7 @@
 ## 分布式理论
 CAP（比对经典关系数据库ACID）
 
-Base
+BASE
 
 共识算法：
 Paxos算法/Raft算法
