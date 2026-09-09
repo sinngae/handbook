@@ -96,3 +96,38 @@ vgo get github.com/gin-gonic/gin@v1.2 # 获取依赖包的指定版本
 vgo mod -vendor # 将依赖包直接放在项目的vendor目录里
 
 ```
+
+## go work
+go 1.18以后有了go work。
+go work init 是 Go 1.18 引入的命令，用于初始化一个工作区文件（go.work），以便在多个模块之间进行开发和管理。
+
+
+以下是创建工作区的基本用法：
+
+```sh
+### 初始化一个空的工作区
+go work init
+
+### 初始化并添加模块路径
+go work init ./module1 ./module2
+
+```
+
+执行后会生成一个 go.work 文件，内容如下：
+```go
+go 1.20
+
+use (
+./module1
+./module2
+)
+```
+
+### 注意事项
+模块路径：`go work init` 后可以指定多个模块路径，路径需包含有效的 go.mod 文件。
+
+文件优先级：go.work 的配置优先于各模块的 go.mod 文件。
+
+本地开发：适用于本地调试和多模块依赖开发，但不建议将 go.work 提交到版本控制系统。
+
+通过 `go work init`，可以轻松管理多个模块的依赖关系，避免频繁修改 replace 指令。
