@@ -48,9 +48,20 @@ json with padding，一种为了解决跨域问题的方案，可以跨域读取
 利用浏览器同源策略在HTML标签`<script>`的例外（这个标签可以访问不同于当前源的数据并解析），这种模式就是JSONP。jsonp读取应答数据不是json而是任意的javascript，用js直译器执行而不是json解析器解析。
 
 ## Multipart/Urlencoded绑定
-form表单解析
-s
++ form表单解析
+
+## 数据绑定解绑
++ Path参数
++ Query参数
++ POST Body 参数
+    + 表单参数
+    + Body Json
++ Header参数
++ Cookie参数
+
+
 # 洋葱模型
+Gin 中间件。
 一种中间件架构模型。
 层层嵌套，就像在洋葱的截面上划出U型的轨迹一样。
 类似的还有：
@@ -59,6 +70,21 @@ s
 + 注册模型，注册到一个中心，由中心的配置管理；
 + AOP 模型，在一个横切面与其他业务分离，洋葱也可以看作AOP
 + 函数链模型，Gin 洋葱内部的 c.Next()
+
+## 常见中间件
++ 接口成功率、性能等统计上报
++ CORS CSRF处理
++ 用户登录态处理，权限校验、JWT解析
++ panic handler, recover & report
++ 编解码
+
+
+# 渲染Render
++ JSON，Protobuf
++ XML
++ YAML
++ HTML
++ 重定向
 + 
 
 # 对比
